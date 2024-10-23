@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="John Doe | React Native Developer">
+  <main class="min-h-screen flex items-center justify-center px-4">
+    <div class="max-w-2xl mx-auto text-center">
+      <div class="mb-8 flex justify-center">
+        <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-gray-100 dark:border-gray-800 shadow-lg">
+          <img 
+            src="/profile.jpg" 
+            alt="John Doe"
+            class="w-full h-full object-cover"
+            width="192"
+            height="192"
+          />
+        </div>
+      </div>
+      <h1 class="text-5xl font-bold mb-6">Hi, I'm Sam!</h1>
+      <div class="space-y-4 text-lg text-gray-600 dark:text-gray-300">
+        <p>
+          React Native Developer from London.
+        </p>
+        <p>
+          I'm passionate about creating beautiful mobile experiences and sharing knowledge through open-source projects.
+        </p>
+        <p>
+          <!-- I'm currently working at <a href="#" class="text-black dark:text-white hover:underline">Mobile Studio</a>. -->
+        </p>
+      </div>
+      
+      <div class="mt-12 flex justify-center gap-6">
+        <a 
+          href="/projects" 
+          class="px-6 py-3 bg-black dark:bg-white text-white dark:text-black rounded-lg hover:opacity-90 transition"
+        >
+          View Projects
+        </a>
+        <a 
+          href="/writing" 
+          class="px-6 py-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-gray-300 dark:hover:border-gray-600 transition"
+        >
+          Read Blog
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    line-height: 1.1;
+  }
+</style>
