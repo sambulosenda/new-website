@@ -1,86 +1,189 @@
 ---
 ---
-<nav id="main-nav" class="fixed w-full py-4 px-4 z-50 transition-colors duration-200">
-  <div class="max-w-6xl mx-auto flex justify-between items-center">
-    <a href="/" class="text-2xl font-bold">S</a>
-    
-    <!-- Mobile menu button -->
-    <button id="mobile-menu-button" class="md:hidden p-2" aria-label="Menu">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-    </button>
 
-    <!-- Desktop menu -->
-    <div class="hidden md:flex gap-8 text-sm items-center">
-      <a href="/writing" class="hover:text-gray-600 dark:hover:text-gray-300">Writing</a>
-      <a href="/projects" class="hover:text-gray-600 dark:hover:text-gray-300">Projects</a>
-      <a href="/about" class="hover:text-gray-600 dark:hover:text-gray-300">About</a>
-      <button id="theme-toggle" class="w-5 h-5 flex items-center justify-center">
-        <svg class="sun hidden dark:block" width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill="currentColor"/>
+<nav id="main-nav" class="fixed w-full py-4 px-4 z-50 transition-all duration-300">
+  <div class="max-w-6xl mx-auto flex justify-between items-center">
+    <a 
+      href="/" 
+      class="text-2xl font-bold relative group"
+      aria-label="Home"
+    >
+      <span class="relative z-10">S</span>
+      <span class="absolute inset-0 bg-blue-100 dark:bg-blue-900/30 rounded-lg scale-0 group-hover:scale-100 -z-0 transition-transform duration-200"></span>
+    </a>
+    
+    <!-- Desktop Navigation -->
+    <div class="hidden md:flex items-center gap-8">
+      <div class="flex gap-6 text-sm font-medium">
+        {[
+          { path: '/writing', label: 'Writing' },
+          { path: '/projects', label: 'Projects' },
+          { path: '/about', label: 'About' }
+        ].map(({ path, label }) => (
+          <a
+            href={path}
+            class={`
+              relative py-2 px-1
+              hover:text-gray-800 dark:hover:text-gray-200
+              transition-colors duration-200
+              before:content-['']
+              before:absolute
+              before:bottom-0
+              before:left-0
+              before:w-full
+              before:h-0.5
+              before:bg-gray-800
+              dark:before:bg-gray-200
+              before:scale-x-0
+              before:origin-right
+              before:transition-transform
+              before:duration-300
+              hover:before:scale-x-100
+              hover:before:origin-left
+              ${Astro.url.pathname === path ? 'text-gray-800 dark:text-gray-200 before:scale-x-100' : 'text-gray-600 dark:text-gray-400'}
+            `}
+          >
+            {label}
+          </a>
+        ))}
+      </div>
+      
+      <button 
+        id="theme-toggle" 
+        class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+        aria-label="Toggle theme"
+      >
+        <svg class="sun hidden dark:block w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
         </svg>
-        <svg class="moon dark:hidden" width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" fill="currentColor"/>
+        <svg class="moon dark:hidden w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
         </svg>
       </button>
     </div>
 
-    <!-- Mobile menu panel -->
-    <div id="mobile-menu" class="fixed inset-0 bg-white dark:bg-gray-900 z-50 hidden">
+    <!-- Mobile Menu Button -->
+    <button 
+      id="mobile-menu-button" 
+      class="md:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+      aria-label="Open menu"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+
+    <!-- Mobile Menu Panel -->
+    <div 
+      id="mobile-menu" 
+      class="fixed inset-0 bg-white dark:bg-gray-900 z-50 hidden"
+      role="dialog"
+      aria-modal="true"
+    >
       <div class="flex flex-col h-full">
-        <div class="flex justify-between items-center p-4 border-b dark:border-gray-800">
+        <div class="flex justify-between items-center p-4">
           <a href="/" class="text-2xl font-bold">S</a>
-          <button id="mobile-menu-close" class="p-2">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <button 
+            id="mobile-menu-close" 
+            class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+            aria-label="Close menu"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
           </button>
         </div>
-        <div class="flex flex-col items-center justify-center flex-1 gap-8 text-lg">
-          <a href="/writing" class="hover:text-gray-600 dark:hover:text-gray-300">Writing</a>
-          <a href="/projects" class="hover:text-gray-600 dark:hover:text-gray-300">Projects</a>
-          <a href="/about" class="hover:text-gray-600 dark:hover:text-gray-300">About</a>
-          <button id="mobile-theme-toggle" class="w-5 h-5 flex items-center justify-center">
-            <svg class="sun hidden dark:block" width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill="currentColor"/>
+        
+        <nav class="flex flex-col items-center justify-center flex-1 gap-8 text-lg">
+          {[
+            { path: '/writing', label: 'Writing' },
+            { path: '/projects', label: 'Projects' },
+            { path: '/about', label: 'About' }
+          ].map(({ path, label }) => (
+            <a
+              href={path}
+              class={`
+                py-2 px-4 rounded-lg
+                transition-colors duration-200
+                hover:bg-gray-100 dark:hover:bg-gray-800
+                ${Astro.url.pathname === path ? 'text-gray-800 dark:text-gray-200' : 'text-gray-600 dark:text-gray-400'}
+              `}
+            >
+              {label}
+            </a>
+          ))}
+          
+          <button 
+            id="mobile-theme-toggle" 
+            class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+            aria-label="Toggle theme"
+          >
+            <svg class="sun hidden dark:block w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
             </svg>
-            <svg class="moon dark:hidden" width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" fill="currentColor"/>
+            <svg class="moon dark:hidden w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
             </svg>
           </button>
-        </div>
+        </nav>
       </div>
     </div>
   </div>
 </nav>
 
 <script>
-  // Handle scroll background
+  let scrollPosition = 0;
   const nav = document.getElementById('main-nav');
-  const handleScroll = () => {
-    if (window.scrollY > 50) {
-      nav?.classList.add('bg-white/80', 'backdrop-blur-md', 'dark:bg-gray-900/80', 'shadow-sm');
+  
+  function handleScroll() {
+    const currentScroll = window.scrollY;
+    
+    // Add background when scrolling down
+    if (currentScroll > 50) {
+      nav?.classList.add(
+        'bg-white/80',
+        'backdrop-blur-md',
+        'dark:bg-gray-900/80',
+        'shadow-sm'
+      );
     } else {
-      nav?.classList.remove('bg-white/80', 'backdrop-blur-md', 'dark:bg-gray-900/80', 'shadow-sm');
+      nav?.classList.remove(
+        'bg-white/80',
+        'backdrop-blur-md',
+        'dark:bg-gray-900/80',
+        'shadow-sm'
+      );
     }
-  };
-  window.addEventListener('scroll', handleScroll);
+    
+    // Hide nav when scrolling down, show when scrolling up
+    if (currentScroll > scrollPosition && currentScroll > 100) {
+      nav?.classList.add('-translate-y-full');
+    } else {
+      nav?.classList.remove('-translate-y-full');
+    }
+    
+    scrollPosition = currentScroll;
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
 
   // Mobile menu functionality
   const mobileMenuButton = document.getElementById('mobile-menu-button');
   const mobileMenuClose = document.getElementById('mobile-menu-close');
   const mobileMenu = document.getElementById('mobile-menu');
   
-  mobileMenuButton?.addEventListener('click', () => {
-    mobileMenu?.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-  });
-
-  mobileMenuClose?.addEventListener('click', () => {
-    mobileMenu?.classList.add('hidden');
-    document.body.style.overflow = '';
-  });
+  function toggleMobileMenu(show: boolean) {
+    if (show) {
+      mobileMenu?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    } else {
+      mobileMenu?.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  }
+  
+  mobileMenuButton?.addEventListener('click', () => toggleMobileMenu(true));
+  mobileMenuClose?.addEventListener('click', () => toggleMobileMenu(false));
 
   // Theme toggle functionality
   function setTheme(theme: 'light' | 'dark') {
@@ -93,21 +196,50 @@
     }
   }
 
-  // Initialize theme to light by default
-  if (!localStorage.getItem('theme')) {
-    setTheme('light');
-  } else if (localStorage.getItem('theme') === 'dark') {
-    setTheme('dark');
+  // Check for saved theme or system preference
+  const savedTheme = localStorage.getItem('theme');
+  const systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
+  if (savedTheme) {
+    setTheme(savedTheme as 'light' | 'dark');
+  } else {
+    setTheme(systemDarkMode ? 'dark' : 'light');
   }
 
   // Theme toggle handlers
   const themeToggle = document.getElementById('theme-toggle');
   const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
 
+  function handleThemeToggle() {
+    const isDark = document.documentElement.classList.contains('dark');
+    setTheme(isDark ? 'light' : 'dark');
+  }
+
   [themeToggle, mobileThemeToggle].forEach(toggle => {
-    toggle?.addEventListener('click', () => {
-      const isDark = document.documentElement.classList.contains('dark');
-      setTheme(isDark ? 'light' : 'dark');
+    toggle?.addEventListener('click', handleThemeToggle);
+  });
+
+  // Cleanup event listeners on component unmount
+  document.addEventListener('astro:before-swap', () => {
+    window.removeEventListener('scroll', handleScroll);
+    [themeToggle, mobileThemeToggle].forEach(toggle => {
+      toggle?.removeEventListener('click', handleThemeToggle);
     });
   });
 </script>
+
+<style>
+  /* Optional: Add smooth transition for mobile menu */
+  #mobile-menu {
+    transition: opacity 0.2s ease;
+  }
+  
+  #mobile-menu.hidden {
+    display: none;
+    opacity: 0;
+  }
+  
+  #mobile-menu:not(.hidden) {
+    opacity: 1;
+  }
+</style>

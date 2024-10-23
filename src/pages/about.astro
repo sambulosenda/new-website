@@ -1,26 +1,149 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const skills = [
+  "React Native",
+  "TypeScript",
+  "Redux",
+  "React Navigation",
+  "Jest",
+  "REST APIs",
+  "GraphQL",
+  "CI/CD",
+];
+
+const experiences = [
+  {
+    title: "Senior React Native Developer",
+    company: "Current Company",
+    period: "2021 - Present",
+    description: "Leading mobile app development projects and mentoring junior developers."
+  },
+  {
+    title: "Mobile Developer",
+    company: "Previous Company",
+    period: "2019 - 2021",
+    description: "Built and maintained cross-platform mobile applications using React Native."
+  }
+];
+
+const contactLinks = [
+  {
+    platform: "Twitter",
+    url: "https://twitter.com/sambulosenda",
+    username: "@sambulosenda"
+  },
+  {
+    platform: "GitHub",
+    url: "https://github.com/sambulosenda",
+    username: "sambulosenda"
+  },
+  {
+    platform: "LinkedIn",
+    url: "https://linkedin.com/in/sambulosenda",
+    username: "Sambulo Senda"
+  }
+];
 ---
 
 <Layout title="About | Sambulo Senda">
-  <div class="min-h-screen max-w-2xl mx-auto px-4 py-32">
-    <h1 class="text-3xl font-bold mb-8">About</h1>
-    <div class="prose">
-      <p>
-        I'm a React Native developer with 5+ years of experience building mobile applications. 
-        My focus is on creating intuitive and performant apps that users love.
-      </p>
-      
-      <p>
-        When I'm not coding, I enjoy writing about mobile development, contributing to open-source projects, 
-        and mentoring other developers.
-      </p>
+  <main class="min-h-screen pt-32 pb-24"> {/* Increased top padding from py-24 */}
+    <div class="max-w-3xl mx-auto px-4">
+      <article class="space-y-20"> {/* Increased section spacing from space-y-16 */}
+        {/* Header Section */}
+        <header class="mb-8"> {/* Added specific bottom margin for header */}
+          <h1 class="text-4xl font-bold mb-8">About Me</h1> {/* Increased margin after title */}
+          <div class="prose prose-lg dark:prose-invert max-w-none space-y-6"> {/* Added space between paragraphs */}
+            <p class="text-xl text-gray-600 dark:text-gray-300">
+              I'm a React Native developer with 5+ years of experience building mobile applications. 
+              My focus is on creating intuitive and performant apps that users love.
+            </p>
+            
+            <p class="text-gray-600 dark:text-gray-300">
+              When I'm not coding, I enjoy writing about mobile development, contributing to open-source projects, 
+              and mentoring other developers. I'm passionate about sharing knowledge and helping others grow in their development journey.
+            </p>
+          </div>
+        </header>
 
-      <h2>Contact</h2>
-      <p>
-        Feel free to reach out to me on <a href="https://twitter.com/sambulosenda" class="text-black hover:underline">Twitter</a> 
-        or <a href="https://github.com/sambulosenda" class="text-black hover:underline">GitHub</a>.
-      </p>
+        {/* Skills Section */}
+        <section class="pt-4"> {/* Added top padding */}
+          <h2 class="text-2xl font-semibold mb-8">Skills & Technologies</h2>
+          <div class="flex flex-wrap gap-3"> {/* Increased gap between skills */}
+            {skills.map(skill => (
+              <span class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
+                {skill}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        {/* Experience Section */}
+        <section class="pt-4"> {/* Added top padding */}
+          <h2 class="text-2xl font-semibold mb-8">Experience</h2>
+          <div class="space-y-12"> {/* Increased spacing between experiences */}
+            {experiences.map(({ title, company, period, description }) => (
+              <div class="border-l-2 border-gray-200 dark:border-gray-700 pl-6 py-2"> {/* Increased left padding and added vertical padding */}
+                <h3 class="text-xl font-medium mb-2">{title}</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-3">{company} · {period}</p>
+                <p class="text-gray-600 dark:text-gray-300">{description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section class="pt-4"> {/* Added top padding */}
+          <h2 class="text-2xl font-semibold mb-8">Let's Connect</h2>
+          <div class="prose prose-lg dark:prose-invert max-w-none mb-8"> {/* Added bottom margin */}
+            <p class="text-gray-600 dark:text-gray-300">
+              I'm always interested in hearing about new projects and opportunities. 
+              Feel free to reach out through any of these platforms:
+            </p>
+          </div>
+          <div class="space-y-3"> {/* Increased spacing between links */}
+            {contactLinks.map(({ platform, url, username }) => (
+              <a 
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block group"
+              >
+                <div class="flex items-center p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                  <span class="min-w-[100px] font-medium">{platform}:</span>
+                  <span class="text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors">
+                    {username}
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      </article>
     </div>
-  </div>
+  </main>
 </Layout>
+
+<style>
+  .prose {
+    max-width: 65ch;
+  }
+  
+  .prose a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    transition: text-decoration-color 150ms ease;
+  }
+  
+  .prose a:hover {
+    text-decoration-color: currentColor;
+  }
+
+  @media (max-width: 640px) {
+    .prose {
+      font-size: 1rem;
+    }
+  }
+</style>
