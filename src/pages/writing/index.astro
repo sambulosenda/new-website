@@ -25,62 +25,42 @@ const postsByYear = posts.reduce((acc, post) => {
 const years = Object.keys(postsByYear).sort().reverse();
 ---
 
-
 <Layout title="Writing | Sambulo Senda">
-  <main class="min-h-screen pt-32 pb-24"> {/* Adjusted top padding */}
-    <div class="max-w-4xl mx-auto px-4">
-      <header class="mb-8"> {/* Increased bottom margin */}
-        <h1 class="text-4xl font-bold mb-6">Writing</h1> {/* Increased margin */}
-        <p class="text-gray-600 dark:text-gray-400 text-lg max-w-2xl">
+  <main class="min-h-screen pt-24 md:pt-32 pb-16 md:pb-24">
+    <div class="max-w-4xl mx-auto px-6 md:px-4">
+      <header class="mb-10 md:mb-16">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4 md:mb-6">Writing</h1>
+        <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl">
           Thoughts, tutorials, and insights about mobile development and React Native.
         </p>
       </header>
 
-      {/* Tags filter */}
-      <div class="mb-4"> {/* Increased bottom margin */}
-        <div class="flex flex-wrap gap-3" id="tag-filters"> {/* Increased gap */}
-          <button 
-            class="tag-filter px-4 py-2 rounded-full text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/40 transition-colors selected"
-            data-tag="all"
-          >
-            All posts
-          </button>
-          {allTags.map(tag => (
-            <button 
-              class="tag-filter px-4 py-2 rounded-full text-sm bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              data-tag={tag}
-            >
-              {tag}
-            </button>
-          ))}
-        </div>
-      </div>
+
 
       {/* Posts listing */}
-      <div class="space-y-24" id="posts-container"> {/* Increased section spacing */}
+      <div class="space-y-16 md:space-y-24" id="posts-container">
         {years.map(year => (
           <section>
-            <h2 class="text-2xl font-semibold mb-12 sticky top-32 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm py-4 -mx-4 px-4">{year}</h2>
-            <div class="space-y-16"> {/* Increased article spacing */}
+            <div class="space-y-12 md:space-y-16">
               {postsByYear[year].map(post => (
                 <article 
                   class="group"
                   data-tags={JSON.stringify(post.frontmatter.tags || [])}
                 >
                   <a href={post.url} class="block">
-                    <h3 class="text-xl font-medium mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    <h3 class="text-lg md:text-xl font-medium mb-3 md:mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                       {post.frontmatter.title}
                     </h3>
                     
                     {post.frontmatter.description && (
-                      <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+                      <p class="text-gray-600 dark:text-gray-400 mb-3 md:mb-4 line-clamp-2 text-sm md:text-base">
                         {post.frontmatter.description}
                       </p>
                     )}
                     
-                    <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
-                      <time datetime={post.frontmatter.date} class="flex items-center gap-2">
-                        <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                    <div class="flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm text-gray-600 dark:text-gray-400">
+                      <time datetime={post.frontmatter.date} class="flex items-center gap-1.5 md:gap-2">
+                        <svg class="w-3.5 h-3.5 md:w-4 md:h-4" viewBox="0 0 20 20" fill="currentColor">
                           <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
                         </svg>
                         {new Date(post.frontmatter.date).toLocaleDateString('en-US', {
@@ -90,8 +70,8 @@ const years = Object.keys(postsByYear).sort().reverse();
                       </time>
                       
                       {post.frontmatter.readingTime && (
-                        <span class="flex items-center gap-2">
-                          <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                        <span class="flex items-center gap-1.5 md:gap-2">
+                          <svg class="w-3.5 h-3.5 md:w-4 md:h-4" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
                           </svg>
                           {post.frontmatter.readingTime}
@@ -99,9 +79,9 @@ const years = Object.keys(postsByYear).sort().reverse();
                       )}
 
                       {post.frontmatter.tags && (
-                        <div class="flex flex-wrap gap-2">
+                        <div class="flex flex-wrap gap-1.5 md:gap-2">
                           {post.frontmatter.tags.slice(0, 2).map(tag => (
-                            <span class="text-xs px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">
+                            <span class="text-xs px-2 md:px-3 py-0.5 md:py-1 bg-gray-100 dark:bg-gray-800 rounded-full">
                               {tag}
                             </span>
                           ))}
@@ -124,9 +104,9 @@ const years = Object.keys(postsByYear).sort().reverse();
       {/* Empty state */}
       <div 
         id="empty-state" 
-        class="hidden text-center py-16 text-gray-600 dark:text-gray-400"
+        class="hidden text-center py-12 md:py-16 text-gray-600 dark:text-gray-400"
       >
-        <p class="text-lg mb-2">No posts found</p>
+        <p class="text-base md:text-lg mb-2">No posts found</p>
         <p class="text-sm">Try selecting a different tag</p>
       </div>
     </div>
@@ -146,6 +126,16 @@ const years = Object.keys(postsByYear).sort().reverse();
     article:hover {
       @apply -translate-y-0.5;
     }
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .overflow-x-auto {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .overflow-x-auto::-webkit-scrollbar {
+    display: none;
   }
 </style>
 

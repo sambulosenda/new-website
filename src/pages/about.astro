@@ -4,26 +4,48 @@ import Layout from '../layouts/Layout.astro';
 const skills = [
   "React Native",
   "TypeScript",
+  "GraphQL",
   "Redux",
   "React Navigation",
-  "Jest",
-  "REST APIs",
-  "GraphQL",
+  "UI/UX Implementation",
+  "Performance Optimization",
+  "Team Leadership",
+  "API Integration",
+  "Testing & Debugging",
+  "Project Management",
   "CI/CD",
 ];
 
 const experiences = [
   {
-    title: "Senior React Native Developer",
-    company: "Current Company",
-    period: "2021 - Present",
-    description: "Leading mobile app development projects and mentoring junior developers."
+    title: "React Native Developer",
+    company: "On Wellbeing",
+    type: "Full-time · Hybrid",
+    location: "Bolton, England, United Kingdom",
+    period: "Jan 2023 - Present",
+    duration: "1 yr 10 mos",
+    achievements: [
+      "Managed project timelines, technical specifications, and team coordination, ensuring all milestones were met on schedule and within scope.",
+      "Collaborated closely with the design team to transform UI/UX designs into fully functional and visually appealing interfaces.",
+      "Successfully conducted rigorous testing and debugging to identify and resolve any issues, ensuring the app's stability and reliability.",
+    ],
+    technologies: ["React Native", "GraphQL", "UI/UX", "Project Management", "Testing"]
   },
   {
-    title: "Mobile Developer",
-    company: "Previous Company",
-    period: "2019 - 2021",
-    description: "Built and maintained cross-platform mobile applications using React Native."
+    title: "Developer",
+    company: "Whitbread",
+    type: "Full-time · Hybrid",
+    location: "Dunstable, England, United Kingdom",
+    period: "Sep 2019 - Jan 2023",
+    duration: "3 yrs 5 mos",
+    achievements: [
+      "Developed and maintained multiple business-critical web applications serving 10,000+ daily users",
+      "Implemented responsive design patterns and cross-browser compatibility solutions",
+      "Optimised application performance through code refactoring and modern JavaScript practices",
+      "Collaborated with UX/UI teams to deliver pixel-perfect implementations of design specifications",
+      "Integrated third-party APIs and services to enhance application functionality"
+    ],
+    technologies: ["JavaScript", "Web Development", "Performance Optimization", "API Integration"]
   }
 ];
 
@@ -47,16 +69,16 @@ const contactLinks = [
 ---
 
 <Layout title="About | Sambulo Senda">
-  <main class="min-h-screen pt-32 pb-24"> {/* Increased top padding from py-24 */}
-    <div class="max-w-3xl mx-auto px-4">
-      <article class="space-y-20"> {/* Increased section spacing from space-y-16 */}
+  <main class="min-h-screen pt-24 md:pt-32 pb-16 md:pb-24">
+    <div class="max-w-3xl mx-auto px-6 md:px-4">
+      <article class="space-y-16 md:space-y-20">
         {/* Header Section */}
-        <header class="mb-8"> {/* Added specific bottom margin for header */}
-          <h1 class="text-4xl font-bold mb-8">About Me</h1> {/* Increased margin after title */}
-          <div class="prose prose-lg dark:prose-invert max-w-none space-y-6"> {/* Added space between paragraphs */}
-            <p class="text-xl text-gray-600 dark:text-gray-300">
-              I'm a React Native developer with 5+ years of experience building mobile applications. 
-              My focus is on creating intuitive and performant apps that users love.
+        <header class="mb-8">
+          <h1 class="text-3xl md:text-4xl font-bold mb-6 md:mb-8">About Me</h1>
+          <div class="prose prose-lg dark:prose-invert max-w-none space-y-6">
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300">
+              I'm a React Native developer with 5+ years of experience building mobile and web applications. 
+              My focus is on creating intuitive, performant, and user-centric solutions.
             </p>
             
             <p class="text-gray-600 dark:text-gray-300">
@@ -67,11 +89,11 @@ const contactLinks = [
         </header>
 
         {/* Skills Section */}
-        <section class="pt-4"> {/* Added top padding */}
-          <h2 class="text-2xl font-semibold mb-8">Skills & Technologies</h2>
-          <div class="flex flex-wrap gap-3"> {/* Increased gap between skills */}
+        <section>
+          <h2 class="text-2xl font-semibold mb-6 md:mb-8">Skills & Technologies</h2>
+          <div class="flex flex-wrap gap-2 md:gap-3">
             {skills.map(skill => (
-              <span class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
+              <span class="px-3 md:px-4 py-1.5 md:py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
                 {skill}
               </span>
             ))}
@@ -79,29 +101,48 @@ const contactLinks = [
         </section>
 
         {/* Experience Section */}
-        <section class="pt-4"> {/* Added top padding */}
-          <h2 class="text-2xl font-semibold mb-8">Experience</h2>
-          <div class="space-y-12"> {/* Increased spacing between experiences */}
-            {experiences.map(({ title, company, period, description }) => (
-              <div class="border-l-2 border-gray-200 dark:border-gray-700 pl-6 py-2"> {/* Increased left padding and added vertical padding */}
-                <h3 class="text-xl font-medium mb-2">{title}</h3>
-                <p class="text-gray-600 dark:text-gray-400 mb-3">{company} · {period}</p>
-                <p class="text-gray-600 dark:text-gray-300">{description}</p>
+        <section>
+          <h2 class="text-2xl font-semibold mb-6 md:mb-8">Experience</h2>
+          <div class="space-y-12">
+            {experiences.map(({ title, company, type, location, period, duration, achievements, technologies }) => (
+              <div class="relative">
+                <div class="border-l-2 border-gray-200 dark:border-gray-700 pl-6 py-2">
+                  <div class="absolute -left-2 top-3 w-4 h-4 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                  <h3 class="text-xl font-medium mb-1">{title}</h3>
+                  <p class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-1">{company}</p>
+                  <div class="text-sm text-gray-600 dark:text-gray-400 space-y-1 mb-4">
+                    <p>{type}</p>
+                    <p>{period} · {duration}</p>
+                    <p>{location}</p>
+                  </div>
+                  <ul class="list-disc list-outside ml-4 space-y-2 text-gray-600 dark:text-gray-300 mb-4">
+                    {achievements.map(achievement => (
+                      <li>{achievement}</li>
+                    ))}
+                  </ul>
+                  <div class="flex flex-wrap gap-2">
+                    {technologies.map(tech => (
+                      <span class="text-xs px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Contact Section */}
-        <section class="pt-4"> {/* Added top padding */}
-          <h2 class="text-2xl font-semibold mb-8">Let's Connect</h2>
-          <div class="prose prose-lg dark:prose-invert max-w-none mb-8"> {/* Added bottom margin */}
+        <section>
+          <h2 class="text-2xl font-semibold mb-6 md:mb-8">Let's Connect</h2>
+          <div class="prose prose-lg dark:prose-invert max-w-none mb-6 md:mb-8">
             <p class="text-gray-600 dark:text-gray-300">
               I'm always interested in hearing about new projects and opportunities. 
               Feel free to reach out through any of these platforms:
             </p>
           </div>
-          <div class="space-y-3"> {/* Increased spacing between links */}
+          <div class="space-y-2 md:space-y-3">
             {contactLinks.map(({ platform, url, username }) => (
               <a 
                 href={url}
@@ -109,7 +150,7 @@ const contactLinks = [
                 rel="noopener noreferrer"
                 class="block group"
               >
-                <div class="flex items-center p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                <div class="flex items-center p-3 md:p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                   <span class="min-w-[100px] font-medium">{platform}:</span>
                   <span class="text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors">
                     {username}
@@ -144,6 +185,10 @@ const contactLinks = [
   @media (max-width: 640px) {
     .prose {
       font-size: 1rem;
+    }
+    
+    .prose p {
+      margin: 1.25em 0;
     }
   }
 </style>
