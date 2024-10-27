@@ -1,0 +1,311 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: React Native Performance Tips - Real-world Examples
+date: 2024-10-27
+description: Practical optimization examples for React Native apps that you can use today
+tags: ['React Native', 'Performance', 'FlatList', 'Mobile Development']
+---
+
+# React Native Performance Tips: Real-world Examples
+
+Hey there! 👋 Let's cut straight to the chase and look at some real performance optimizations we deal with daily in React Native development. No theoretical fluff - just practical examples you can use in your apps today.
+
+## FlatList Optimization: The Most Common Need
+
+If you're like me, you're probably working with lists in 90% of your screens. Here's how to make them blazing fast:
+
+```jsx
+// 🚫 Common mistake: Creating new functions in render
+const BadContactList = ({ contacts }) => {
+  return (
+    <FlatList
+      data={contacts}
+      renderItem={({ item }) => (
+        <ContactCard 
+          contact={item}
+          onPress={() => handlePress(item.id)} // New function every render!
+        />
+      )}
+      keyExtractor={item => item.id} // Also a new function!
+    />
+  );
+};
+
+// ✅ Optimized version
+const ContactList = ({ contacts }) => {
+  // Memoize the renderItem function
+  const renderItem = useCallback(({ item }) => (
+    <ContactCard 
+      contact={item}
+      onPress={handlePressContact} // Use shared function
+    />
+  ), []); // Empty deps if function doesn't use any props/state
+
+  // Memoize the keyExtractor
+  const keyExtractor = useCallback((item) => item.id, []);
+
+  // Memoize onEndReached handler if you're doing pagination
+  const handleEndReached = useCallback(() => {
+    if (!isLoading && hasMorePages) {
+      loadMoreContacts();
+    }
+  }, [isLoading, hasMorePages]);
+
+  return (
+    <FlatList
+      data={contacts}
+      renderItem={renderItem}
+      keyExtractor={keyExtractor}
+      onEndReached={handleEndReached}
+      onEndReachedThreshold={0.5}
+      // Performance props
+      removeClippedSubviews={true}
+      initialNumToRender={10}
+      maxToRenderPerBatch={10}
+      windowSize={5}
+      ListEmptyComponent={EmptyListMessage}
+      contentContainerStyle={styles.listContent}
+    />
+  );
+};
+
+// Memoize the entire CardItem component
+const ContactCard = memo(({ contact, onPress }) => (
+  <TouchableOpacity
+    onPress={() => onPress(contact.id)}
+    style={styles.card}
+  >
+    <FastImage 
+      source={{ uri: contact.avatar }}
+      style={styles.avatar}
+    />
+    <View style={styles.info}>
+      <Text style={styles.name}>{contact.name}</Text>
+      <Text style={styles.phone}>{contact.phone}</Text>
+    </View>
+  </TouchableOpacity>
+));
+```
+
+## Image Heavy Screens: Profile & Gallery Views
+
+Working with images in RN can be tricky. Here's a pattern I use for profile screens:
+
+```jsx
+const ProfileScreen = () => {
+  // Memoize expensive filter operations
+  const sortedPhotos = useMemo(() => 
+    photos
+      .filter(p => p.userId === currentUserId)
+      .sort((a, b) => b.date - a.date)
+    , [photos, currentUserId]
+  );
+
+  // Memoize image picking function
+  const handleImagePick = useCallback(async () => {
+    try {
+      const result = await ImagePicker.launchImageLibrary({
+        mediaType: 'photo',
+        quality: 0.8,
+      });
+      
+      if (result.assets?.[0]?.uri) {
+        const compressed = await compressImage(result.assets[0].uri);
+        await uploadImage(compressed);
+      }
+    } catch (error) {
+      // Error handling
+    }
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <ProfileHeader
+        user={user}
+        onImagePress={handleImagePick}
+      />
+      <PhotoGrid photos={sortedPhotos} />
+    </View>
+  );
+};
+
+// Memoized grid component
+const PhotoGrid = memo(({ photos }) => {
+  const renderPhoto = useCallback(({ item }) => (
+    <FastImage
+      source={{ uri: item.uri }}
+      style={styles.gridPhoto}
+      resizeMode="cover"
+    />
+  ), []);
+
+  return (
+    <FlatList
+      data={photos}
+      renderItem={renderPhoto}
+      numColumns={3}
+      removeClippedSubviews={true}
+    />
+  );
+});
+```
+
+## Form Handling: Without Breaking the Bank
+
+Forms are everywhere in our apps. Here's how to handle them efficiently:
+
+```jsx
+const EditProfileForm = () => {
+  // Use refs instead of state for form fields when you don't need
+  // real-time validation
+  const nameRef = useRef();
+  const bioRef = useRef();
+  const emailRef = useRef();
+
+  // Memoize submission handler
+  const handleSubmit = useCallback(async () => {
+    const formData = {
+      name: nameRef.current?.value,
+      bio: bioRef.current?.value,
+      email: emailRef.current?.value,
+    };
+
+    try {
+      await updateProfile(formData);
+      navigation.goBack();
+    } catch (error) {
+      // Error handling
+    }
+  }, [navigation]);
+
+  // If you need validation, memoize the validation function
+  const validateField = useCallback((field, value) => {
+    switch (field) {
+      case 'email':
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      case 'name':
+        return value.length >= 2;
+      default:
+        return true;
+    }
+  }, []);
+
+  return (
+    <KeyboardAvoidingView style={styles.container}>
+      <TextInput
+        ref={nameRef}
+        placeholder="Name"
+        style={styles.input}
+      />
+      <TextInput
+        ref={bioRef}
+        placeholder="Bio"
+        multiline
+        style={styles.bioInput}
+      />
+      <TextInput
+        ref={emailRef}
+        placeholder="Email"
+        keyboardType="email-address"
+        style={styles.input}
+      />
+      <Button title="Save" onPress={handleSubmit} />
+    </KeyboardAvoidingView>
+  );
+};
+```
+
+## Navigation & Screen Transitions
+
+Here's how to handle navigation without performance hits:
+
+```jsx
+const HomeScreen = () => {
+  // Memoize navigation handlers
+  const handleProfilePress = useCallback(() => {
+    navigation.navigate('Profile', {
+      userId: currentUserId,
+    });
+  }, [currentUserId, navigation]);
+
+  // Memoize data preparation for the next screen
+  const prepareDataForNextScreen = useCallback((item) => ({
+    title: item.title,
+    id: item.id,
+    preview: item.images[0],
+    // Transform any other data needed
+  }), []);
+
+  const handleItemPress = useCallback((item) => {
+    const screenData = prepareDataForNextScreen(item);
+    navigation.navigate('Details', screenData);
+  }, [navigation, prepareDataForNextScreen]);
+
+  return (
+    <View style={styles.container}>
+      <Header onProfilePress={handleProfilePress} />
+      <FeedList
+        data={feedItems}
+        onItemPress={handleItemPress}
+      />
+    </View>
+  );
+};
+```
+
+## Real-world Performance Tips
+
+Here are some bonus tips I've learned the hard way:
+
+1. Use `memo` for list items in FlatList/ScrollView:
+```jsx
+const ListItem = memo(({ title, onPress }) => (
+  <TouchableOpacity onPress={onPress}>
+    <Text>{title}</Text>
+  </TouchableOpacity>
+), (prevProps, nextProps) => {
+  // Custom comparison if needed
+  return prevProps.title === nextProps.title;
+});
+```
+
+2. Handle animations efficiently:
+```jsx
+const FadeInView = ({ children }) => {
+  const opacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true, // Important!
+    }).start();
+  }, []);
+
+  return (
+    <Animated.View style={{ opacity }}>
+      {children}
+    </Animated.View>
+  );
+};
+```
+
+## When Not to Optimize
+
+Not everything needs optimization. Skip these patterns when:
+- Your list has fewer than 20 items
+- Your form is simple (2-3 fields)
+- You're building a prototype
+- The screen is not frequently visited
+
+## Wrap Up
+
+Remember:
+- Always use `useCallback` for FlatList's `renderItem` and `keyExtractor`
+- Memoize list items with `memo`
+- Use `useMemo` for expensive calculations or data transformations
+- Consider using refs for form inputs if you don't need real-time validation
+
+Happy coding! 🚀
+
+PS: These examples are from real apps I've worked on. What performance challenges are you facing in your RN apps? Let me know in the comments!
