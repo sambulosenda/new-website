@@ -1,0 +1,130 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: Optimizing React Forms - Beyond useState
+date: 2024-10-27
+description: Learn how to improve form performance in React by moving beyond useState
+tags: ["React", "Performance", "Forms", "Hooks"]
+---
+
+
+When we learn React hooks, the first one we encounter is useState, and we're amazed by how it updates our components and reflects the values. However, we can get lazy and start using it for everything. Over time, this can lead to performance loss and make our project heavier, often without us knowing why. Let's look at an example of a simple login page.
+
+## The Problem with useState
+
+Every time we type a value into an input, we end up re-rendering the entire component unnecessarily. Here's what we typically do:
+
+```jsx
+const LoginForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle login
+    console.log(email, password);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button type="submit">Login</button>
+    </form>
+  );
+};
+```
+
+Unless we actually need to validate the inputs with every user input, there's no need to track the value at every moment. We can capture the value and even validate it only when the user presses the submit button.
+
+## Solution 1: Using useRef
+
+Instead of using useState, which triggers re-renders, we can use useRef to tie a reference to each input:
+
+```jsx
+const LoginForm = () => {
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle login
+    console.log(emailRef.current.value, passwordRef.current.value);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="email" ref={emailRef} />
+      <input type="password" ref={passwordRef} />
+      <button type="submit">Login</button>
+    </form>
+  );
+};
+```
+
+## Solution 2: Using FormData API
+
+We might not even need to use useRef. If our form is encapsulated within a form element, we can simply use the FormData API:
+
+```jsx
+const LoginForm = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    // Handle login
+    console.log({
+      email: formData.get("email"),
+      password: formData.get("password"),
+    });
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="email" name="email" />
+      <input type="password" name="password" />
+      <button type="submit">Login</button>
+    </form>
+  );
+};
+```
+
+## When Should You Still Use useState?
+
+While the above solutions are great for performance, there are still valid use cases for useState in forms:
+
+1. When you need real-time validation
+2. When you need to show immediate feedback based on input
+3. When the input value affects other parts of the UI
+4. When building controlled components that need to sync with external state
+
+## Performance Impact
+
+Let's look at the difference in re-renders for a form with 5 inputs:
+
+| Approach | Re-renders per keystroke | Re-renders for 100 characters |
+| -------- | ------------------------ | ----------------------------- |
+| useState | 5                        | 500                           |
+| useRef   | 0                        | 0                             |
+| FormData | 0                        | 0                             |
+
+## Conclusion
+
+While useState is a powerful tool in React's arsenal, it's important to choose the right tool for the job. For many forms, especially those that don't require real-time validation or immediate feedback, using useRef or the Form Data API can lead to better performance and cleaner code.
+
+Next time you're building a form, ask yourself:
+
+- Do I really need to track this value on every keystroke?
+- Could I wait until form submission to access these values?
+- Am I causing unnecessary re-renders?
+
+The answers to these questions will guide you to the most appropriate solution for your use case.
+
+I hope you found this tip useful. Feel free to comment, share your experiences, or add to this discussion. I look forward to sharing more insights on how to develop more performant applications.
