@@ -1,0 +1,174 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: 10 VS Code Extensions That Will Supercharge Your Development
+date: 2024-10-28
+description: Discover powerful VS Code extensions that will boost your productivity and make coding more enjoyable
+tags: ["VS Code", "Tools", "Productivity", "Development"]
+---
+
+# 10 VS Code Extensions That Will Supercharge Your Development
+
+Time is precious, especially in the fast-paced world of software development. Every second counts, and making the most of each moment can make a huge difference in our productivity. That's why today I'm sharing **10 amazing Visual Studio Code (VS Code) extensions that will help you code faster and more efficiently**.
+
+Want to see these extensions in action? Check out my video demonstration where I show how each extension works! 🔥
+
+## 1. JSON to TS
+
+How many precious minutes have you spent manually creating TypeScript interfaces to define JSON object types? With JSON to TS, this task becomes quick and simple. Just select the object, run the command, and your interfaces are generated automatically!
+
+Example usage:
+
+```typescript
+// From this JSON
+{
+  "name": "John Doe",
+  "age": 30,
+  "addresses": [
+    {
+      "street": "123 Main St",
+      "city": "Boston"
+    }
+  ]
+}
+
+// To this TypeScript interface automatically!
+interface Address {
+  street: string;
+  city: string;
+}
+
+interface User {
+  name: string;
+  age: number;
+  addresses: Address[];
+}
+```
+
+## 2. VSCode Random
+
+VSCode Random lets you generate random data right in VS Code. No more switching to external tools! With just a few clicks, you can generate various types of data automatically:
+
+- Names
+- Emails
+- Phone numbers
+- Addresses
+- UUIDs
+- And much more!
+
+## 3. Intellicode
+
+Intellicode is your AI-powered development assistant that suggests functions and methods based on your code context. These recommendations are made by analyzing thousands of open-source contributions on GitHub, making it easier to find the most relevant options.
+
+Key features:
+
+- Smart code completion
+- Context-aware suggestions
+- Framework-specific recommendations
+- Learning from your coding patterns
+
+## 4. Tabnine
+
+Tabnine is another AI assistant that takes development speed to the next level. With features like:
+
+- AI-powered autocompletion
+- Test generation
+- Code explanations
+- Full-line and full-function completion
+- Multi-language support
+
+## 5. Codeium
+
+Similar to Tabnine, Codeium is an AI toolkit that accelerates development. Key features include:
+
+- Natural language to code generation
+- Smart refactoring suggestions
+- Code explanations
+- Context-aware completions
+- Free for individual developers!
+
+## 6. Prettier
+
+Prettier is a code formatting tool that automates the process of maintaining consistent style across your project. Configuration example:
+
+```json
+// .prettierrc
+{
+  "semi": true,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "printWidth": 80,
+  "tabWidth": 2,
+  "endOfLine": "auto"
+}
+```
+
+## 7. Markdown Preview Enhanced
+
+If you work with Markdown files (like me writing this blog post!), Markdown Preview Enhanced is indispensable. Features include:
+
+- Real-time preview
+- Multiple export formats
+- Custom CSS
+- Math equations
+- Diagrams and charts
+
+## 8. Bookmark
+
+Bookmark allows you to add reminders in your code. These bookmarks help track pending tasks and make it easy to return to specific parts of your code. Usage:
+
+- `Ctrl + Alt + K`: Create/remove bookmark
+- `Ctrl + Alt + L`: Jump to next bookmark
+- `Ctrl + Alt + J`: Jump to previous bookmark
+
+## 9. Code Spell Checker
+
+Code Spell Checker helps catch spelling mistakes as you type. It supports:
+
+- Multiple programming languages
+- Custom dictionaries
+- Camel case splitting
+- Workspace-specific settings
+
+Example configuration:
+
+```json
+{
+  "cSpell.words": ["tailwindcss", "nextjs", "spotify"],
+  "cSpell.language": "en,pt"
+}
+```
+
+## 10. Snippets
+
+Snippets are reusable code blocks that save time and reduce typing errors. Here's a React component snippet example:
+
+```json
+{
+  "React Functional Component": {
+    "prefix": "rfc",
+    "body": [
+      "interface ${1:${TM_FILENAME_BASE}}Props {",
+      "  $2",
+      "}",
+      "",
+      "export function ${1:${TM_FILENAME_BASE}}({ $3 }: ${1:${TM_FILENAME_BASE}}Props) {",
+      "  return (",
+      "    <div>",
+      "      $4",
+      "    </div>",
+      "  )",
+      "}"
+    ]
+  }
+}
+```
+
+## Conclusion
+
+These 10 VS Code extensions are just a few of the many tools available to increase your productivity as a developer. Try them out and discover how they can transform your workflow and make development more efficient and enjoyable.
+
+Do you use any other VS Code extensions? Drop them in the comments! Let's help each other and share extensions to make our daily coding lives easier! 🔥
+
+Until next time! 👋
+
+PS: Don't forget to hit ⭐️ if you found this useful!
