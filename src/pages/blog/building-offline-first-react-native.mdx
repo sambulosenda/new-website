@@ -1,0 +1,360 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: Building Offline First Apps in React Native - A Complete Guide
+date: 2024-10-27
+description: Learn how to build robust React Native apps that work seamlessly without internet connection
+tags: ["React Native", "Offline First", "Mobile Development", "Performance"]
+---
+
+Ever lost your network connection while using an app and got frustrated when nothing worked? That's exactly what we want to prevent! Let's dive into building React Native apps that work seamlessly, with or without internet. 🚀
+
+## Why Offline First Matters?
+
+In an ideal world, we'd always have perfect internet connectivity. But reality is different:
+
+- Users in areas with poor network coverage
+- Subway commuters losing signal
+- Battery-saving mode with data turned off
+- Travel mode with airplane mode on
+
+Building for offline first isn't just nice to have—it's essential for a great user experience.
+
+## Let's Build an Offline-Ready App
+
+I'll show you practical implementations for each key strategy. Let's dive in!
+
+### 1. Local Data Storage
+
+Here's how to implement local storage using different solutions:
+
+```typescript
+// Using AsyncStorage
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const TodoStorage = {
+  async saveItem(todo: Todo) {
+    try {
+      await AsyncStorage.setItem(`todo-${todo.id}`, JSON.stringify(todo));
+    } catch (error) {
+      console.error("Error saving todo:", error);
+    }
+  },
+
+  async getItem(id: string) {
+    try {
+      const item = await AsyncStorage.getItem(`todo-${id}`);
+      return item ? JSON.parse(item) : null;
+    } catch (error) {
+      console.error("Error getting todo:", error);
+      return null;
+    }
+  },
+};
+
+// Using WatermelonDB
+import { Model } from "@nozbe/watermelondb";
+import { field, date, readonly } from "@nozbe/watermelondb/decorators";
+
+class Todo extends Model {
+  static table = "todos";
+
+  @field("title") title;
+  @field("completed") completed;
+  @date("created_at") createdAt;
+  @readonly @date("updated_at") updatedAt;
+}
+```
+
+### 2. Smart Data Synchronization
+
+Here's a practical implementation of offline sync:
+
+```typescript
+import NetInfo from "@react-native-community/netinfo";
+
+class SyncService {
+  private syncQueue: Array<() => Promise<void>> = [];
+  private isSyncing = false;
+
+  constructor() {
+    // Listen for network changes
+    NetInfo.addEventListener((state) => {
+      if (state.isConnected && !this.isSyncing) {
+        this.processSyncQueue();
+      }
+    });
+  }
+
+  addToSyncQueue(action: () => Promise<void>) {
+    this.syncQueue.push(action);
+    this.processSyncQueue();
+  }
+
+  private async processSyncQueue() {
+    if (this.isSyncing || this.syncQueue.length === 0) return;
+
+    const networkState = await NetInfo.fetch();
+    if (!networkState.isConnected) return;
+
+    this.isSyncing = true;
+
+    try {
+      while (this.syncQueue.length > 0) {
+        const action = this.syncQueue.shift();
+        if (action) {
+          await action();
+        }
+      }
+    } finally {
+      this.isSyncing = false;
+    }
+  }
+}
+
+// Usage example:
+const syncService = new SyncService();
+
+function createTodo(todo: Todo) {
+  // Save locally first
+  await TodoStorage.saveItem(todo);
+
+  // Queue sync with server
+  syncService.addToSyncQueue(async () => {
+    await api.todos.create(todo);
+  });
+}
+```
+
+### 3. API Response Caching
+
+Here's how to implement API caching:
+
+```typescript
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { persistCache } from "apollo3-cache-persist";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const cache = new InMemoryCache();
+
+// Setup persistent cache
+await persistCache({
+  cache,
+  storage: AsyncStorage,
+});
+
+const client = new ApolloClient({
+  cache,
+  link: apolloLink,
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: "cache-and-network",
+      nextFetchPolicy: "cache-first",
+    },
+  },
+});
+
+// For REST APIs with Axios
+import axios from "axios";
+import { setupCache } from "axios-cache-adapter";
+
+const cache = setupCache({
+  maxAge: 15 * 60 * 1000, // Cache for 15 minutes
+  exclude: { query: false },
+  storage: AsyncStorage,
+});
+
+const api = axios.create({
+  adapter: cache.adapter,
+});
+```
+
+### 4. User Experience Components
+
+Let's create some components for handling offline states:
+
+```typescript
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import NetInfo from "@react-native-community/netinfo";
+
+export function OfflineNotice() {
+  const [isOffline, setIsOffline] = React.useState(false);
+
+  React.useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setIsOffline(!state.isConnected);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  if (!isOffline) return null;
+
+  return (
+    <View style={styles.offlineContainer}>
+      <Text style={styles.offlineText}>No Internet Connection</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  offlineContainer: {
+    backgroundColor: "#b52424",
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    width: "100%",
+    position: "absolute",
+    top: 0,
+  },
+  offlineText: {
+    color: "#fff",
+  },
+});
+
+// Optimistic UI updates
+function TodoList() {
+  const [todos, setTodos] = React.useState([]);
+
+  const addTodo = async (newTodo) => {
+    // Optimistically update UI
+    setTodos((prev) => [...prev, newTodo]);
+
+    try {
+      await api.todos.create(newTodo);
+    } catch (error) {
+      // Revert on error
+      setTodos((prev) => prev.filter((todo) => todo.id !== newTodo.id));
+      Alert.alert("Error", "Failed to create todo");
+    }
+  };
+
+  return (
+    <View>
+      <OfflineNotice />
+      {/* Todo list rendering */}
+    </View>
+  );
+}
+```
+
+### 5. Background Sync Implementation
+
+Here's how to implement background sync:
+
+```typescript
+import BackgroundFetch from "react-native-background-fetch";
+
+class BackgroundSync {
+  static async configure() {
+    try {
+      await BackgroundFetch.configure(
+        {
+          minimumFetchInterval: 15, // minutes
+          stopOnTerminate: false,
+          enableHeadless: true,
+          startOnBoot: true,
+        },
+        async (taskId) => {
+          // Sync your data here
+          await syncService.processSyncQueue();
+          BackgroundFetch.finish(taskId);
+        }
+      );
+    } catch (error) {
+      console.error("Background fetch setup failed:", error);
+    }
+  }
+}
+
+// Usage
+BackgroundSync.configure();
+```
+
+## Best Practices
+
+1. **Always Save Locally First**
+
+```typescript
+async function saveData(data) {
+  // Save to local storage first
+  await localStorage.save(data);
+
+  // Then try to sync with server
+  try {
+    await api.sync(data);
+  } catch (error) {
+    // Queue for later sync
+    syncService.addToSyncQueue(() => api.sync(data));
+  }
+}
+```
+
+2. **Handle Conflicts Gracefully**
+
+```typescript
+function resolveConflict(localData, serverData) {
+  // Timestamp-based resolution
+  return localData.updatedAt > serverData.updatedAt ? localData : serverData;
+}
+```
+
+3. **Implement Retry Logic**
+
+```typescript
+async function withRetry(fn, maxAttempts = 3) {
+  let attempts = 0;
+  while (attempts < maxAttempts) {
+    try {
+      return await fn();
+    } catch (error) {
+      attempts++;
+      if (attempts === maxAttempts) throw error;
+      await new Promise((r) => setTimeout(r, 1000 * attempts));
+    }
+  }
+}
+```
+
+## Testing Offline Functionality
+
+Here's a simple test setup:
+
+```typescript
+import { render, act } from "@testing-library/react-native";
+import NetInfo from "@react-native-community/netinfo";
+
+jest.mock("@react-native-community/netinfo", () => ({
+  addEventListener: jest.fn(),
+  fetch: jest.fn(),
+}));
+
+test("shows offline notice when disconnected", async () => {
+  NetInfo.fetch.mockResolvedValueOnce({ isConnected: false });
+
+  const { getByText } = render(<OfflineNotice />);
+
+  await act(async () => {
+    // Trigger offline state
+    const callback = NetInfo.addEventListener.mock.calls[0][0];
+    callback({ isConnected: false });
+  });
+
+  expect(getByText("No Internet Connection")).toBeTruthy();
+});
+```
+
+## Conclusion
+
+Building offline-first apps requires careful planning and implementation, but the improved user experience is worth the effort. Remember:
+
+- Always save locally first
+- Sync intelligently when online
+- Provide clear offline indicators
+- Handle conflicts gracefully
+- Test thoroughly in offline scenarios
+
+What offline challenges have you faced in your React Native apps? Share your experiences in the comments! 💬
+
+Happy coding! 🚀
