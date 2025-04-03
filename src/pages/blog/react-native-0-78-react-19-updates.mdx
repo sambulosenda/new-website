@@ -1,0 +1,81 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: Prevent the Keyboard from Covering React Native UI Components
+date: 2024-10-27
+description: Learn how to handle keyboard behavior gracefully in React Native apps
+tags: ["React Native", "UI", "Keyboard", "iOS"]
+---
+React Native 0.78 has just arrived, and it’s packed with powerful updates that will delight developers. From seamless integration with React 19 to enhanced performance optimizations, this release takes mobile development to the next level. Let’s dive into the most exciting changes!
+
+#React 19: The Star of the Show
+
+The headline feature of React Native 0.78 is its full support for React 19, unlocking modern APIs that make development smoother and more efficient. Here are some key additions:
+
+Actions: Streamlining Async Operations 🚀
+
+Actions are a new way to handle asynchronous transitions and data submissions with minimal boilerplate. They manage pending states, optimistic updates, and error handling automatically.
+
+useActionState: A Game-Changer for State Management 🎯
+
+This new hook simplifies async operations by returning an encapsulated action with its latest result and pending state. It’s a must-have for keeping your UI responsive.
+
+useOptimist: Optimistic UI Updates Made Easy ⚡
+
+No more complex workarounds! useOptimist helps show optimistic UI updates while waiting for async requests to complete, creating a seamless user experience.
+
+use(): New Data Fetching Paradigm 🔄
+
+React 19 introduces use(), an API that allows accessing promises and context during rendering. React will pause rendering until the resource resolves—no more unnecessary loading states!
+
+A Small Adjustment: ref Now Works Like Any Other Prop
+
+No more hassle with forwardRef—you can now use ref just like any regular prop. However, note that older APIs like PropTypes have been deprecated, requiring minor code adjustments.
+
+💡 Would you like a deep dive into React 19’s features? Let me know in the comments!
+
+React Compiler: Performance on Autopilot 🛠️
+
+React Native 0.78 introduces React Compiler, an automatic optimization tool that applies memoization at build time. If you’ve ever debated when to use useMemo or useCallback, this tool removes the guesswork.
+
+How to Enable It
+
+Install the compiler package.
+
+Add the Babel plugin.
+
+Verify via developer tools.
+
+I’m considering writing a step-by-step guide on this—stay tuned!
+
+A New Release Rhythm 📅
+
+Starting in 2025, React Native will shift to smaller, more frequent releases with fewer breaking changes. This means faster bug fixes and feature rollouts without the pain of major rewrites. A welcome change for developers!
+
+XML Icons on Android 🎨
+
+Android developers, rejoice! React Native 0.78 now supports native XML icons. Instead of bundling multiple image versions, you can now:
+
+Use vector icons across different screen sizes without losing quality.
+
+Reduce APK size by eliminating unnecessary image assets.
+
+Import XML icons directly like any other static resource.
+
+What’s Next for Expo Users? 🚀
+
+If you use Expo, React Native 0.78 support is coming via a Canary version of the SDK. Expect Expo SDK 53 to arrive soon with full compatibility for React Native 0.79.
+
+Wrapping Up 🎉
+
+React Native 0.78 brings a ton of exciting improvements:
+
+Full React 19 support with modern hooks like useOptimist and use().
+
+React Compiler automates memoization for better performance.
+
+A new release cycle with more frequent updates.
+
+Native XML icons on Android for sharper, lighter apps.
+
+Which feature are you most excited about? Drop your thoughts in the comments! If you found this breakdown helpful, consider sharing it with fellow developers. Thanks for reading, and I’ll catch you in the next one! 🚀
+
