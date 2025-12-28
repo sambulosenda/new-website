@@ -1,216 +1,97 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Twitter, Github, Linkedin } from 'lucide-react';
-
 
 const skills = [
-  "React Native",
-  "TypeScript",
-  "GraphQL",
-  "Redux",
-  "React Navigation",
-  "UI/UX Implementation",
-  "Performance Optimization",
-  "Team Leadership",
-  "API Integration",
-  "Testing & Debugging",
-  "Project Management",
-  "CI/CD",
+  "React Native", "TypeScript", "GraphQL", "Redux", "React Navigation",
+  "Performance Optimization", "CI/CD", "API Integration", "Testing"
 ];
 
 const experiences = [
   {
     title: "React Native Developer",
     company: "On Wellbeing",
-    type: "Full-time · Hybrid",
-    location: "Bolton, England, United Kingdom",
     period: "Jan 2023 - Present",
-    duration: "1 yr 10 mos",
-    achievements: [
-      "Managed project timelines, and team coordination, ensuring all milestones were met on schedule and within scope.",
-      "Collaborated closely with the design team to transform UI/UX designs into fully functional and visually appealing interfaces.",
-      "Successfully conducted rigorous testing and debugging to identify and resolve any issues, ensuring the app's stability and reliability.",
-    ],
-    technologies: ["React Native", "GraphQL", "UI/UX", "Project Management", "Testing"]
+    description: "Led mobile development, collaborated with design team, and ensured app stability through rigorous testing.",
+    technologies: ["React Native", "GraphQL", "MobX"]
   },
   {
     title: "Developer",
     company: "Whitbread",
-    type: "Full-time · Hybrid",
-    location: "Dunstable, England, United Kingdom",
     period: "Sep 2019 - Jan 2023",
-    duration: "3 yrs 5 mos",
-    achievements: [
-      "Developed and maintained multiple business-critical web applications serving 10,000+ daily users",
-      "Implemented responsive design patterns and cross-browser compatibility solutions",
-      "Optimised application performance through code refactoring and modern JavaScript practices",
-      "Collaborated with UX/UI teams to deliver pixel-perfect implementations of design specifications",
-      "Integrated third-party APIs and services to enhance application functionality"
-    ],
-    technologies: ["JavaScript", "Web Development", "Performance Optimization", "API Integration"]
+    description: "Developed and maintained business-critical web applications serving 10,000+ daily users.",
+    technologies: ["JavaScript", "React", "Node.js"]
   }
 ];
 
-const contactLinks = [
-  {
-    platform: "Twitter",
-    url: "https://twitter.com/sambulosenda",
-    username: "@sambulosenda",
-    icon: `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`,
-  },
-  {
-    platform: "GitHub",
-    url: "https://github.com/sambulosenda",
-    username: "sambulosenda",
-    icon: `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`,
-  },
-  {
-    platform: "LinkedIn",
-    url: "https://linkedin.com/in/sambulosenda",
-    username: "Sambulo Senda", 
-    icon: `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`,
-  }
+const socialLinks = [
+  { platform: 'GitHub', url: 'https://github.com/sambulosenda' },
+  { platform: 'LinkedIn', url: 'https://linkedin.com/in/sambulosenda' },
+  { platform: 'Twitter', url: 'https://twitter.com/sambulosenda' },
 ];
 ---
 
-<Layout title="About | Sambulo Senda">
-  <main class="min-h-screen pt-24 md:pt-32 pb-16 md:pb-24">
-    <div class="max-w-3xl mx-auto px-6 md:px-4">
-      <article class="space-y-16 md:space-y-20">
-        {/* Header Section */}
-        <header class="mb-8">
-          <h1 class="text-3xl md:text-4xl font-bold mb-6 md:mb-8">About Me</h1>
-          <div class="prose prose-lg dark:prose-invert max-w-none space-y-6">
-            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300">
-              I'm a React Native developer with 5+ years of experience building mobile and web applications. 
-              My focus is on creating intuitive, performant, and user-centric solutions.
-            </p>
-            
-            <p class="text-gray-600 dark:text-gray-300">
-              When I'm not coding, I enjoy writing about mobile development, contributing to open-source projects, 
-              and mentoring other developers. I'm passionate about sharing knowledge and helping others grow in their development journey.
-            </p>
-          </div>
-        </header>
+<Layout title="About — Sambulo Senda">
+  <main class="bg-white dark:bg-zinc-950 pt-32 pb-20">
+    <div class="max-w-3xl mx-auto px-6">
 
-        {/* Skills Section */}
-        <section>
-          <h2 class="text-2xl font-semibold mb-6 md:mb-8">Skills & Technologies</h2>
-          <div class="flex flex-wrap gap-2 md:gap-3">
-            {skills.map(skill => (
-              <span class="px-3 md:px-4 py-1.5 md:py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
-                {skill}
-              </span>
-            ))}
-          </div>
-        </section>
+      <!-- Header -->
+      <header class="mb-16">
+        <h1 class="text-3xl font-medium text-zinc-900 dark:text-white tracking-tight mb-6">About</h1>
+        <p class="text-lg text-zinc-500 leading-relaxed">
+          I'm a React Native developer with 5+ years of experience building mobile and web applications.
+          My focus is on creating intuitive, performant, and user-centric solutions.
+        </p>
+      </header>
 
-        {/* Experience Section */}
-        <section>
-          <h2 class="text-2xl font-semibold mb-6 md:mb-8">Experience</h2>
-          <div class="space-y-12">
-            {experiences.map(({ title, company, type, location, period, duration, achievements, technologies }) => (
-              <div class="relative">
-                <div class="border-l-2 border-gray-200 dark:border-gray-700 pl-6 py-2">
-                  <div class="absolute -left-2 top-3 w-4 h-4 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-                  <h3 class="text-xl font-medium mb-1">{title}</h3>
-                  <p class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-1">{company}</p>
-                  <div class="text-sm text-gray-600 dark:text-gray-400 space-y-1 mb-4">
-                    <p>{type}</p>
-                    <p>{period} · {duration}</p>
-                    <p>{location}</p>
-                  </div>
-                  <ul class="list-disc list-outside ml-4 space-y-2 text-gray-600 dark:text-gray-300 mb-4">
-                    {achievements.map(achievement => (
-                      <li>{achievement}</li>
-                    ))}
-                  </ul>
-                  <div class="flex flex-wrap gap-2">
-                    {technologies.map(tech => (
-                      <span class="text-xs px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Contact Section */}
-  <section>
-    <h2 class="text-2xl font-semibold mb-6 md:mb-8">Let's Connect</h2>
-    <div class="prose prose-lg dark:prose-invert max-w-none mb-6 md:mb-8">
-      <p class="text-gray-600 dark:text-gray-300">
-        I'm always interested in hearing about new projects and opportunities. 
-        Feel free to reach out through any of these platforms:
-      </p>
-    </div>
-    <div class="space-y-2 md:space-y-3">
-      {contactLinks.map(({ platform, url, username }) => (
-        <a 
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="block group"
-        >
-          <div class="flex items-center p-3 md:p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-            <div class="min-w-[100px] flex items-center gap-2">
-              {platform === "Twitter" && (
-                <svg class="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-              )}
-              {platform === "GitHub" && (
-                <svg class="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-                </svg>
-              )}
-              {platform === "LinkedIn" && (
-                <svg class="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-              )}
-              <span class="font-medium">{platform}:</span>
-            </div>
-            <span class="text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors">
-              {username}
+      <!-- Skills -->
+      <section class="mb-16">
+        <h2 class="text-lg font-medium text-zinc-900 dark:text-white mb-6">Skills</h2>
+        <div class="flex flex-wrap gap-2">
+          {skills.map(skill => (
+            <span class="px-3 py-1.5 bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-lg text-sm text-zinc-600 dark:text-zinc-400">
+              {skill}
             </span>
-          </div>
-        </a>
-      ))}
-    </div>
-  </section>
-      </article>
+          ))}
+        </div>
+      </section>
+
+      <!-- Experience -->
+      <section class="mb-16">
+        <h2 class="text-lg font-medium text-zinc-900 dark:text-white mb-6">Experience</h2>
+        <div class="space-y-8">
+          {experiences.map(({ title, company, period, description, technologies }) => (
+            <div class="border-l-2 border-zinc-200 dark:border-zinc-800 pl-6">
+              <h3 class="font-medium text-zinc-900 dark:text-white">{title}</h3>
+              <p class="text-zinc-500 text-sm mb-2">{company} · {period}</p>
+              <p class="text-zinc-600 dark:text-zinc-400 text-sm mb-3">{description}</p>
+              <div class="flex flex-wrap gap-2">
+                {technologies.map(tech => (
+                  <span class="text-xs px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-500 rounded">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section>
+        <h2 class="text-lg font-medium text-zinc-900 dark:text-white mb-6">Connect</h2>
+        <div class="flex gap-6">
+          {socialLinks.map(({ platform, url }) => (
+            <a
+              href={url}
+              target="_blank"
+              class="text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
+            >
+              {platform}
+            </a>
+          ))}
+        </div>
+      </section>
+
     </div>
   </main>
 </Layout>
-
-<style>
-  .prose {
-    max-width: 65ch;
-  }
-  
-  .prose a {
-    color: inherit;
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
-    transition: text-decoration-color 150ms ease;
-  }
-  
-  .prose a:hover {
-    text-decoration-color: currentColor;
-  }
-
-  @media (max-width: 640px) {
-    .prose {
-      font-size: 1rem;
-    }
-    
-    .prose p {
-      margin: 1.25em 0;
-    }
-  }
-</style>

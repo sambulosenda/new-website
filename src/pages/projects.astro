@@ -4,175 +4,83 @@ import Layout from '../layouts/Layout.astro';
 const projects = [
   {
     title: 'Wellbeing App',
-    description: 'A comprehensive mobile application focused on employee mental health and wellbeing tracking, featuring meditation sessions, mood tracking, and team analytics.',
-    tags: ['React Native', 'MobX', 'GraphQL', 'Node.js'],
-    link: '#',
+    description: 'Mobile app for employee mental health and wellbeing tracking.',
+    tags: ['React Native', 'MobX', 'GraphQL'],
     status: 'Live'
   },
   {
-    title: 'E-commerce Mobile App',
-    description: 'Feature-rich shopping app with real-time inventory, AR product preview, and seamless payment integration.',
-    tags: ['React Native', 'Redux', 'Firebase', 'Stripe'],
-    link: '#',
+    title: 'E-commerce App',
+    description: 'Shopping app with real-time inventory and payment integration.',
+    tags: ['React Native', 'Redux', 'Stripe'],
     status: 'Live'
   },
   {
     title: 'Fitness Tracker',
-    description: 'Personal fitness tracking app with workout plans, progress monitoring, and social features.',
-    tags: ['React Native', 'TypeScript', 'Redux Toolkit', 'REST API'],
-    link: '#',
+    description: 'Personal fitness tracking with workout plans and progress monitoring.',
+    tags: ['React Native', 'TypeScript', 'Redux Toolkit'],
     status: 'In Development'
   },
   {
-    title: 'Social Media Dashboard',
-    description: 'Analytics dashboard for social media managers with real-time metrics and scheduling capabilities.',
-    tags: ['React Native', 'Context API', 'Chart.js', 'Firebase'],
-    link: '#',
+    title: 'Social Dashboard',
+    description: 'Analytics dashboard for social media managers.',
+    tags: ['React Native', 'Chart.js', 'Firebase'],
     status: 'Live'
   },
   {
-    title: 'Travel Planning App',
-    description: 'Collaborative travel planning app with itinerary management and local recommendations.',
-    tags: ['React Native', 'MongoDB', 'Express', 'Socket.io'],
-    link: '#',
+    title: 'Travel Planner',
+    description: 'Collaborative travel planning with itinerary management.',
+    tags: ['React Native', 'MongoDB', 'Socket.io'],
     status: 'Beta'
   },
   {
-    title: 'Food Delivery Platform',
-    description: 'On-demand food delivery app with real-time order tracking and driver management.',
-    tags: ['React Native', 'Redux Saga', 'Google Maps API', 'Node.js'],
-    link: '#',
+    title: 'Food Delivery',
+    description: 'On-demand food delivery with real-time order tracking.',
+    tags: ['React Native', 'Redux Saga', 'Google Maps'],
     status: 'Live'
   }
 ];
 ---
 
-<Layout title="Projects | Sambulo Senda">
-  <main class="min-h-screen pt-32 pb-24"> {/* Adjusted top padding */}
-    <div class="max-w-6xl mx-auto px-4">
-      <header class="mb-16"> {/* Increased bottom margin */}
-        <h1 class="text-4xl font-bold mb-6">Projects</h1> {/* Increased margin */}
-        <p class="text-gray-600 dark:text-gray-300 text-lg max-w-2xl">
-          A collection of mobile applications I've built. Each project represents unique challenges
-          and solutions in the mobile development space.
+<Layout title="Projects — Sambulo Senda">
+  <main class="bg-white dark:bg-zinc-950 pt-32 pb-20">
+    <div class="max-w-5xl mx-auto px-6">
+
+      <header class="mb-16">
+        <h1 class="text-3xl font-medium text-zinc-900 dark:text-white tracking-tight mb-4">Projects</h1>
+        <p class="text-zinc-500 max-w-xl">
+          Mobile applications I've built, each representing unique challenges in mobile development.
         </p>
       </header>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"> {/* Increased grid gap */}
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map(project => (
-          <article class="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-300 hover:-translate-y-1"> {/* Added hover translation */}
-            <div class="p-8"> {/* Increased padding */}
-              <div class="flex justify-between items-start mb-6"> {/* Increased margin */}
-                <h3 class="text-xl font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {project.title}
-                </h3>
-                <span class={`text-xs px-3 py-1.5 rounded-full ${
-                  project.status === 'Live' ? 'bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-400' :
-                  project.status === 'Beta' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-400' :
-                  'bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-400'
-                }`}>
-                  {project.status}
+          <article class="group p-6 border border-zinc-100 dark:border-zinc-800 rounded-xl hover:border-zinc-200 dark:hover:border-zinc-700 transition-colors">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="font-medium text-zinc-900 dark:text-white group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors">
+                {project.title}
+              </h3>
+              <span class={`text-xs px-2 py-1 rounded ${
+                project.status === 'Live' ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400' :
+                project.status === 'Beta' ? 'bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400' :
+                'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400'
+              }`}>
+                {project.status}
+              </span>
+            </div>
+
+            <p class="text-sm text-zinc-500 mb-4">{project.description}</p>
+
+            <div class="flex flex-wrap gap-2">
+              {project.tags.map(tag => (
+                <span class="text-xs px-2 py-1 bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded text-zinc-500">
+                  {tag}
                 </span>
-              </div>
-              
-              <p class="text-gray-600 dark:text-gray-300 mb-8 line-clamp-3"> {/* Increased margin */}
-                {project.description}
-              </p>
-
-              <div class="space-y-6"> {/* Increased spacing */}
-                <div class="flex flex-wrap gap-3"> {/* Increased gap */}
-                  {project.tags.map(tag => (
-                    <span class="text-sm px-4 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <a 
-                  href={project.link}
-                  class="inline-flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors group-hover:gap-2"
-                >
-                  View Project Details
-                  <svg 
-                    class="w-5 h-5 ml-1.5 transition-all group-hover:translate-x-0.5" 
-                    viewBox="0 0 20 20" 
-                    fill="currentColor"
-                  >
-                    <path 
-                      fill-rule="evenodd" 
-                      d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" 
-                      clip-rule="evenodd" 
-                    />
-                  </svg>
-                </a>
-              </div>
+              ))}
             </div>
           </article>
         ))}
       </div>
+
     </div>
   </main>
 </Layout>
-
-<style>
-  article {
-    position: relative;
-    isolation: isolate;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    transition: all 0.3s ease;
-  }
-
-  article:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  }
-
-  article::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(
-      1000px circle at var(--mouse-x, 0) var(--mouse-y, 0),
-      rgba(255, 255, 255, 0.08),
-      transparent 40%
-    );
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  article:hover::before {
-    opacity: 1;
-  }
-
-  .dark article {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  .dark article:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  }
-
-  @media (max-width: 768px) {
-    article::before {
-      display: none;
-    }
-  }
-</style>
-
-<script>
-  document.addEventListener('astro:page-load', () => {
-    const articles = document.querySelectorAll('article');
-    
-    articles.forEach(article => {
-      article.addEventListener('mousemove', (e) => {
-        const rect = article.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        article.style.setProperty('--mouse-x', `${x}px`);
-        article.style.setProperty('--mouse-y', `${y}px`);
-      });
-    });
-  });
-</script>
