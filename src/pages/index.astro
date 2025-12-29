@@ -19,9 +19,23 @@ const socialLinks = [
   },
 ];
 
-const technologies = ['React Native', 'TypeScript', 'Redux', 'GraphQL', 'Node.js', 'CI/CD'];
+const technologies = [
+  { name: 'React Native', primary: true },
+  { name: 'TypeScript', primary: true },
+  { name: 'Redux', primary: false },
+  { name: 'GraphQL', primary: false },
+  { name: 'Node.js', primary: false },
+  { name: 'CI/CD', primary: false },
+];
 
 const apps = [
+  {
+    title: 'Softmind',
+    description: 'AI-powered mental wellness app with mood tracking, guided check-ins, journaling, and personalized programs.',
+    tags: ['React Native', 'AI', 'Personal Project'],
+    screenshot: '/softmind.jpeg',
+    url: 'https://getsoftmind.com',
+  },
   {
     title: 'Andersen EV',
     description: 'Migrated EV charging app to React Native New Architecture, improving performance by 30%.',
@@ -35,17 +49,17 @@ const apps = [
     screenshot: '/aspire.png',
   },
   {
-    title: 'Onwellbeing',
-    description: 'React Native mobile apps serving 10,000+ daily users across hospitality brands.',
-    tags: ['React Native', 'React', 'Enterprise'],
-    screenshot: '/onwellbeing.png',
-  },
-  {
     title: 'Report Focus News',
     description: 'Offline-first architecture with biometric auth and GDPR compliance.',
     tags: ['Consulting', 'AWS', 'Security'],
     screenshot: '/report-focus-news.png',
   },
+];
+
+const stats = [
+  { value: '5+', label: 'Years' },
+  { value: '20+', label: 'Apps' },
+  { value: '50k+', label: 'Users' },
 ];
 ---
 
@@ -53,55 +67,62 @@ const apps = [
   <main class="bg-white dark:bg-zinc-950">
 
     <!-- Hero -->
-    <section class="pt-32 pb-20 lg:pt-44 lg:pb-28">
-      <div class="max-w-5xl mx-auto px-6">
-        <div class="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+    <section class="min-h-screen flex items-center pt-20 pb-16 lg:pt-0 lg:pb-0">
+      <div class="max-w-6xl mx-auto px-6 w-full">
+        <div class="grid lg:grid-cols-5 gap-12 lg:gap-16 items-center">
 
-          <div class="space-y-8">
-            <p class="text-sm tracking-widest text-zinc-400 uppercase">React Native Developer</p>
-
-            <h1 class="text-4xl lg:text-5xl font-medium text-zinc-900 dark:text-white leading-tight tracking-tight">
-              I build apps<br/>
-              <span class="text-zinc-400">people love to use.</span>
-            </h1>
-
-            <p class="text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
-              I'm Sambulo — I help teams build beautiful, high-performance mobile experiences. Featured on the App Store.
+          <!-- Content - takes more space -->
+          <div class="lg:col-span-3 space-y-6">
+            <!-- Eyebrow -->
+            <p class="text-sm tracking-widest text-zinc-400 uppercase animate-fade-in">
+              React Native Developer
             </p>
 
-            <div class="flex items-center gap-6 text-sm text-zinc-500">
-              <span class="flex items-center gap-2">
-                <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
-                Available
-              </span>
-              <span class="flex items-center gap-2">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                Featured
-              </span>
+            <!-- Main headline - larger, more impactful -->
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-medium text-zinc-900 dark:text-white leading-[1.1] tracking-tight animate-fade-in-up delay-1">
+              I build apps<br/>
+              <span class="text-zinc-300 dark:text-zinc-600">people love.</span>
+            </h1>
+
+            <!-- Subheadline -->
+            <p class="text-xl text-zinc-500 leading-relaxed max-w-lg animate-fade-in-up delay-2">
+              Helping teams create beautiful, high-performance mobile experiences with React Native.
+            </p>
+
+            <!-- Stats row -->
+            <div class="flex gap-8 py-4 animate-fade-in-up delay-3">
+              {stats.map((stat) => (
+                <div>
+                  <div class="text-3xl font-semibold text-zinc-900 dark:text-white">{stat.value}</div>
+                  <div class="text-sm text-zinc-400">{stat.label}</div>
+                </div>
+              ))}
             </div>
 
-            <div class="flex gap-3 pt-2">
+            <!-- CTAs -->
+            <div class="flex flex-wrap gap-4 animate-fade-in-up delay-4">
               <a
                 href="https://cal.com/sambulosenda"
                 target="_blank"
-                class="px-5 py-2.5 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-lg text-sm font-medium hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-colors"
+                class="px-6 py-3 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-full text-sm font-medium hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-all hover:scale-105"
               >
                 Book a call
               </a>
               <a
                 href="#work"
-                class="px-5 py-2.5 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-lg text-sm font-medium hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                class="px-6 py-3 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-full text-sm font-medium hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all"
               >
                 View work
               </a>
             </div>
 
-            <div class="flex gap-4 pt-4">
+            <!-- Social -->
+            <div class="flex items-center gap-5 pt-2 animate-fade-in-up delay-5">
               {socialLinks.map(({ url, platform, icon }) => (
                 <a
                   href={url}
                   target="_blank"
-                  class="text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                  class="text-zinc-300 hover:text-zinc-900 dark:text-zinc-600 dark:hover:text-white transition-colors"
                   aria-label={platform}
                 >
                   <Fragment set:html={icon} />
@@ -110,24 +131,39 @@ const apps = [
             </div>
           </div>
 
-          <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900">
-            <img
-              src="/profile.jpg"
-              alt="Sambulo Senda"
-              class="w-full h-full object-cover"
-            />
+          <!-- Profile Image - smaller, balanced -->
+          <div class="lg:col-span-2 animate-fade-in-up delay-3">
+            <div class="relative">
+              <!-- Status badge -->
+              <div class="absolute -top-3 -right-3 z-10 flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-full shadow-lg animate-fade-in delay-6">
+                <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                <span class="text-xs font-medium text-zinc-600 dark:text-zinc-400">Available</span>
+              </div>
+
+              <div class="aspect-[3/4] rounded-3xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 ring-1 ring-zinc-100 dark:ring-zinc-800">
+                <img
+                  src="/profile.jpg"
+                  alt="Sambulo Senda"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Tech -->
-    <section class="py-12 border-y border-zinc-100 dark:border-zinc-900">
-      <div class="max-w-5xl mx-auto px-6">
-        <div class="flex flex-wrap justify-center gap-2">
+    <section class="py-16 border-y border-zinc-100 dark:border-zinc-900">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex flex-wrap justify-center gap-3">
           {technologies.map((tech) => (
-            <span class="px-4 py-2 bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-lg text-sm text-zinc-500">
-              {tech}
+            <span class={`px-4 py-2 rounded-full text-sm transition-all hover:scale-105 ${
+              tech.primary
+                ? 'bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-medium'
+                : 'bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 text-zinc-500'
+            }`}>
+              {tech.name}
             </span>
           ))}
         </div>
@@ -136,69 +172,224 @@ const apps = [
 
     <!-- Work -->
     <section id="work" class="py-24 lg:py-32">
-      <div class="max-w-5xl mx-auto px-6">
-        <div class="mb-16">
-          <h2 class="text-3xl font-medium text-zinc-900 dark:text-white tracking-tight">Selected Work</h2>
-          <p class="mt-3 text-zinc-500">Apps designed and developed from concept to launch.</p>
+      <div class="max-w-6xl mx-auto px-6">
+        <!-- Section header -->
+        <div class="max-w-2xl mb-16">
+          <p class="text-sm tracking-widest text-zinc-400 uppercase mb-4">Portfolio</p>
+          <h2 class="text-4xl lg:text-5xl font-medium text-zinc-900 dark:text-white tracking-tight mb-4">
+            Selected Work
+          </h2>
+          <p class="text-lg text-zinc-500">
+            Apps designed and developed from concept to App Store launch.
+          </p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-10">
-          {apps.map((app) => (
-            <article class="group">
-              <div class="aspect-[4/3] rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-4">
+        <!-- Bento Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 md:grid-rows-[1fr_1fr] gap-5">
+          <!-- Featured (large) -->
+          <article class="group md:col-span-2 md:row-span-2 animate-on-scroll" style="--delay: 0ms">
+            <div class="relative h-full rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 ring-1 ring-zinc-100 dark:ring-zinc-800">
+              <img
+                src={apps[0].screenshot}
+                alt={apps[0].title}
+                class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/80 via-zinc-900/20 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
+                <div class="flex gap-2 text-xs text-zinc-300 mb-2">
+                  {apps[0].tags.map((tag, i) => (
+                    <span>{tag}{i < apps[0].tags.length - 1 ? ' ·' : ''}</span>
+                  ))}
+                </div>
+                <h3 class="text-2xl lg:text-3xl font-medium text-white mb-2">{apps[0].title}</h3>
+                <p class="text-zinc-300 text-sm lg:text-base max-w-md">{apps[0].description}</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2 (small) -->
+          <article class="group h-full flex flex-col animate-on-scroll" style="--delay: 100ms">
+            <div class="flex-1 rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-4 ring-1 ring-zinc-100 dark:ring-zinc-800">
+              <img
+                src={apps[1].screenshot}
+                alt={apps[1].title}
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            <div class="flex gap-2 text-xs text-zinc-400 mb-1">
+              {apps[1].tags.map((tag, i) => (
+                <span>{tag}{i < apps[1].tags.length - 1 ? ' ·' : ''}</span>
+              ))}
+            </div>
+            <h3 class="text-lg font-medium text-zinc-900 dark:text-white">{apps[1].title}</h3>
+            <p class="text-sm text-zinc-500 mt-1 line-clamp-2">{apps[1].description}</p>
+          </article>
+
+          <!-- Card 3 (small) -->
+          <article class="group h-full flex flex-col animate-on-scroll" style="--delay: 200ms">
+            <div class="flex-1 rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 mb-4 ring-1 ring-zinc-100 dark:ring-zinc-800">
+              <img
+                src={apps[2].screenshot}
+                alt={apps[2].title}
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            <div class="flex gap-2 text-xs text-zinc-400 mb-1">
+              {apps[2].tags.map((tag, i) => (
+                <span>{tag}{i < apps[2].tags.length - 1 ? ' ·' : ''}</span>
+              ))}
+            </div>
+            <h3 class="text-lg font-medium text-zinc-900 dark:text-white">{apps[2].title}</h3>
+            <p class="text-sm text-zinc-500 mt-1 line-clamp-2">{apps[2].description}</p>
+          </article>
+
+          <!-- Card 4 (full width) -->
+          <article class="group md:col-span-3 animate-on-scroll" style="--delay: 300ms">
+            <div class="flex flex-col md:flex-row gap-6 p-6 rounded-2xl bg-zinc-50 dark:bg-zinc-900 ring-1 ring-zinc-100 dark:ring-zinc-800">
+              <div class="md:w-1/3 aspect-[4/3] md:aspect-auto rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800 flex-shrink-0">
                 <img
-                  src={app.screenshot}
-                  alt={app.title}
-                  class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                  src={apps[3].screenshot}
+                  alt={apps[3].title}
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
                 />
               </div>
-              <div class="flex gap-2 text-xs text-zinc-400 mb-2">
-                {app.tags.map((tag, i) => (
-                  <span>{tag}{i < app.tags.length - 1 ? ' ·' : ''}</span>
-                ))}
+              <div class="flex flex-col justify-center">
+                <div class="flex gap-2 text-xs text-zinc-400 mb-2">
+                  {apps[3].tags.map((tag, i) => (
+                    <span>{tag}{i < apps[3].tags.length - 1 ? ' ·' : ''}</span>
+                  ))}
+                </div>
+                <h3 class="text-xl font-medium text-zinc-900 dark:text-white mb-2">{apps[3].title}</h3>
+                <p class="text-zinc-500">{apps[3].description}</p>
               </div>
-              <h3 class="text-lg font-medium text-zinc-900 dark:text-white">{app.title}</h3>
-              <p class="text-sm text-zinc-500 mt-1">{app.description}</p>
-            </article>
-          ))}
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- CTA -->
-    <section class="py-24 bg-zinc-950 dark:bg-zinc-900">
-      <div class="max-w-2xl mx-auto px-6 text-center">
-        <h2 class="text-3xl font-medium text-white tracking-tight mb-4">Let's work together</h2>
-        <p class="text-zinc-400 mb-8">Building something? I can help.</p>
-        <div class="flex gap-3 justify-center">
+    <section class="py-24 lg:py-32 bg-zinc-950">
+      <div class="max-w-3xl mx-auto px-6 text-center">
+        <p class="text-sm tracking-widest text-zinc-500 uppercase mb-6">Get in touch</p>
+        <h2 class="text-4xl lg:text-5xl font-medium text-white tracking-tight mb-6">
+          Let's build something<br/>great together
+        </h2>
+        <p class="text-lg text-zinc-400 mb-10 max-w-xl mx-auto">
+          Have a project in mind? I'd love to hear about it. Let's discuss how I can help bring your ideas to life.
+        </p>
+        <div class="flex flex-wrap gap-4 justify-center">
           <a
             href="https://cal.com/sambulosenda"
             target="_blank"
-            class="px-5 py-2.5 bg-white text-zinc-900 rounded-lg text-sm font-medium hover:bg-zinc-100 transition-colors"
+            class="px-8 py-4 bg-white text-zinc-900 rounded-full font-medium hover:bg-zinc-100 transition-all hover:scale-105"
           >
             Schedule a call
           </a>
           <a
             href="mailto:sambulosenda@gmail.com"
-            class="px-5 py-2.5 border border-zinc-700 text-zinc-300 rounded-lg text-sm font-medium hover:bg-zinc-800 transition-colors"
+            class="px-8 py-4 border border-zinc-700 text-zinc-300 rounded-full font-medium hover:bg-zinc-800 transition-all"
           >
-            Email me
+            Send an email
           </a>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-8 border-t border-zinc-100 dark:border-zinc-900">
-      <div class="max-w-5xl mx-auto px-6 flex justify-between items-center text-sm text-zinc-400">
-        <span>© {new Date().getFullYear()} Sambulo Senda</span>
-        <div class="flex gap-6">
-          {socialLinks.map(({ url, platform }) => (
-            <a href={url} target="_blank" class="hover:text-zinc-900 dark:hover:text-white transition-colors">{platform}</a>
-          ))}
+    <footer class="py-10 border-t border-zinc-100 dark:border-zinc-900">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-zinc-400">
+          <span>© {new Date().getFullYear()} Sambulo Senda</span>
+          <div class="flex gap-8">
+            {socialLinks.map(({ url, platform }) => (
+              <a href={url} target="_blank" class="hover:text-zinc-900 dark:hover:text-white transition-colors">
+                {platform}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>
   </main>
 </Layout>
+
+<style>
+  /* Animations */
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+
+  .delay-1 { animation-delay: 100ms; opacity: 0; }
+  .delay-2 { animation-delay: 200ms; opacity: 0; }
+  .delay-3 { animation-delay: 300ms; opacity: 0; }
+  .delay-4 { animation-delay: 400ms; opacity: 0; }
+  .delay-5 { animation-delay: 500ms; opacity: 0; }
+  .delay-6 { animation-delay: 600ms; opacity: 0; }
+
+  /* Scroll animations */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition-delay: var(--delay, 0ms);
+  }
+
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+  );
+
+  document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+    observer.observe(el);
+  });
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
