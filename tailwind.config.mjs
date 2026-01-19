@@ -5,13 +5,20 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+      },
+      colors: {
+        accent: {
+          DEFAULT: '#f59e0b',
+          dark: '#fbbf24',
+        }
       },
       typography: {
         DEFAULT: {
           css: {
-            maxWidth: '65ch',
+            maxWidth: '42.5rem',
             color: 'inherit',
+            lineHeight: '1.8',
             a: {
               color: 'inherit',
               textDecoration: 'none',

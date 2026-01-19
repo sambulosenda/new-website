@@ -1,44 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-const projects = [
-  {
-    title: 'Wellbeing App',
-    description: 'Mobile app for employee mental health and wellbeing tracking.',
-    tags: ['React Native', 'MobX', 'GraphQL'],
-    status: 'Live'
-  },
-  {
-    title: 'E-commerce App',
-    description: 'Shopping app with real-time inventory and payment integration.',
-    tags: ['React Native', 'Redux', 'Stripe'],
-    status: 'Live'
-  },
-  {
-    title: 'Fitness Tracker',
-    description: 'Personal fitness tracking with workout plans and progress monitoring.',
-    tags: ['React Native', 'TypeScript', 'Redux Toolkit'],
-    status: 'In Development'
-  },
-  {
-    title: 'Social Dashboard',
-    description: 'Analytics dashboard for social media managers.',
-    tags: ['React Native', 'Chart.js', 'Firebase'],
-    status: 'Live'
-  },
-  {
-    title: 'Travel Planner',
-    description: 'Collaborative travel planning with itinerary management.',
-    tags: ['React Native', 'MongoDB', 'Socket.io'],
-    status: 'Beta'
-  },
-  {
-    title: 'Food Delivery',
-    description: 'On-demand food delivery with real-time order tracking.',
-    tags: ['React Native', 'Redux Saga', 'Google Maps'],
-    status: 'Live'
-  }
-];
+import { projects } from '../data/projects';
 ---
 
 <Layout title="Projects — Sambulo Senda">
@@ -52,30 +14,44 @@ const projects = [
         </p>
       </header>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid md:grid-cols-2 gap-6">
         {projects.map(project => (
-          <article class="group p-6 border border-zinc-100 dark:border-zinc-800 rounded-xl hover:border-zinc-200 dark:hover:border-zinc-700 transition-colors">
-            <div class="flex justify-between items-start mb-4">
-              <h3 class="font-medium text-zinc-900 dark:text-white group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors">
-                {project.title}
-              </h3>
-              <span class={`text-xs px-2 py-1 rounded ${
-                project.status === 'Live' ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400' :
-                project.status === 'Beta' ? 'bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400' :
-                'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400'
-              }`}>
-                {project.status}
-              </span>
-            </div>
+          <article class="group border border-zinc-100 dark:border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-200 dark:hover:border-zinc-700 transition-colors">
+            {project.screenshot && (
+              <div class="aspect-[16/10] overflow-hidden bg-zinc-100 dark:bg-zinc-900">
+                <img
+                  src={project.screenshot}
+                  alt={project.title}
+                  class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+            )}
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-3">
+                <h3 class="font-medium text-zinc-900 dark:text-white group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors">
+                  {project.title}
+                </h3>
+                {project.status && (
+                  <span class={`text-xs px-2 py-1 rounded ${
+                    project.status === 'Live' ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400' :
+                    project.status === 'Beta' ? 'bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400' :
+                    'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400'
+                  }`}>
+                    {project.status}
+                  </span>
+                )}
+              </div>
 
-            <p class="text-sm text-zinc-500 mb-4">{project.description}</p>
+              <p class="text-sm text-zinc-500 mb-4">{project.description}</p>
 
-            <div class="flex flex-wrap gap-2">
-              {project.tags.map(tag => (
-                <span class="text-xs px-2 py-1 bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded text-zinc-500">
-                  {tag}
-                </span>
-              ))}
+              <div class="flex flex-wrap gap-2">
+                {project.tags.map(tag => (
+                  <span class="text-xs px-2 py-1 bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded text-zinc-500">
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
           </article>
         ))}

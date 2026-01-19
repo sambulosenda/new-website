@@ -28,6 +28,35 @@ const years = Object.keys(postsByYear).sort().reverse();
         </p>
       </header>
 
+      <!-- Featured latest post -->
+      {posts[0] && (
+        <article class="mb-12 p-6 -mx-6 rounded-2xl bg-zinc-50 dark:bg-zinc-900/50 group">
+          <a href={posts[0].url} class="block">
+            <span class="text-xs font-medium text-amber-600 dark:text-amber-400 mb-2 block">Latest</span>
+            <h3 class="text-xl font-medium text-zinc-900 dark:text-white group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors mb-2">
+              {posts[0].frontmatter.title}
+            </h3>
+            {posts[0].frontmatter.description && (
+              <p class="text-sm text-zinc-500 mb-3">
+                {posts[0].frontmatter.description}
+              </p>
+            )}
+            <div class="flex items-center gap-4 text-xs text-zinc-400">
+              <time datetime={posts[0].frontmatter.date}>
+                {new Date(posts[0].frontmatter.date).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric'
+                })}
+              </time>
+              {posts[0].frontmatter.readingTime && (
+                <span>{posts[0].frontmatter.readingTime}</span>
+              )}
+            </div>
+          </a>
+        </article>
+      )}
+
       <div class="space-y-12">
         {years.map(year => (
           <section>
