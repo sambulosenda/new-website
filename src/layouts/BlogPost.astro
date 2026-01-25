@@ -57,37 +57,37 @@ const jsonLd = {
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
   <!-- Reading progress bar -->
-  <div id="reading-progress" class="fixed top-0 left-0 h-1 bg-amber-500 z-50 transition-all duration-150" style="width: 0%"></div>
+  <div id="reading-progress" class="fixed top-0 left-0 h-0.5 bg-syntax-blue z-50 transition-all duration-150" style="width: 0%"></div>
 
-  <article class="bg-white dark:bg-zinc-950 min-h-screen">
+  <article class="bg-editor-bg min-h-screen">
 
     <!-- Header -->
-    <header class="pt-32 pb-12 border-b border-zinc-100 dark:border-zinc-900">
+    <header class="pt-32 pb-12 border-b border-editor-border">
       <div class="max-w-3xl mx-auto px-6">
 
         {frontmatter.tags && (
           <div class="flex flex-wrap gap-2 mb-6">
             {frontmatter.tags.map((tag: string) => (
-              <span class="text-xs px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-500 rounded">
+              <span class="font-mono text-xs px-2 py-1 bg-editor-surface border border-editor-border rounded text-gray-400">
                 {tag}
               </span>
             ))}
           </div>
         )}
 
-        <h1 class="text-3xl lg:text-4xl font-medium text-zinc-900 dark:text-white tracking-tight mb-4">
+        <h1 class="text-2xl lg:text-3xl font-semibold text-gray-100 mb-4">
           {frontmatter.title}
         </h1>
 
         {frontmatter.description && (
-          <p class="text-lg text-zinc-500 mb-6 max-w-2xl">
+          <p class="text-lg text-gray-400 mb-6 max-w-2xl">
             {frontmatter.description}
           </p>
         )}
 
-        <div class="flex items-center gap-4 text-sm text-zinc-400">
+        <div class="flex items-center gap-4 font-mono text-sm text-gray-500">
           <time datetime={frontmatter.date}>{formattedDate}</time>
-          <span>·</span>
+          <span class="text-editor-border">|</span>
           <span>{readingTime}</span>
         </div>
       </div>
@@ -100,21 +100,21 @@ const jsonLd = {
       </div>
 
       <!-- Footer -->
-      <footer class="mt-16 pt-8 border-t border-zinc-100 dark:border-zinc-900">
+      <footer class="mt-16 pt-8 border-t border-editor-border">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
-              <span class="text-sm font-medium text-zinc-600 dark:text-zinc-400">S</span>
+            <div class="w-10 h-10 rounded-lg bg-editor-surface border border-editor-border flex items-center justify-center font-mono text-sm text-syntax-blue">
+              S
             </div>
             <div>
-              <div class="text-sm font-medium text-zinc-900 dark:text-white">Sambulo Senda</div>
-              <div class="text-xs text-zinc-500">React Native Developer</div>
+              <div class="text-sm font-medium text-gray-100">Sambulo Senda</div>
+              <div class="font-mono text-xs text-gray-500">@sambulosenda</div>
             </div>
           </div>
 
           <div class="flex gap-2">
             <button
-              class="share-twitter p-2 rounded-lg text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              class="share-twitter p-2 rounded-lg text-gray-500 hover:text-syntax-blue hover:bg-editor-surface transition-colors"
               aria-label="Share on Twitter"
             >
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -122,7 +122,7 @@ const jsonLd = {
               </svg>
             </button>
             <button
-              class="share-linkedin p-2 rounded-lg text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              class="share-linkedin p-2 rounded-lg text-gray-500 hover:text-syntax-blue hover:bg-editor-surface transition-colors"
               aria-label="Share on LinkedIn"
             >
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -134,12 +134,12 @@ const jsonLd = {
 
         <a
           href="/writing"
-          class="inline-flex items-center gap-2 mt-8 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
+          class="group inline-flex items-center gap-2 mt-8 font-mono text-sm text-gray-500 hover:text-syntax-blue transition-colors"
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
           </svg>
-          Back to articles
+          cd ../blog
         </a>
       </footer>
     </div>
@@ -148,41 +148,29 @@ const jsonLd = {
 
 <style is:global>
   .prose {
-    max-width: 42.5rem; /* 680px */
-    color: #52525b; /* zinc-600 */
-  }
-
-  .dark .prose {
-    color: #a1a1aa; /* zinc-400 */
+    max-width: 42.5rem;
+    color: #8b949e;
   }
 
   .prose h2 {
     font-size: 1.5rem;
-    font-weight: 500;
+    font-weight: 600;
     margin-top: 2.5rem;
     margin-bottom: 1rem;
-    color: #18181b; /* zinc-900 */
-  }
-
-  .dark .prose h2 {
-    color: #fafafa; /* white */
+    color: #f6f8fa;
   }
 
   .prose h3 {
     font-size: 1.25rem;
-    font-weight: 500;
+    font-weight: 600;
     margin-top: 2rem;
     margin-bottom: 0.75rem;
-    color: #18181b;
-  }
-
-  .dark .prose h3 {
-    color: #fafafa;
+    color: #f6f8fa;
   }
 
   .prose p {
     margin: 1.25rem 0;
-    line-height: 1.8;
+    line-height: 1.75;
   }
 
   .prose ul, .prose ol {
@@ -195,79 +183,58 @@ const jsonLd = {
   }
 
   .prose a {
-    color: #18181b;
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-
-  .dark .prose a {
-    color: #fafafa;
+    color: #79c0ff;
+    text-decoration: none;
   }
 
   .prose a:hover {
-    color: #71717a; /* zinc-500 */
+    text-decoration: underline;
   }
 
   .prose pre {
-    background-color: #18181b; /* zinc-900 */
+    background-color: #161b22;
     padding: 1.25rem;
     border-radius: 0.5rem;
     overflow-x: auto;
     margin: 1.5rem 0;
-  }
-
-  .dark .prose pre {
-    background-color: #27272a; /* zinc-800 */
+    border: 1px solid #30363d;
   }
 
   .prose code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 0.875em;
   }
 
   .prose pre code {
-    color: #e4e4e7; /* zinc-200 */
+    color: #e6edf3;
     padding: 0;
     background: none;
   }
 
   .prose :not(pre) > code {
-    background-color: #f4f4f5; /* zinc-100 */
-    color: #18181b;
+    background-color: #21262d;
+    color: #79c0ff;
     padding: 0.2em 0.4em;
     border-radius: 0.25rem;
   }
 
-  .dark .prose :not(pre) > code {
-    background-color: #27272a;
-    color: #e4e4e7;
-  }
-
   .prose blockquote {
-    border-left: 2px solid #e4e4e7; /* zinc-200 */
+    border-left: 2px solid #30363d;
     padding-left: 1rem;
     margin: 1.5rem 0;
-    color: #71717a;
+    color: #6e7681;
     font-style: italic;
-  }
-
-  .dark .prose blockquote {
-    border-left-color: #3f3f46; /* zinc-700 */
-    color: #a1a1aa;
   }
 
   .prose img {
     border-radius: 0.5rem;
     margin: 1.5rem 0;
+    border: 1px solid #30363d;
   }
 
   .prose hr {
-    border-color: #e4e4e7;
+    border-color: #30363d;
     margin: 2rem 0;
-  }
-
-  .dark .prose hr {
-    border-color: #27272a;
   }
 
   .prose table {
@@ -279,32 +246,19 @@ const jsonLd = {
 
   .prose th, .prose td {
     padding: 0.75rem;
-    border: 1px solid #e4e4e7;
+    border: 1px solid #30363d;
     text-align: left;
   }
 
-  .dark .prose th, .dark .prose td {
-    border-color: #27272a;
-  }
-
   .prose th {
-    background-color: #f4f4f5;
-    font-weight: 500;
-    color: #18181b;
-  }
-
-  .dark .prose th {
-    background-color: #27272a;
-    color: #fafafa;
+    background-color: #161b22;
+    font-weight: 600;
+    color: #f6f8fa;
   }
 
   .prose strong {
-    color: #18181b;
+    color: #f6f8fa;
     font-weight: 600;
-  }
-
-  .dark .prose strong {
-    color: #fafafa;
   }
 </style>
 

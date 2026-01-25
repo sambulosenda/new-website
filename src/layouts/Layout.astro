@@ -22,7 +22,7 @@ const ogImage = new URL(image, Astro.site || 'https://sambulosenda.com');
 ---
 
 <!doctype html>
-<html lang="en" class="overscroll-none">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -46,22 +46,20 @@ const ogImage = new URL(image, Astro.site || 'https://sambulosenda.com');
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+
+    <!-- Fonts: Inter + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
     <script is:inline>
-      const theme = localStorage.getItem('theme') || 'dark';
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-        document.documentElement.style.backgroundColor = '#09090b';
-        document.documentElement.style.colorScheme = 'dark';
-      } else {
-        document.documentElement.style.backgroundColor = '#fff';
-        document.documentElement.style.colorScheme = 'light';
-      }
+      // Always dark mode for developer aesthetic
+      document.documentElement.classList.add('dark');
+      document.documentElement.style.backgroundColor = '#0d1117';
+      document.documentElement.style.colorScheme = 'dark';
     </script>
   </head>
-  <body class="text-gray-900 dark:text-white antialiased overscroll-none" style="font-family: 'DM Sans', system-ui, sans-serif;">
+  <body class="bg-editor-bg text-gray-100 antialiased selection:bg-syntax-blue/30" style="font-family: 'Inter', system-ui, sans-serif;">
     <Navigation />
     <slot />
   </body>

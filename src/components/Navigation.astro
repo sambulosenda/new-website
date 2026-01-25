@@ -1,98 +1,99 @@
 ---
 const navLinks = [
-  { path: '/#work', label: 'Work' },
-  { path: '/writing', label: 'Writing' }
+  { path: '/#work', label: 'work' },
+  { path: '/writing', label: 'blog' }
 ];
 ---
 
 <nav id="main-nav" class="fixed w-full py-4 px-6 z-50 transition-all duration-300">
-  <div class="max-w-6xl mx-auto flex justify-between items-center">
-    <a href="/" class="text-lg font-medium tracking-tight text-zinc-900 dark:text-white">
-      Sambulo<span class="text-zinc-400 dark:text-zinc-600">.dev</span>
-    </a>
+  <div class="max-w-6xl mx-auto">
+    <div class="flex justify-between items-center px-4 py-3 bg-editor-surface/80 backdrop-blur-xl border border-editor-border rounded-lg">
+      <!-- Logo -->
+      <a href="/" class="group flex items-center gap-3">
+        <div class="flex items-center gap-2 font-mono text-sm">
+          <span class="text-syntax-purple">const</span>
+          <span class="text-syntax-blue">dev</span>
+          <span class="text-gray-400">=</span>
+          <span class="text-syntax-orange">"sambulo"</span>
+        </div>
+      </a>
 
-    <!-- Desktop -->
-    <div class="hidden md:flex items-center gap-8">
-      <div class="flex gap-6 text-sm">
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex items-center gap-1">
         {navLinks.map(({ path, label }) => (
           <a
             href={path}
-            class={`text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors ${
-              Astro.url.pathname === path || (path === '/#work' && Astro.url.pathname === '/') ? 'text-zinc-900 dark:text-white' : ''
+            class={`px-4 py-2 font-mono text-sm transition-all duration-200 rounded ${
+              Astro.url.pathname === path || (path === '/#work' && Astro.url.pathname === '/')
+                ? 'text-syntax-blue bg-syntax-blue/10'
+                : 'text-gray-400 hover:text-gray-100 hover:bg-editor-hover'
             }`}
           >
-            {label}
+            .{label}()
           </a>
         ))}
+
+        <div class="w-px h-5 bg-editor-border mx-2"></div>
+
+        <a
+          href="https://cal.com/sambulosenda"
+          target="_blank"
+          class="flex items-center gap-2 px-4 py-2 bg-syntax-blue/10 hover:bg-syntax-blue/20 text-syntax-blue font-mono text-sm rounded border border-syntax-blue/30 transition-all duration-200"
+        >
+          <span class="w-2 h-2 bg-syntax-green rounded-full animate-pulse"></span>
+          hire()
+        </a>
       </div>
 
-      <a
-        href="https://cal.com/sambulosenda"
-        target="_blank"
-        class="px-4 py-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-lg text-sm font-medium hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-colors"
-      >
-        Get in touch
-      </a>
-
-      <button id="theme-toggle" class="w-9 h-9 flex items-center justify-center rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
-        <svg class="sun hidden dark:block w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
-        </svg>
-        <svg class="moon dark:hidden w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-button" class="md:hidden w-10 h-10 flex items-center justify-center rounded text-gray-400 hover:text-gray-100 hover:bg-editor-hover transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
     </div>
+  </div>
 
-    <!-- Mobile Menu Button -->
-    <button id="mobile-menu-button" class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-white">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-    </button>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="fixed inset-0 bg-white dark:bg-zinc-950 z-50 hidden">
-      <div class="flex flex-col h-full">
-        <div class="flex justify-between items-center p-6">
-          <a href="/" class="text-lg font-medium tracking-tight text-zinc-900 dark:text-white">
-            Sambulo<span class="text-zinc-400 dark:text-zinc-600">.dev</span>
-          </a>
-          <button id="mobile-menu-close" class="w-9 h-9 flex items-center justify-center rounded-lg text-zinc-500">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-          </button>
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="fixed inset-0 bg-editor-bg/95 backdrop-blur-xl z-50 hidden">
+    <div class="flex flex-col h-full">
+      <div class="flex justify-between items-center p-6">
+        <div class="font-mono text-sm">
+          <span class="text-syntax-purple">const</span>
+          <span class="text-syntax-blue ml-2">dev</span>
+          <span class="text-gray-400 ml-1">=</span>
+          <span class="text-syntax-orange ml-1">"sambulo"</span>
         </div>
-
-        <nav class="flex flex-col items-center justify-center flex-1 gap-8">
-          {navLinks.map(({ path, label }) => (
-            <a
-              href={path}
-              class={`text-lg ${Astro.url.pathname === path ? 'text-zinc-900 dark:text-white' : 'text-zinc-500'}`}
-            >
-              {label}
-            </a>
-          ))}
-
-          <a
-            href="https://cal.com/sambulosenda"
-            target="_blank"
-            class="px-6 py-3 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-lg font-medium"
-          >
-            Get in touch
-          </a>
-
-          <button id="mobile-theme-toggle" class="w-10 h-10 flex items-center justify-center rounded-lg text-zinc-500">
-            <svg class="sun hidden dark:block w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
-            </svg>
-            <svg class="moon dark:hidden w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
-            </svg>
-          </button>
-        </nav>
+        <button id="mobile-menu-close" class="w-10 h-10 flex items-center justify-center rounded text-gray-400 hover:text-gray-100 hover:bg-editor-hover transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
       </div>
+
+      <nav class="flex flex-col items-center justify-center flex-1 gap-4">
+        {navLinks.map(({ path, label }) => (
+          <a
+            href={path}
+            class={`px-6 py-3 font-mono text-lg transition-colors rounded ${
+              Astro.url.pathname === path
+                ? 'text-syntax-blue bg-syntax-blue/10'
+                : 'text-gray-400 hover:text-gray-100'
+            }`}
+          >
+            .{label}()
+          </a>
+        ))}
+
+        <a
+          href="https://cal.com/sambulosenda"
+          target="_blank"
+          class="mt-4 flex items-center gap-2 px-6 py-3 bg-syntax-blue/10 text-syntax-blue font-mono text-lg rounded border border-syntax-blue/30"
+        >
+          <span class="w-2 h-2 bg-syntax-green rounded-full animate-pulse"></span>
+          hire()
+        </a>
+      </nav>
     </div>
   </div>
 </nav>
@@ -102,11 +103,10 @@ const navLinks = [
 
   function handleScroll() {
     const currentScroll = window.scrollY;
-
     if (currentScroll > 50) {
-      nav?.classList.add('bg-white/80', 'dark:bg-zinc-950/80', 'backdrop-blur-md', 'border-b', 'border-zinc-100', 'dark:border-zinc-900');
+      nav?.querySelector('div > div')?.classList.add('shadow-lg', 'shadow-black/20');
     } else {
-      nav?.classList.remove('bg-white/80', 'dark:bg-zinc-950/80', 'backdrop-blur-md', 'border-b', 'border-zinc-100', 'dark:border-zinc-900');
+      nav?.querySelector('div > div')?.classList.remove('shadow-lg', 'shadow-black/20');
     }
   }
 
@@ -129,35 +129,4 @@ const navLinks = [
 
   mobileMenuButton?.addEventListener('click', () => toggleMobileMenu(true));
   mobileMenuClose?.addEventListener('click', () => toggleMobileMenu(false));
-
-  // Theme toggle
-  function setTheme(theme: 'light' | 'dark') {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }
-
-  const savedTheme = localStorage.getItem('theme');
-  const systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  if (savedTheme) {
-    setTheme(savedTheme as 'light' | 'dark');
-  } else {
-    setTheme(systemDarkMode ? 'dark' : 'light');
-  }
-
-  const themeToggle = document.getElementById('theme-toggle');
-  const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
-
-  function handleThemeToggle() {
-    const isDark = document.documentElement.classList.contains('dark');
-    setTheme(isDark ? 'light' : 'dark');
-  }
-
-  themeToggle?.addEventListener('click', handleThemeToggle);
-  mobileThemeToggle?.addEventListener('click', handleThemeToggle);
 </script>
