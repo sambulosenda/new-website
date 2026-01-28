@@ -1,67 +1,128 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const lastUpdated = "January 28, 2025";
 ---
 
 <Layout title="Privacy Policy — Sambulo Senda">
   <main class="bg-white dark:bg-zinc-950 pt-32 pb-20">
     <div class="max-w-3xl mx-auto px-6">
 
-      <h1 class="text-3xl font-medium text-zinc-900 dark:text-white tracking-tight mb-8">Privacy Policy</h1>
+      <h1 class="text-3xl font-medium text-zinc-900 dark:text-white tracking-tight mb-4">Privacy Policy</h1>
+      <p class="text-sm text-zinc-500 dark:text-zinc-500 mb-8">Last updated: {lastUpdated}</p>
 
       <div class="prose prose-zinc dark:prose-invert max-w-none">
         <p class="text-zinc-600 dark:text-zinc-400 mb-8">
-          This Privacy Policy describes how we collect, use, and protect your personal information.
+          This Privacy Policy describes how Sambulo Senda ("we", "us", or "our") collects, uses, and protects your information when you use our website and mobile applications.
         </p>
 
+        <!-- Apps Covered -->
         <section class="mb-10">
-          <h2 class="text-lg font-medium text-zinc-900 dark:text-white mb-4">Information We Collect</h2>
+          <h2 class="text-lg font-medium text-zinc-900 dark:text-white mb-4">Apps Covered by This Policy</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-zinc-600 dark:text-zinc-400">
+              <thead>
+                <tr class="border-b border-zinc-200 dark:border-zinc-800">
+                  <th class="text-left py-2 font-medium text-zinc-900 dark:text-white">App</th>
+                  <th class="text-left py-2 font-medium text-zinc-900 dark:text-white">Data Access</th>
+                  <th class="text-left py-2 font-medium text-zinc-900 dark:text-white">Third-Party Services</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-zinc-100 dark:border-zinc-800/50">
+                  <td class="py-3 font-medium">Scribe Scan</td>
+                  <td class="py-3">Camera, Local Storage</td>
+                  <td class="py-3">Google Gemini API, RevenueCat</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
 
-          <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">Information You Provide</h3>
+        <!-- Mobile Apps Section -->
+        <section class="mb-10">
+          <h2 class="text-lg font-medium text-zinc-900 dark:text-white mb-4">Mobile Applications</h2>
+
+          <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">Data We Collect</h3>
+          <ul class="list-disc pl-5 text-sm text-zinc-600 dark:text-zinc-400 space-y-1 mb-4">
+            <li><strong>Camera Access:</strong> Used solely to capture images for text extraction. Images are processed and not stored on our servers.</li>
+            <li><strong>Local Storage:</strong> Your scans and preferences are stored locally on your device.</li>
+            <li><strong>Subscription Data:</strong> Managed by RevenueCat for in-app purchases. We receive anonymized purchase status only.</li>
+          </ul>
+
+          <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">Data We Do NOT Collect</h3>
+          <ul class="list-disc pl-5 text-sm text-zinc-600 dark:text-zinc-400 space-y-1 mb-4">
+            <li>We do not require account creation</li>
+            <li>We do not collect personal identification information</li>
+            <li>We do not track your location</li>
+            <li>We do not sell or share your data with advertisers</li>
+          </ul>
+
+          <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">Third-Party Services</h3>
+          <ul class="list-disc pl-5 text-sm text-zinc-600 dark:text-zinc-400 space-y-1">
+            <li><strong>Google Gemini API:</strong> Images are sent to Google's servers for text extraction (OCR). Google's privacy policy applies to this processing. Images are not stored after processing.</li>
+            <li><strong>RevenueCat:</strong> Handles subscription management. See <a href="https://www.revenuecat.com/privacy" class="text-zinc-900 dark:text-white hover:underline">RevenueCat's Privacy Policy</a>.</li>
+            <li><strong>Apple/Google:</strong> App Store and Play Store terms apply for app distribution and payments.</li>
+          </ul>
+        </section>
+
+        <!-- Website Section -->
+        <section class="mb-10">
+          <h2 class="text-lg font-medium text-zinc-900 dark:text-white mb-4">Website (sambulosenda.com)</h2>
+
+          <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">Information Collected</h3>
           <ul class="list-disc pl-5 text-sm text-zinc-600 dark:text-zinc-400 space-y-1 mb-4">
             <li>Name and email when subscribing to newsletters</li>
             <li>Contact information when sending inquiries</li>
-            <li>Comments and feedback</li>
+            <li>Browser type, device information, pages visited (analytics)</li>
           </ul>
 
-          <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">Automatically Collected</h3>
-          <ul class="list-disc pl-5 text-sm text-zinc-600 dark:text-zinc-400 space-y-1">
-            <li>Browser type and version</li>
-            <li>Device information</li>
-            <li>Pages visited and time spent</li>
-          </ul>
-        </section>
-
-        <section class="mb-10">
-          <h2 class="text-lg font-medium text-zinc-900 dark:text-white mb-4">How We Use Your Information</h2>
-          <ul class="list-disc pl-5 text-sm text-zinc-600 dark:text-zinc-400 space-y-1">
-            <li>Deliver newsletters and updates</li>
-            <li>Improve our services</li>
-            <li>Analyze site usage</li>
-            <li>Respond to inquiries</li>
-          </ul>
-        </section>
-
-        <section class="mb-10">
-          <h2 class="text-lg font-medium text-zinc-900 dark:text-white mb-4">Cookies</h2>
+          <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">Cookies</h3>
           <p class="text-sm text-zinc-600 dark:text-zinc-400">
             We use cookies to remember preferences and analyze traffic. You can disable cookies in your browser settings.
           </p>
         </section>
 
+        <!-- Data Retention -->
+        <section class="mb-10">
+          <h2 class="text-lg font-medium text-zinc-900 dark:text-white mb-4">Data Retention</h2>
+          <ul class="list-disc pl-5 text-sm text-zinc-600 dark:text-zinc-400 space-y-1">
+            <li><strong>Mobile Apps:</strong> All data is stored locally on your device. Uninstalling the app removes all data.</li>
+            <li><strong>Website:</strong> Contact form submissions are retained until you request deletion.</li>
+          </ul>
+        </section>
+
+        <!-- Your Rights -->
         <section class="mb-10">
           <h2 class="text-lg font-medium text-zinc-900 dark:text-white mb-4">Your Rights</h2>
           <ul class="list-disc pl-5 text-sm text-zinc-600 dark:text-zinc-400 space-y-1">
             <li>Access your personal data</li>
             <li>Request data deletion</li>
             <li>Opt out of communications</li>
-            <li>Update your information</li>
+            <li>Export your data (mobile apps: use in-app export feature)</li>
           </ul>
         </section>
 
+        <!-- Children's Privacy -->
+        <section class="mb-10">
+          <h2 class="text-lg font-medium text-zinc-900 dark:text-white mb-4">Children's Privacy</h2>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400">
+            Our services are not intended for children under 13. We do not knowingly collect personal information from children under 13. If you believe we have collected such information, please contact us immediately.
+          </p>
+        </section>
+
+        <!-- Changes -->
+        <section class="mb-10">
+          <h2 class="text-lg font-medium text-zinc-900 dark:text-white mb-4">Changes to This Policy</h2>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400">
+            We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date.
+          </p>
+        </section>
+
+        <!-- Contact -->
         <section>
           <h2 class="text-lg font-medium text-zinc-900 dark:text-white mb-4">Contact</h2>
           <p class="text-sm text-zinc-600 dark:text-zinc-400">
-            For privacy inquiries: <a href="mailto:sambulosenda@gmail.com" class="text-zinc-900 dark:text-white hover:underline">sambulosenda@gmail.com</a>
+            For privacy inquiries or data requests: <a href="mailto:sambulosenda@gmail.com" class="text-zinc-900 dark:text-white hover:underline">sambulosenda@gmail.com</a>
           </p>
         </section>
       </div>
