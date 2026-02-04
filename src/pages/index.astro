@@ -5,21 +5,22 @@ import { projects, socialLinks } from '../data/projects';
 const apps = projects;
 ---
 
-<Layout title="Sambulo Senda — React Native Developer">
+<Layout title="Sambulo Senda — Software Engineer">
   <main class="bg-editor-bg">
 
     <!-- Hero -->
-    <section class="pt-32 pb-24">
-      <div class="max-w-4xl mx-auto px-6">
-        <h1 class="text-4xl md:text-5xl font-semibold text-gray-100 mb-6">
+    <section class="pt-40 pb-20">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl md:text-5xl font-semibold text-gray-100">
           Sambulo Senda
         </h1>
+        <p class="text-lg text-gray-500 mt-3 mb-8">Software Engineer</p>
 
-        <p class="text-xl text-gray-400 leading-relaxed max-w-2xl mb-8">
+        <p class="text-xl text-gray-400 leading-relaxed max-w-2xl mb-10">
           I build software that solves real problems—owning things end-to-end from serverless architecture to final UX. Core skills: TypeScript, React, React Native, Node. Also into mentoring, product direction, and AI/LLM engineering.
         </p>
 
-        <div class="flex items-center gap-6 text-sm">
+        <div class="flex items-center gap-5 text-sm">
           {socialLinks.map(({ url, platform }) => (
             <a
               href={url}
@@ -34,54 +35,40 @@ const apps = projects;
     </section>
 
     <!-- Work -->
-    <section id="work" class="py-24">
-      <div class="max-w-4xl mx-auto px-6">
+    <section id="work" class="py-20">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-2xl font-semibold text-gray-100 mb-8">
           Projects
         </h2>
 
-        <!-- Portfolio Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {apps.map((app) => (
-            <article class="group">
-              <div class="relative aspect-video rounded-lg overflow-hidden bg-editor-surface border border-editor-border hover:border-gray-600 transition-colors">
-                <img
-                  src={app.screenshot}
-                  alt={app.title}
-                  class="w-full h-full object-cover"
-                  loading="lazy"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-editor-bg via-editor-bg/50 to-transparent"></div>
-                <div class="absolute bottom-0 left-0 right-0 p-5">
-                  <h3 class="text-lg font-semibold text-gray-100 mb-1">{app.title}</h3>
-                  <p class="text-gray-400 text-sm">{app.description}</p>
-                </div>
-              </div>
-            </article>
-          ))}
+        <!-- Projects List -->
+        <div class="space-y-6">
+          {apps.map((app) => {
+            const Wrapper = app.url ? 'a' : 'div';
+            return (
+              <Wrapper
+                href={app.url}
+                target={app.url ? '_blank' : undefined}
+                class={`block p-5 rounded-lg border border-editor-border hover:border-gray-600 transition-colors ${app.url ? 'cursor-pointer' : ''}`}
+              >
+                <h3 class="text-lg font-medium text-gray-100 mb-2">{app.title}</h3>
+                <p class="text-gray-400 text-sm">{app.description}</p>
+              </Wrapper>
+            );
+          })}
         </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 border-t border-editor-border">
-      <div class="max-w-4xl mx-auto px-6 text-center">
-        <span class="text-sm text-gray-500">© {new Date().getFullYear()} sambulo.dev</span>
+    <footer class="py-16 border-t border-editor-border">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+        <span>© {new Date().getFullYear()} sambulo.dev</span>
+        <a href="mailto:sambulosenda@gmail.com" class="hover:text-gray-300 transition-colors">
+          sambulosenda@gmail.com
+        </a>
       </div>
     </footer>
 
   </main>
 </Layout>
-
-<script>
-  // Smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-</script>

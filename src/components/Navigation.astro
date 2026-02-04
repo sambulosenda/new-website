@@ -5,7 +5,7 @@ const navLinks = [
 ];
 ---
 
-<nav class="fixed w-full py-6 px-6 z-50">
+<nav id="nav" class="fixed w-full py-6 px-4 sm:px-6 lg:px-8 z-50 transition-colors duration-200">
   <div class="max-w-4xl mx-auto flex justify-between items-center">
     <!-- Logo -->
     <a href="/" class="text-gray-100 font-medium hover:text-syntax-blue transition-colors">
@@ -41,7 +41,7 @@ const navLinks = [
 
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="fixed inset-0 bg-editor-bg z-50 hidden">
-    <div class="flex flex-col h-full p-6">
+    <div class="flex flex-col h-full p-4 sm:p-6">
       <div class="flex justify-between items-center">
         <a href="/" class="text-gray-100 font-medium">sambulo</a>
         <button id="mobile-menu-close" class="text-gray-400 hover:text-gray-100 transition-colors">
@@ -70,9 +70,19 @@ const navLinks = [
 </nav>
 
 <script>
+  const nav = document.getElementById('nav');
   const mobileMenuButton = document.getElementById('mobile-menu-button');
   const mobileMenuClose = document.getElementById('mobile-menu-close');
   const mobileMenu = document.getElementById('mobile-menu');
+
+  // Backdrop on scroll
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      nav?.classList.add('bg-editor-bg/80', 'backdrop-blur-lg');
+    } else {
+      nav?.classList.remove('bg-editor-bg/80', 'backdrop-blur-lg');
+    }
+  }, { passive: true });
 
   function toggleMobileMenu(show: boolean) {
     if (show) {
@@ -86,4 +96,9 @@ const navLinks = [
 
   mobileMenuButton?.addEventListener('click', () => toggleMobileMenu(true));
   mobileMenuClose?.addEventListener('click', () => toggleMobileMenu(false));
+
+  // Close menu on link click
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => toggleMobileMenu(false));
+  });
 </script>
