@@ -11,7 +11,7 @@ interface Props {
 
 const {
   title,
-  description = "Software engineer building end-to-end solutions from serverless architecture to mobile apps.",
+  description = "Mobile engineer and indie app maker. Shipping React Native apps to the App Store — from Bible readers to AI-powered OCR.",
   image = "/profile.jpg",
   type = "website",
   publishedTime
@@ -22,7 +22,7 @@ const ogImage = new URL(image, Astro.site || 'https://sambulosenda.com');
 ---
 
 <!doctype html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -47,19 +47,12 @@ const ogImage = new URL(image, Astro.site || 'https://sambulosenda.com');
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- Fonts: Inter + JetBrains Mono -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <script is:inline>
-      // Always dark mode for developer aesthetic
-      document.documentElement.classList.add('dark');
-      document.documentElement.style.backgroundColor = '#0d1117';
-      document.documentElement.style.colorScheme = 'dark';
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-editor-bg text-gray-100 antialiased selection:bg-syntax-blue/30" style="font-family: 'Inter', system-ui, sans-serif;">
+  <body class="bg-surface-muted text-ink antialiased" style="font-family: 'Inter', system-ui, sans-serif;">
     <Navigation />
     <slot />
   </body>

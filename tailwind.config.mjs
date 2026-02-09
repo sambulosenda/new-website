@@ -1,56 +1,41 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Inter"', 'system-ui', 'sans-serif'],
+        sans: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       colors: {
-        // Editor-inspired dark palette
-        editor: {
-          bg: '#0d1117',
-          surface: '#161b22',
-          border: '#30363d',
-          hover: '#21262d',
+        surface: {
+          DEFAULT: '#ffffff',
+          muted: '#f8f8f7',
+          subtle: '#f0efed',
         },
-        // Syntax highlighting colors
-        syntax: {
-          blue: '#79c0ff',
-          cyan: '#56d4dd',
-          purple: '#d2a8ff',
-          pink: '#ff7eb6',
-          orange: '#ffa657',
-          yellow: '#e3b341',
-          green: '#7ee787',
-          red: '#ff7b72',
-          gray: '#8b949e',
+        border: {
+          DEFAULT: '#e8e6e3',
+          muted: '#f0efed',
         },
-        // Base grays
-        gray: {
-          50: '#f6f8fa',
-          100: '#eaeef2',
-          200: '#d0d7de',
-          300: '#afb8c1',
-          400: '#8b949e',
-          500: '#6e7681',
-          600: '#484f58',
-          700: '#30363d',
-          800: '#21262d',
-          900: '#161b22',
-          950: '#0d1117',
+        ink: {
+          DEFAULT: '#1a1a19',
+          muted: '#6b6b69',
+          faint: '#9e9e9b',
+        },
+        accent: {
+          DEFAULT: '#2b5ce6',
+          hover: '#1d4ed8',
+          subtle: '#eef2ff',
         },
       },
       typography: {
         DEFAULT: {
           css: {
-            maxWidth: '42.5rem',
-            color: 'inherit',
-            lineHeight: '1.75',
+            maxWidth: '65ch',
+            color: '#6b6b69',
+            lineHeight: '1.8',
             a: {
-              color: '#79c0ff',
+              color: '#2b5ce6',
               textDecoration: 'none',
               fontWeight: '500',
               '&:hover': {
@@ -58,23 +43,17 @@ export default {
               },
             },
             'h1,h2,h3,h4': {
-              color: 'inherit',
+              color: '#1a1a19',
+              fontWeight: '600',
+            },
+            strong: {
+              color: '#1a1a19',
               fontWeight: '600',
             },
             code: {
               fontFamily: '"JetBrains Mono", ui-monospace, monospace',
             },
           },
-        },
-      },
-      animation: {
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
-      },
-      keyframes: {
-        glow: {
-          '0%': { opacity: '0.5' },
-          '100%': { opacity: '1' },
         },
       },
     },

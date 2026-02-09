@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="App Support — Sambulo Senda">
+  <main>
+    <section class="pt-36 pb-20 sm:pt-44">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
+
+        <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-3">App Support</h1>
+        <p class="text-ink-muted mb-12">
+          Need help with one of my apps? I'm here to assist.
+        </p>
+
+        <!-- Contact -->
+        <section class="mb-12">
+          <h2 class="text-lg font-semibold text-ink mb-4">Contact</h2>
+          <div class="bg-surface rounded-xl p-6 border border-border">
+            <p class="text-sm text-ink-muted mb-4">
+              For support requests, bug reports, or feature suggestions:
+            </p>
+            <a
+              href="mailto:sambulosenda@gmail.com?subject=App%20Support%20Request"
+              class="inline-flex items-center gap-2 bg-ink text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-ink/90 transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              sambulosenda@gmail.com
+            </a>
+            <p class="text-xs text-ink-faint mt-3">
+              I typically respond within 24-48 hours.
+            </p>
+          </div>
+        </section>
+
+        <!-- Apps -->
+        <section class="mb-12">
+          <h2 class="text-lg font-semibold text-ink mb-4">Supported Apps</h2>
+          <div class="space-y-4">
+            <div class="bg-surface rounded-xl p-5 border border-border">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-surface-subtle rounded-xl flex items-center justify-center">
+                  <svg class="w-6 h-6 text-ink-faint" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-medium text-ink">Scribe Scan</h3>
+                  <p class="text-sm text-ink-muted mt-1">Handwriting to text scanner powered by AI</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="mb-12">
+          <h2 class="text-lg font-semibold text-ink mb-4">Frequently Asked Questions</h2>
+          <div class="space-y-3">
+            <details class="group bg-surface rounded-xl border border-border">
+              <summary class="flex items-center justify-between p-4 cursor-pointer text-sm font-medium text-ink">
+                How do I cancel my subscription?
+                <svg class="w-4 h-4 text-ink-faint group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-ink-muted">
+                <p><strong class="text-ink">iOS:</strong> Settings &rarr; Apple ID &rarr; Subscriptions &rarr; Scribe Scan &rarr; Cancel</p>
+                <p class="mt-2"><strong class="text-ink">Android:</strong> Play Store &rarr; Profile &rarr; Payments & subscriptions &rarr; Subscriptions &rarr; Scribe Scan &rarr; Cancel</p>
+              </div>
+            </details>
+
+            <details class="group bg-surface rounded-xl border border-border">
+              <summary class="flex items-center justify-between p-4 cursor-pointer text-sm font-medium text-ink">
+                How do I restore my purchase on a new device?
+                <svg class="w-4 h-4 text-ink-faint group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-ink-muted">
+                Open the app and go to Settings &rarr; Subscription &rarr; Restore Purchases. Make sure you're signed in with the same Apple ID or Google account used for the original purchase.
+              </div>
+            </details>
+
+            <details class="group bg-surface rounded-xl border border-border">
+              <summary class="flex items-center justify-between p-4 cursor-pointer text-sm font-medium text-ink">
+                Why isn't the text extraction accurate?
+                <svg class="w-4 h-4 text-ink-faint group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-ink-muted">
+                For best results: ensure good lighting, hold the camera steady, and make sure the text is clearly visible within the viewfinder. Very stylized handwriting or poor image quality may affect accuracy.
+              </div>
+            </details>
+
+            <details class="group bg-surface rounded-xl border border-border">
+              <summary class="flex items-center justify-between p-4 cursor-pointer text-sm font-medium text-ink">
+                How do I delete my data?
+                <svg class="w-4 h-4 text-ink-faint group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-ink-muted">
+                All your scans are stored locally on your device. Go to Settings &rarr; Data &rarr; Clear All Scans to delete everything. Alternatively, uninstalling the app removes all data.
+              </div>
+            </details>
+
+            <details class="group bg-surface rounded-xl border border-border">
+              <summary class="flex items-center justify-between p-4 cursor-pointer text-sm font-medium text-ink">
+                Is my data sent to any servers?
+                <svg class="w-4 h-4 text-ink-faint group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-ink-muted">
+                Images are sent to Google's Gemini API for text extraction only. They are processed and not stored. Your scans and extracted text remain on your device and are never uploaded to our servers.
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <!-- Legal links -->
+        <section>
+          <h2 class="text-lg font-semibold text-ink mb-4">Legal</h2>
+          <div class="flex gap-4">
+            <a href="/privacy-policy" class="text-sm text-ink-muted hover:text-accent transition-colors underline underline-offset-2">
+              Privacy Policy
+            </a>
+            <a href="/terms" class="text-sm text-ink-muted hover:text-accent transition-colors underline underline-offset-2">
+              Terms of Service
+            </a>
+          </div>
+        </section>
+
+      </div>
+    </section>
+
+    <footer class="border-t border-border py-12">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-sm text-ink-muted">
+        <span>&copy; {new Date().getFullYear()} sambulo.dev</span>
+        <a href="mailto:sambulosenda@gmail.com" class="hover:text-ink transition-colors">sambulosenda@gmail.com</a>
+      </div>
+    </footer>
+  </main>
+</Layout>

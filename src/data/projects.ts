@@ -9,6 +9,22 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    title: 'Versify Bible',
+    description: 'Full-featured Bible app with reading plans, streak tracking, cross-references, highlights, journaling, prayer lists, and iOS widgets. Built with Expo, Supabase, and SQLite for offline support.',
+    tags: ['React Native', 'Expo', 'Supabase', 'Personal Project'],
+    screenshot: '/versify-bible.png',
+    url: 'https://apps.apple.com/eg/app/versify-daily-bible-verses/id6756984138',
+    status: 'Live',
+  },
+  {
+    title: 'Scribe Scan',
+    description: 'AI-powered handwriting to text scanner using Google Gemini for accurate OCR. Snap a photo of handwritten notes and get editable text instantly.',
+    tags: ['React Native', 'AI', 'Google Gemini', 'Personal Project'],
+    screenshot: '/scribe-scan.png',
+    url: 'https://apps.apple.com/eg/app/scribe-scan-handwriting-ocr/id6758213865',
+    status: 'Live',
+  },
+  {
     title: 'Softmind',
     description: 'AI-powered mental wellness app with mood tracking, guided check-ins, journaling, and personalized programs.',
     tags: ['React Native', 'AI', 'Personal Project'],
@@ -18,22 +34,16 @@ export const projects: Project[] = [
   },
   {
     title: 'Andersen EV',
-    description: 'Migrated EV charging app to React Native New Architecture, improving performance by 30%.',
-    tags: ['React Native', 'IoT', 'Performance'],
+    description: 'Migrated EV charging app to React Native New Architecture for a leading UK EV charger manufacturer. Improved app startup time by 30% and reduced JS bundle size.',
+    tags: ['React Native', 'IoT', 'Performance', 'Client Work'],
     screenshot: '/andersen-ev.png',
-    status: 'Live',
-  },
-  {
-    title: 'Aspire',
-    description: 'Built mental well-being app serving 10,000+ users with 98% crash-free rate.',
-    tags: ['React Native', 'MobX', 'GraphQL'],
-    screenshot: '/aspire.png',
+    url: 'https://andersen-ev.com',
     status: 'Live',
   },
   {
     title: 'Report Focus News',
-    description: 'Offline-first architecture with biometric auth and GDPR compliance.',
-    tags: ['Consulting', 'AWS', 'Security'],
+    description: 'Built offline-first news app with biometric authentication, push notifications, and GDPR-compliant data handling for a UK media outlet.',
+    tags: ['React Native', 'AWS', 'Security', 'Client Work'],
     screenshot: '/report-focus-news.png',
     status: 'Live',
   },
@@ -60,8 +70,9 @@ export const socialLinks = [
 export const technologies = [
   { name: 'React Native', primary: true },
   { name: 'TypeScript', primary: true },
-  { name: 'Redux', primary: false },
-  { name: 'GraphQL', primary: false },
+  { name: 'Expo', primary: true },
   { name: 'Node.js', primary: false },
-  { name: 'CI/CD', primary: false },
+  { name: 'Supabase', primary: false },
+  { name: 'GraphQL', primary: false },
+  { name: 'AI/LLMs', primary: false },
 ];

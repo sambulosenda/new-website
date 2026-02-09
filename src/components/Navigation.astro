@@ -1,23 +1,22 @@
 ---
 const navLinks = [
-  { path: '/#work', label: 'Work' },
-  { path: '/writing', label: 'Blog' }
+  { path: '/projects', label: 'Projects' },
+  { path: '/writing', label: 'Writing' },
 ];
 ---
 
-<nav id="nav" class="fixed w-full py-6 px-4 sm:px-6 lg:px-8 z-50 transition-colors duration-200">
-  <div class="max-w-4xl mx-auto flex justify-between items-center">
-    <!-- Logo -->
-    <a href="/" class="text-gray-100 font-medium hover:text-syntax-blue transition-colors">
+<nav id="nav" class="fixed w-full py-5 px-4 sm:px-6 lg:px-8 z-50 transition-all duration-300">
+  <div class="max-w-3xl mx-auto flex justify-between items-center">
+    <a href="/" class="text-ink font-semibold tracking-tight hover:text-accent transition-colors">
       sambulo
     </a>
 
-    <!-- Desktop Nav -->
+    <!-- Desktop -->
     <div class="hidden md:flex items-center gap-8">
       {navLinks.map(({ path, label }) => (
         <a
           href={path}
-          class="text-gray-400 hover:text-gray-100 transition-colors text-sm"
+          class="text-ink-muted hover:text-ink text-sm transition-colors"
         >
           {label}
         </a>
@@ -25,42 +24,44 @@ const navLinks = [
       <a
         href="https://cal.com/sambulosenda"
         target="_blank"
-        class="text-sm px-4 py-2 bg-syntax-blue text-editor-bg rounded-lg hover:bg-syntax-blue/90 transition-colors"
+        rel="noopener noreferrer"
+        class="text-sm px-4 py-2 bg-ink text-white rounded-lg hover:bg-ink/90 transition-colors"
       >
         Book a call
       </a>
     </div>
 
-    <!-- Mobile Menu Button -->
-    <button id="mobile-menu-button" class="md:hidden text-gray-400 hover:text-gray-100 transition-colors">
+    <!-- Mobile toggle -->
+    <button id="mobile-menu-button" class="md:hidden text-ink-muted hover:text-ink transition-colors" aria-label="Open menu">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
     </button>
   </div>
 
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="fixed inset-0 bg-editor-bg z-50 hidden">
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="fixed inset-0 bg-surface-muted z-50 hidden">
     <div class="flex flex-col h-full p-4 sm:p-6">
       <div class="flex justify-between items-center">
-        <a href="/" class="text-gray-100 font-medium">sambulo</a>
-        <button id="mobile-menu-close" class="text-gray-400 hover:text-gray-100 transition-colors">
+        <a href="/" class="text-ink font-semibold tracking-tight">sambulo</a>
+        <button id="mobile-menu-close" class="text-ink-muted hover:text-ink transition-colors" aria-label="Close menu">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
       </div>
 
       <nav class="flex flex-col items-center justify-center flex-1 gap-8">
         {navLinks.map(({ path, label }) => (
-          <a href={path} class="text-gray-300 hover:text-gray-100 text-xl transition-colors">
+          <a href={path} class="text-ink text-xl hover:text-accent transition-colors">
             {label}
           </a>
         ))}
         <a
           href="https://cal.com/sambulosenda"
           target="_blank"
-          class="px-6 py-3 bg-syntax-blue text-editor-bg rounded-lg"
+          rel="noopener noreferrer"
+          class="px-6 py-3 bg-ink text-white rounded-lg"
         >
           Book a call
         </a>
@@ -75,16 +76,15 @@ const navLinks = [
   const mobileMenuClose = document.getElementById('mobile-menu-close');
   const mobileMenu = document.getElementById('mobile-menu');
 
-  // Backdrop on scroll
   window.addEventListener('scroll', () => {
     if (window.scrollY > 20) {
-      nav?.classList.add('bg-editor-bg/80', 'backdrop-blur-lg');
+      nav?.classList.add('bg-surface-muted/80', 'backdrop-blur-xl', 'border-b', 'border-border/60');
     } else {
-      nav?.classList.remove('bg-editor-bg/80', 'backdrop-blur-lg');
+      nav?.classList.remove('bg-surface-muted/80', 'backdrop-blur-xl', 'border-b', 'border-border/60');
     }
   }, { passive: true });
 
-  function toggleMobileMenu(show: boolean) {
+  function toggleMobileMenu(show) {
     if (show) {
       mobileMenu?.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
@@ -96,8 +96,6 @@ const navLinks = [
 
   mobileMenuButton?.addEventListener('click', () => toggleMobileMenu(true));
   mobileMenuClose?.addEventListener('click', () => toggleMobileMenu(false));
-
-  // Close menu on link click
   mobileMenu?.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => toggleMobileMenu(false));
   });

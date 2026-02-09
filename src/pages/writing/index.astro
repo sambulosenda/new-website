@@ -18,42 +18,34 @@ const years = Object.keys(postsByYear).sort().reverse();
 ---
 
 <Layout title="Writing — Sambulo Senda">
-  <main class="bg-editor-bg pt-32 pb-20">
-    <div class="max-w-3xl mx-auto px-6">
+  <main>
+    <section class="pt-36 pb-20 sm:pt-44">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
 
-      <header class="mb-16">
-        <div class="font-mono text-sm mb-4">
-          <span class="text-syntax-gray">/**</span>
-          <br/>
-          <span class="text-syntax-gray"> * Blog posts & tutorials</span>
-          <br/>
-          <span class="text-syntax-gray"> */</span>
-        </div>
-        <h1 class="text-3xl font-semibold text-gray-100 mb-4">
-          Blog<span class="text-syntax-blue">.posts()</span>
-        </h1>
-        <p class="text-gray-400">
-          Thoughts and tutorials about mobile development and React Native.
-        </p>
-      </header>
+        <header class="mb-12">
+          <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-3">Writing</h1>
+          <p class="text-ink-muted">
+            Thoughts and tutorials about mobile development and React Native.
+          </p>
+        </header>
 
-      <!-- Featured latest post -->
-      {posts[0] && (
-        <article class="mb-16 group">
-          <a href={posts[0].url} class="block p-6 bg-editor-surface border border-editor-border rounded-xl hover:border-syntax-blue/50 transition-all">
-            <div class="flex items-center gap-2 mb-4">
-              <span class="w-2 h-2 bg-syntax-green rounded-full animate-pulse"></span>
-              <span class="font-mono text-xs text-syntax-green">latest</span>
+        <!-- Featured latest post -->
+        {posts[0] && (
+          <a href={posts[0].url} class="group block bg-surface rounded-xl border border-border p-6 mb-12 hover:border-ink-faint/40 hover:shadow-sm transition-all">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span class="text-xs text-emerald-600 font-medium">Latest</span>
             </div>
-            <h3 class="text-xl font-semibold text-gray-100 group-hover:text-syntax-blue transition-colors mb-3">
+            <h3 class="text-lg font-semibold text-ink group-hover:text-accent transition-colors mb-2">
               {posts[0].frontmatter.title}
             </h3>
             {posts[0].frontmatter.description && (
-              <p class="text-gray-400 mb-4">
-                {posts[0].frontmatter.description}
-              </p>
+              <p class="text-ink-muted mb-3">{posts[0].frontmatter.description}</p>
             )}
-            <div class="flex items-center gap-4 font-mono text-xs text-gray-500">
+            <div class="flex items-center gap-3 text-xs text-ink-faint font-mono">
               <time datetime={posts[0].frontmatter.date}>
                 {new Date(posts[0].frontmatter.date).toLocaleDateString('en-US', {
                   month: 'short',
@@ -62,62 +54,58 @@ const years = Object.keys(postsByYear).sort().reverse();
                 })}
               </time>
               {posts[0].frontmatter.readingTime && (
-                <span>{posts[0].frontmatter.readingTime}</span>
+                <>
+                  <span class="text-border">&middot;</span>
+                  <span>{posts[0].frontmatter.readingTime}</span>
+                </>
               )}
             </div>
           </a>
-        </article>
-      )}
+        )}
 
-      <div class="space-y-12">
-        {years.map(year => (
-          <section>
-            <div class="flex items-center gap-4 mb-6">
-              <span class="font-mono text-sm text-syntax-purple">// {year}</span>
-              <div class="flex-1 h-px bg-editor-border"></div>
-            </div>
-            <div class="space-y-4">
-              {postsByYear[year].map(post => (
-                <article class="group">
-                  <a href={post.url} class="flex items-start justify-between gap-4 p-4 -mx-4 rounded-lg hover:bg-editor-surface transition-colors">
+        <!-- Posts by year -->
+        <div class="space-y-10">
+          {years.map(year => (
+            <section>
+              <h2 class="text-sm font-semibold text-ink-faint uppercase tracking-wider mb-4">{year}</h2>
+              <div class="space-y-1">
+                {postsByYear[year].map(post => (
+                  <a href={post.url} class="group flex items-center justify-between gap-4 py-3 px-3 -mx-3 rounded-lg hover:bg-surface transition-colors">
                     <div class="flex-1 min-w-0">
-                      <h3 class="font-medium text-gray-100 group-hover:text-syntax-blue transition-colors mb-1 truncate">
+                      <h3 class="text-sm font-medium text-ink group-hover:text-accent transition-colors truncate">
                         {post.frontmatter.title}
                       </h3>
-
                       {post.frontmatter.description && (
-                        <p class="text-sm text-gray-500 line-clamp-1">
-                          {post.frontmatter.description}
-                        </p>
+                        <p class="text-sm text-ink-faint mt-0.5 line-clamp-1">{post.frontmatter.description}</p>
                       )}
                     </div>
-
-                    <time datetime={post.frontmatter.date} class="font-mono text-xs text-gray-600 whitespace-nowrap">
+                    <time datetime={post.frontmatter.date} class="text-xs text-ink-faint whitespace-nowrap shrink-0 font-mono">
                       {new Date(post.frontmatter.date).toLocaleDateString('en-US', {
                         month: 'short',
                         day: 'numeric'
                       })}
                     </time>
                   </a>
-                </article>
-              ))}
-            </div>
-          </section>
-        ))}
-      </div>
-
-      {posts.length === 0 && (
-        <div class="text-center py-16">
-          <div class="font-mono text-sm text-gray-500">
-            <span class="text-syntax-gray">// no posts yet</span>
-            <br/>
-            <span class="text-syntax-purple">return</span>
-            <span class="text-syntax-orange"> []</span>
-            <span class="text-gray-400">;</span>
-          </div>
+                ))}
+              </div>
+            </section>
+          ))}
         </div>
-      )}
 
-    </div>
+        {posts.length === 0 && (
+          <div class="text-center py-16">
+            <p class="text-ink-faint">No posts yet.</p>
+          </div>
+        )}
+
+      </div>
+    </section>
+
+    <footer class="border-t border-border py-12">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-sm text-ink-muted">
+        <span>&copy; {new Date().getFullYear()} sambulo.dev</span>
+        <a href="mailto:sambulosenda@gmail.com" class="hover:text-ink transition-colors">sambulosenda@gmail.com</a>
+      </div>
+    </footer>
   </main>
 </Layout>

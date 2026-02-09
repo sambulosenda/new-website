@@ -4,102 +4,76 @@ import { projects } from '../data/projects';
 ---
 
 <Layout title="Projects — Sambulo Senda">
-  <main class="bg-editor-bg pt-32 pb-20">
-    <div class="max-w-5xl mx-auto px-6">
+  <main>
+    <section class="pt-36 pb-20 sm:pt-44">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
 
-      <header class="mb-16">
-        <div class="font-mono text-sm mb-4">
-          <span class="text-syntax-gray">/**</span>
-          <br/>
-          <span class="text-syntax-gray"> * All projects</span>
-          <br/>
-          <span class="text-syntax-gray"> */</span>
+        <header class="mb-12">
+          <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-3">Projects</h1>
+          <p class="text-ink-muted">
+            Apps I've built — each solving a unique problem.
+          </p>
+        </header>
+
+        <div class="space-y-4">
+          {projects.map((project) => {
+            const Wrapper = project.url ? 'a' : 'div';
+            return (
+              <Wrapper
+                href={project.url}
+                target={project.url ? '_blank' : undefined}
+                rel={project.url ? 'noopener noreferrer' : undefined}
+                class={`group block bg-surface rounded-xl border border-border overflow-hidden hover:border-ink-faint/40 hover:shadow-sm transition-all ${project.url ? 'cursor-pointer' : ''}`}
+              >
+                <div class="flex flex-col sm:flex-row">
+                  {project.screenshot && (
+                    <div class="sm:w-48 shrink-0 aspect-[16/10] sm:aspect-auto overflow-hidden bg-surface-subtle">
+                      <img
+                        src={project.screenshot}
+                        alt={project.title}
+                        class="w-full h-full object-cover object-top"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                  <div class="flex-1 p-5">
+                    <div class="flex items-center gap-2 mb-1.5">
+                      <h3 class="font-medium text-ink group-hover:text-accent transition-colors">
+                        {project.title}
+                      </h3>
+                      {project.status && (
+                        <span class={`shrink-0 text-xs px-1.5 py-0.5 rounded-full font-medium ${
+                          project.status === 'Live' ? 'bg-emerald-50 text-emerald-600' :
+                          project.status === 'Beta' ? 'bg-amber-50 text-amber-600' :
+                          'bg-gray-100 text-gray-500'
+                        }`}>
+                          {project.status}
+                        </span>
+                      )}
+                    </div>
+                    <p class="text-sm text-ink-muted mb-3">{project.description}</p>
+                    <div class="flex flex-wrap gap-1.5">
+                      {project.tags.map(tag => (
+                        <span class="text-xs px-2 py-0.5 rounded-md bg-surface-subtle text-ink-faint">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </Wrapper>
+            );
+          })}
         </div>
-        <h1 class="text-3xl font-semibold text-gray-100 mb-4">
-          Projects<span class="text-syntax-blue">.all()</span>
-        </h1>
-        <p class="text-gray-400 max-w-xl">
-          Mobile applications I've built, each representing unique challenges in mobile development.
-        </p>
-      </header>
 
-      <div class="grid md:grid-cols-2 gap-6">
-        {projects.map((project, i) => (
-          <article
-            class="group bg-editor-surface border border-editor-border rounded-xl overflow-hidden hover:border-gray-600 transition-all animate-on-scroll"
-            style={`--delay: ${i * 50}ms`}
-          >
-            {project.screenshot && (
-              <div class="aspect-[16/10] overflow-hidden bg-editor-bg">
-                <img
-                  src={project.screenshot}
-                  alt={project.title}
-                  class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
-              </div>
-            )}
-            <div class="p-6">
-              <div class="flex justify-between items-start mb-3">
-                <h3 class="font-semibold text-gray-100 group-hover:text-syntax-blue transition-colors">
-                  {project.title}
-                </h3>
-                {project.status && (
-                  <span class={`font-mono text-xs px-2 py-1 rounded border ${
-                    project.status === 'Live' ? 'bg-syntax-green/10 border-syntax-green/30 text-syntax-green' :
-                    project.status === 'Beta' ? 'bg-syntax-orange/10 border-syntax-orange/30 text-syntax-orange' :
-                    'bg-editor-hover border-editor-border text-gray-400'
-                  }`}>
-                    {project.status}
-                  </span>
-                )}
-              </div>
-
-              <p class="text-sm text-gray-400 mb-4">{project.description}</p>
-
-              <div class="flex flex-wrap gap-2">
-                {project.tags.map(tag => (
-                  <span class="font-mono text-xs px-2 py-1 bg-editor-bg border border-editor-border rounded text-gray-500">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </article>
-        ))}
       </div>
+    </section>
 
-    </div>
+    <footer class="border-t border-border py-12">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-sm text-ink-muted">
+        <span>&copy; {new Date().getFullYear()} sambulo.dev</span>
+        <a href="mailto:sambulosenda@gmail.com" class="hover:text-ink transition-colors">sambulosenda@gmail.com</a>
+      </div>
+    </footer>
   </main>
 </Layout>
-
-<style>
-  .animate-on-scroll {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-    transition-delay: var(--delay, 0ms);
-  }
-
-  .animate-on-scroll.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-</style>
-
-<script>
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-
-  document.querySelectorAll('.animate-on-scroll').forEach((el) => {
-    observer.observe(el);
-  });
-</script>

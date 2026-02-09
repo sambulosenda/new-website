@@ -1,58 +1,129 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { projects, socialLinks } from '../data/projects';
+import { projects, socialLinks, technologies } from '../data/projects';
 
-const apps = projects;
+const allPosts = await Astro.glob('./blog/*.{md,mdx}');
+const latestPosts = allPosts
+  .sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf())
+  .slice(0, 3);
+
+const featured = projects.slice(0, 3);
 ---
 
 <Layout title="Sambulo Senda — Software Engineer">
-  <main class="bg-editor-bg">
+  <main>
 
     <!-- Hero -->
-    <section class="pt-40 pb-20">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-4xl md:text-5xl font-semibold text-gray-100">
-          Sambulo Senda
-        </h1>
-        <p class="text-lg text-gray-500 mt-3 mb-8">Software Engineer</p>
+    <section class="pt-36 pb-20 sm:pt-44 sm:pb-28">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <div class="flex items-center gap-5 mb-10">
+          <img
+            src="/profile.jpg"
+            alt="Sambulo Senda"
+            class="w-16 h-16 rounded-full object-cover ring-2 ring-border"
+          />
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight">Sambulo Senda</h1>
+            <p class="text-ink-muted text-sm mt-0.5">Mobile Engineer & Indie App Maker</p>
+          </div>
+        </div>
 
-        <p class="text-xl text-gray-400 leading-relaxed max-w-2xl mb-10">
-          I build software that solves real problems—owning things end-to-end from serverless architecture to final UX. Core skills: TypeScript, React, React Native, Node. Also into mentoring, product direction, and AI/LLM engineering.
+        <p class="text-lg sm:text-xl text-ink-muted leading-relaxed max-w-2xl">
+          I ship apps to the App Store and help teams build great mobile experiences. Multiple live apps, from Bible readers to AI-powered OCR — all built end-to-end with React Native, TypeScript, and Expo.
         </p>
 
-        <div class="flex items-center gap-5 text-sm">
-          {socialLinks.map(({ url, platform }) => (
-            <a
-              href={url}
-              target="_blank"
-              class="text-gray-500 hover:text-gray-300 transition-colors"
-            >
-              {platform}
-            </a>
-          ))}
+        <!-- About -->
+        <div class="mt-8 p-5 bg-surface rounded-xl border border-border">
+          <p class="text-sm text-ink-muted leading-relaxed">
+            Software engineer with experience across startups and agencies. I've built apps serving thousands of users, migrated codebases to React Native's New Architecture, and shipped AI-powered features using LLMs. Currently building indie apps and available for consulting.
+          </p>
+        </div>
+
+        <!-- Social + CTA -->
+        <div class="flex flex-wrap items-center gap-4 mt-8">
+          <a
+            href="https://cal.com/sambulosenda"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-white text-sm font-medium rounded-lg hover:bg-ink/90 transition-colors"
+          >
+            Get in touch
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <div class="flex items-center gap-3">
+            {socialLinks.map(({ url, platform, icon }) => (
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="p-2 text-ink-faint hover:text-ink rounded-lg hover:bg-surface-subtle transition-colors"
+                aria-label={platform}
+              >
+                <span set:html={icon} />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Work -->
-    <section id="work" class="py-20">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-2xl font-semibold text-gray-100 mb-8">
-          Projects
-        </h2>
+    <!-- Divider -->
+    <div class="max-w-3xl mx-auto px-4 sm:px-6"><div class="border-t border-border"></div></div>
 
-        <!-- Projects List -->
-        <div class="space-y-6">
-          {apps.map((app) => {
-            const Wrapper = app.url ? 'a' : 'div';
+    <!-- Featured Projects -->
+    <section class="py-20">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-lg font-semibold text-ink">Projects</h2>
+          <a href="/projects" class="text-sm text-ink-muted hover:text-accent transition-colors">
+            View all &rarr;
+          </a>
+        </div>
+
+        <div class="space-y-4">
+          {featured.map((project) => {
+            const Wrapper = project.url ? 'a' : 'div';
             return (
               <Wrapper
-                href={app.url}
-                target={app.url ? '_blank' : undefined}
-                class={`block p-5 rounded-lg border border-editor-border hover:border-gray-600 transition-colors ${app.url ? 'cursor-pointer' : ''}`}
+                href={project.url}
+                target={project.url ? '_blank' : undefined}
+                rel={project.url ? 'noopener noreferrer' : undefined}
+                class={`group block bg-surface rounded-xl border border-border p-5 hover:border-ink-faint/40 hover:shadow-sm transition-all ${project.url ? 'cursor-pointer' : ''}`}
               >
-                <h3 class="text-lg font-medium text-gray-100 mb-2">{app.title}</h3>
-                <p class="text-gray-400 text-sm">{app.description}</p>
+                <div class="flex items-start gap-4">
+                  {project.screenshot && (
+                    <img
+                      src={project.screenshot}
+                      alt={project.title}
+                      class="w-16 h-16 rounded-xl object-cover object-top shrink-0 border border-border"
+                      loading="lazy"
+                    />
+                  )}
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-1">
+                      <h3 class="font-medium text-ink group-hover:text-accent transition-colors truncate">
+                        {project.title}
+                      </h3>
+                      {project.status && (
+                        <span class={`shrink-0 text-xs px-1.5 py-0.5 rounded-full font-medium ${
+                          project.status === 'Live' ? 'bg-emerald-50 text-emerald-600' :
+                          project.status === 'Beta' ? 'bg-amber-50 text-amber-600' :
+                          'bg-gray-100 text-gray-500'
+                        }`}>
+                          {project.status}
+                        </span>
+                      )}
+                    </div>
+                    <p class="text-sm text-ink-muted line-clamp-2">{project.description}</p>
+                    <div class="flex flex-wrap gap-1.5 mt-3">
+                      {project.tags.map(tag => (
+                        <span class="text-xs px-2 py-0.5 rounded-md bg-surface-subtle text-ink-faint">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </Wrapper>
             );
           })}
@@ -60,13 +131,80 @@ const apps = projects;
       </div>
     </section>
 
+    <!-- Divider -->
+    <div class="max-w-3xl mx-auto px-4 sm:px-6"><div class="border-t border-border"></div></div>
+
+    <!-- Latest Writing -->
+    {latestPosts.length > 0 && (
+      <section class="py-20">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6">
+          <div class="flex items-center justify-between mb-8">
+            <h2 class="text-lg font-semibold text-ink">Writing</h2>
+            <a href="/writing" class="text-sm text-ink-muted hover:text-accent transition-colors">
+              All posts &rarr;
+            </a>
+          </div>
+
+          <div class="space-y-1">
+            {latestPosts.map(post => (
+              <a href={post.url} class="group flex items-center justify-between gap-4 py-3 px-3 -mx-3 rounded-lg hover:bg-surface transition-colors">
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-sm font-medium text-ink group-hover:text-accent transition-colors truncate">
+                    {post.frontmatter.title}
+                  </h3>
+                  {post.frontmatter.description && (
+                    <p class="text-sm text-ink-faint mt-0.5 line-clamp-1">{post.frontmatter.description}</p>
+                  )}
+                </div>
+                <time datetime={post.frontmatter.date} class="text-xs text-ink-faint whitespace-nowrap shrink-0 font-mono">
+                  {new Date(post.frontmatter.date).toLocaleDateString('en-US', {
+                    month: 'short',
+                    year: 'numeric'
+                  })}
+                </time>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Divider -->
+    <div class="max-w-3xl mx-auto px-4 sm:px-6"><div class="border-t border-border"></div></div>
+
+    <!-- Stack -->
+    <section class="py-20">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <h2 class="text-lg font-semibold text-ink mb-6">Stack</h2>
+        <div class="flex flex-wrap gap-2">
+          {technologies.map(({ name, primary }) => (
+            <span class={`text-sm px-3 py-1.5 rounded-lg border transition-colors ${
+              primary
+                ? 'bg-accent-subtle border-accent/20 text-accent font-medium'
+                : 'bg-surface border-border text-ink-muted'
+            }`}>
+              {name}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="py-16 border-t border-editor-border">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-        <span>© {new Date().getFullYear()} sambulo.dev</span>
-        <a href="mailto:sambulosenda@gmail.com" class="hover:text-gray-300 transition-colors">
-          sambulosenda@gmail.com
-        </a>
+    <footer class="border-t border-border py-12">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+          <div>
+            <span class="font-semibold text-ink tracking-tight">sambulo</span>
+            <p class="text-sm text-ink-faint mt-1">&copy; {new Date().getFullYear()}</p>
+          </div>
+          <div class="flex items-center gap-6 text-sm text-ink-muted">
+            <a href="/projects" class="hover:text-ink transition-colors">Projects</a>
+            <a href="/writing" class="hover:text-ink transition-colors">Writing</a>
+            <a href="/support" class="hover:text-ink transition-colors">Support</a>
+            <a href="mailto:sambulosenda@gmail.com" class="hover:text-ink transition-colors">Email</a>
+          </div>
+        </div>
       </div>
     </footer>
 
