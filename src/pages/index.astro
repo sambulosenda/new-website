@@ -92,12 +92,14 @@ const featured = projects.slice(0, 3);
               >
                 <div class="flex items-start gap-4">
                   {project.screenshot && (
-                    <img
-                      src={project.screenshot}
-                      alt={project.title}
-                      class="w-16 h-16 rounded-xl object-cover object-top shrink-0 border border-border"
-                      loading="lazy"
-                    />
+                    <div class="w-16 h-16 rounded-xl shrink-0 border border-border bg-surface-subtle flex items-center justify-center p-1.5 overflow-hidden">
+                      <img
+                        src={project.screenshot}
+                        alt={project.title}
+                        class="w-full h-full object-contain rounded-md"
+                        loading="lazy"
+                      />
+                    </div>
                   )}
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2 mb-1">
