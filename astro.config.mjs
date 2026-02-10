@@ -13,5 +13,13 @@ export default defineConfig({
   server: {
     host: true,
   },
+  markdown: {
+    shikiConfig: {
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+    },
+  },
   integrations: [tailwind(), mdx(), sitemap()],
 });

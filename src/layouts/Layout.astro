@@ -1,5 +1,7 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 import Navigation from '../components/Navigation.astro';
+import CommandPalette from '../components/CommandPalette.astro';
 
 interface Props {
   title: string;
@@ -12,13 +14,18 @@ interface Props {
 const {
   title,
   description = "Mobile engineer and indie app maker. Shipping React Native apps to the App Store — from Bible readers to AI-powered OCR.",
-  image = "/profile.jpg",
+  image,
   type = "website",
   publishedTime
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://sambulosenda.com');
-const ogImage = new URL(image, Astro.site || 'https://sambulosenda.com');
+
+// Use OG image endpoint for blog posts, fallback to provided image or default
+const slug = Astro.url.pathname.replace(/^\/blog\//, '').replace(/\/$/, '');
+const ogImage = type === 'article' && slug
+  ? new URL(`/og/${slug}.png`, Astro.site || 'https://sambulosenda.com')
+  : new URL(image || '/profile.jpg', Astro.site || 'https://sambulosenda.com');
 ---
 
 <!doctype html>
@@ -31,6 +38,9 @@ const ogImage = new URL(image, Astro.site || 'https://sambulosenda.com');
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="Sambulo Senda's Blog" href="/rss.xml" />
 
     <!-- Open Graph -->
     <meta property="og:type" content={type} />
@@ -51,9 +61,64 @@ const ogImage = new URL(image, Astro.site || 'https://sambulosenda.com');
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Dark mode: blocking script to prevent flash -->
+    <script is:inline>
+      (function() {
+        const stored = localStorage.getItem('theme');
+        if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+
+    <ViewTransitions />
+
+    <style is:global>
+      :root {
+        --color-surface: #ffffff;
+        --color-surface-muted: #f8f8f7;
+        --color-surface-subtle: #f0efed;
+        --color-border: #e8e6e3;
+        --color-border-muted: #f0efed;
+        --color-ink: #1a1a19;
+        --color-ink-muted: #6b6b69;
+        --color-ink-faint: #9e9e9b;
+        --color-accent: #2b5ce6;
+        --color-accent-hover: #1d4ed8;
+        --color-accent-subtle: #eef2ff;
+      }
+
+      html.dark {
+        --color-surface: #131313;
+        --color-surface-muted: #1a1a1a;
+        --color-surface-subtle: #232323;
+        --color-border: #2e2e2e;
+        --color-border-muted: #232323;
+        --color-ink: #e8e6e3;
+        --color-ink-muted: #a0a09d;
+        --color-ink-faint: #6b6b69;
+        --color-accent: #6b8ef2;
+        --color-accent-hover: #8aa4f5;
+        --color-accent-subtle: #1e2640;
+      }
+    </style>
   </head>
   <body class="bg-surface-muted text-ink antialiased" style="font-family: 'Inter', system-ui, sans-serif;">
     <Navigation />
     <slot />
+    <CommandPalette />
   </body>
 </html>
+
+<script>
+  // Re-apply dark mode after view transition swap
+  document.addEventListener('astro:after-swap', () => {
+    const stored = localStorage.getItem('theme');
+    if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  });
+</script>

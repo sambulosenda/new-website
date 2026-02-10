@@ -1,0 +1,25 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-border py-12">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+      <div>
+        <span class="font-semibold text-ink tracking-tight">sambulo</span>
+        <p class="text-sm text-ink-faint mt-1">&copy; {year}</p>
+      </div>
+      <div class="flex items-center gap-6 text-sm text-ink-muted">
+        <a href="/projects" class="hover:text-ink transition-colors">Projects</a>
+        <a href="/writing" class="hover:text-ink transition-colors">Writing</a>
+        <a href="/now" class="hover:text-ink transition-colors">Now</a>
+        <a href="/support" class="hover:text-ink transition-colors">Support</a>
+        <a href="/rss.xml" class="hover:text-ink transition-colors" aria-label="RSS Feed">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

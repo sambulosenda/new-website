@@ -67,12 +67,19 @@ export const socialLinks = [
   },
 ];
 
-export const technologies = [
-  { name: 'React Native', primary: true },
-  { name: 'TypeScript', primary: true },
-  { name: 'Expo', primary: true },
-  { name: 'Node.js', primary: false },
-  { name: 'Supabase', primary: false },
-  { name: 'GraphQL', primary: false },
-  { name: 'AI/LLMs', primary: false },
+export interface Technology {
+  name: string;
+  primary: boolean;
+  years: number;
+  description: string;
+}
+
+export const technologies: Technology[] = [
+  { name: 'React Native', primary: true, years: 5, description: 'Cross-platform mobile apps shipped to App Store & Play Store' },
+  { name: 'TypeScript', primary: true, years: 5, description: 'Type-safe code across frontend and backend projects' },
+  { name: 'Expo', primary: true, years: 4, description: 'Managed workflow, EAS builds, OTA updates, and native modules' },
+  { name: 'Node.js', primary: false, years: 6, description: 'REST APIs, serverless functions, and build tooling' },
+  { name: 'Supabase', primary: false, years: 2, description: 'Auth, real-time database, storage, and edge functions' },
+  { name: 'GraphQL', primary: false, years: 3, description: 'Schema design, Apollo Client, and code generation' },
+  { name: 'AI/LLMs', primary: false, years: 2, description: 'Google Gemini, OpenAI APIs, on-device ML integration' },
 ];

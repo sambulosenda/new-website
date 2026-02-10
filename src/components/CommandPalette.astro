@@ -1,0 +1,229 @@
+---
+const pages = [
+  { title: 'Home', url: '/', section: 'Pages' },
+  { title: 'Projects', url: '/projects', section: 'Pages' },
+  { title: 'Writing', url: '/writing', section: 'Pages' },
+  { title: 'Now', url: '/now', section: 'Pages' },
+  { title: 'Support', url: '/support', section: 'Pages' },
+];
+
+const allPosts = await Astro.glob('../pages/blog/*.{md,mdx}');
+const posts = allPosts
+  .sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf())
+  .map(post => ({
+    title: post.frontmatter.title,
+    url: post.url,
+    section: 'Posts',
+    description: post.frontmatter.description || '',
+  }));
+
+const actions = [
+  { title: 'Toggle dark mode', action: 'toggle-theme', section: 'Actions', icon: 'moon' },
+  { title: 'Copy current URL', action: 'copy-url', section: 'Actions', icon: 'link' },
+  { title: 'RSS Feed', url: '/rss.xml', section: 'Actions', icon: 'rss' },
+];
+---
+
+<div id="command-palette" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-label="Command palette">
+  <!-- Backdrop -->
+  <div id="cp-backdrop" class="absolute inset-0 bg-ink/40 backdrop-blur-sm"></div>
+
+  <!-- Panel -->
+  <div class="relative flex items-start justify-center pt-[20vh] px-4">
+    <div id="cp-panel" class="w-full max-w-lg bg-surface border border-border rounded-xl shadow-2xl overflow-hidden">
+      <!-- Search input -->
+      <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
+        <svg class="w-4 h-4 text-ink-faint shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input
+          id="cp-input"
+          type="text"
+          placeholder="Search pages, posts, and actions..."
+          class="flex-1 bg-transparent text-sm text-ink placeholder:text-ink-faint outline-none"
+          autocomplete="off"
+        />
+        <kbd class="hidden sm:inline text-xs text-ink-faint bg-surface-subtle px-1.5 py-0.5 rounded border border-border">esc</kbd>
+      </div>
+
+      <!-- Results -->
+      <div id="cp-results" class="max-h-[50vh] overflow-y-auto p-2">
+      </div>
+
+      <!-- Empty state -->
+      <div id="cp-empty" class="hidden p-8 text-center text-sm text-ink-faint">
+        No results found.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ pages: JSON.stringify(pages), posts: JSON.stringify(posts), actions: JSON.stringify(actions) }}>
+  document.addEventListener('astro:page-load', () => {
+    const palette = document.getElementById('command-palette');
+    const backdrop = document.getElementById('cp-backdrop');
+    const input = document.getElementById('cp-input');
+    const resultsContainer = document.getElementById('cp-results');
+    const emptyState = document.getElementById('cp-empty');
+
+    if (!palette || !input || !resultsContainer || !emptyState) return;
+
+    const allPages = JSON.parse(pages);
+    const allPosts = JSON.parse(posts);
+    const allActions = JSON.parse(actions);
+    let selectedIndex = 0;
+
+    const icons = {
+      page: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>',
+      post: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>',
+      moon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>',
+      link: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>',
+      rss: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"/></svg>',
+    };
+
+    function getAllItems() {
+      return [...allPages, ...allPosts, ...allActions];
+    }
+
+    function filterItems(query) {
+      if (!query) return getAllItems();
+      const q = query.toLowerCase();
+      return getAllItems().filter(function(item) {
+        return item.title.toLowerCase().includes(q) ||
+          (item.description && item.description.toLowerCase().includes(q)) ||
+          (item.section && item.section.toLowerCase().includes(q));
+      });
+    }
+
+    function getIcon(item) {
+      if (item.icon) return icons[item.icon] || icons.page;
+      if (item.section === 'Posts') return icons.post;
+      return icons.page;
+    }
+
+    function renderResults(items) {
+      if (items.length === 0) {
+        resultsContainer.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      resultsContainer.classList.remove('hidden');
+      emptyState.classList.add('hidden');
+
+      // Clear and rebuild using DOM methods
+      resultsContainer.textContent = '';
+      let currentSection = '';
+
+      items.forEach(function(item, i) {
+        if (item.section !== currentSection) {
+          currentSection = item.section;
+          const sectionEl = document.createElement('div');
+          sectionEl.className = 'text-xs font-medium text-ink-faint uppercase tracking-wider px-3 py-1.5' + (i > 0 ? ' mt-2' : '');
+          sectionEl.textContent = currentSection;
+          resultsContainer.appendChild(sectionEl);
+        }
+
+        const btn = document.createElement('button');
+        btn.className = 'cp-item flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left text-sm transition-colors hover:bg-surface-subtle' + (i === selectedIndex ? ' bg-surface-subtle' : '');
+        btn.setAttribute('data-index', String(i));
+
+        const iconSpan = document.createElement('span');
+        iconSpan.className = 'text-ink-faint shrink-0';
+        iconSpan.innerHTML = getIcon(item);
+        btn.appendChild(iconSpan);
+
+        const textSpan = document.createElement('span');
+        textSpan.className = 'text-ink truncate';
+        textSpan.textContent = item.title;
+        btn.appendChild(textSpan);
+
+        btn.addEventListener('click', function() { executeItem(item); });
+        resultsContainer.appendChild(btn);
+      });
+    }
+
+    function executeItem(item) {
+      closePalette();
+      if (item.action === 'toggle-theme') {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      } else if (item.action === 'copy-url') {
+        navigator.clipboard.writeText(window.location.href);
+      } else if (item.url) {
+        window.location.href = item.url;
+      }
+    }
+
+    function openPalette() {
+      palette.classList.remove('hidden');
+      input.value = '';
+      selectedIndex = 0;
+      renderResults(getAllItems());
+      requestAnimationFrame(function() { input.focus(); });
+    }
+
+    function closePalette() {
+      palette.classList.add('hidden');
+      input.value = '';
+    }
+
+    function updateSelection(items) {
+      resultsContainer.querySelectorAll('.cp-item').forEach(function(btn, i) {
+        if (i === selectedIndex) {
+          btn.classList.add('bg-surface-subtle');
+          btn.scrollIntoView({ block: 'nearest' });
+        } else {
+          btn.classList.remove('bg-surface-subtle');
+        }
+      });
+    }
+
+    // Event listeners
+    document.addEventListener('open-command-palette', openPalette);
+
+    document.addEventListener('keydown', function(e) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        if (palette.classList.contains('hidden')) {
+          openPalette();
+        } else {
+          closePalette();
+        }
+      }
+
+      if (palette.classList.contains('hidden')) return;
+
+      if (e.key === 'Escape') {
+        closePalette();
+      }
+
+      var items = filterItems(input.value);
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+        updateSelection(items);
+      }
+
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        selectedIndex = Math.max(selectedIndex - 1, 0);
+        updateSelection(items);
+      }
+
+      if (e.key === 'Enter' && items[selectedIndex]) {
+        e.preventDefault();
+        executeItem(items[selectedIndex]);
+      }
+    });
+
+    backdrop?.addEventListener('click', closePalette);
+
+    input.addEventListener('input', function() {
+      selectedIndex = 0;
+      var items = filterItems(input.value);
+      renderResults(items);
+    });
+  });
+</script>

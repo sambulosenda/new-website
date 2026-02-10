@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
 import { projects, socialLinks, technologies } from '../data/projects';
 
 const allPosts = await Astro.glob('./blog/*.{md,mdx}');
@@ -45,7 +46,7 @@ const featured = projects.slice(0, 3);
             href="https://cal.com/sambulosenda"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-white text-sm font-medium rounded-lg hover:bg-ink/90 transition-colors"
+            class="inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-surface text-sm font-medium rounded-lg hover:opacity-90 transition-colors"
           >
             Get in touch
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
@@ -179,36 +180,27 @@ const featured = projects.slice(0, 3);
       <div class="max-w-3xl mx-auto px-4 sm:px-6">
         <h2 class="text-lg font-semibold text-ink mb-6">Stack</h2>
         <div class="flex flex-wrap gap-2">
-          {technologies.map(({ name, primary }) => (
-            <span class={`text-sm px-3 py-1.5 rounded-lg border transition-colors ${
-              primary
-                ? 'bg-accent-subtle border-accent/20 text-accent font-medium'
-                : 'bg-surface border-border text-ink-muted'
-            }`}>
-              {name}
-            </span>
+          {technologies.map(({ name, primary, years, description }) => (
+            <div class="relative group">
+              <span class={`inline-block text-sm px-3 py-1.5 rounded-lg border transition-colors cursor-default ${
+                primary
+                  ? 'bg-accent-subtle border-accent/20 text-accent font-medium'
+                  : 'bg-surface border-border text-ink-muted'
+              }`}>
+                {name}
+              </span>
+              <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-3 bg-surface border border-border rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10 pointer-events-none">
+                <div class="text-sm font-medium text-ink mb-1">{name}</div>
+                <div class="text-xs text-ink-faint mb-1">{years} {years === 1 ? 'year' : 'years'} experience</div>
+                <div class="text-xs text-ink-muted leading-relaxed">{description}</div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="border-t border-border py-12">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-          <div>
-            <span class="font-semibold text-ink tracking-tight">sambulo</span>
-            <p class="text-sm text-ink-faint mt-1">&copy; {new Date().getFullYear()}</p>
-          </div>
-          <div class="flex items-center gap-6 text-sm text-ink-muted">
-            <a href="/projects" class="hover:text-ink transition-colors">Projects</a>
-            <a href="/writing" class="hover:text-ink transition-colors">Writing</a>
-            <a href="/support" class="hover:text-ink transition-colors">Support</a>
-            <a href="mailto:sambulosenda@gmail.com" class="hover:text-ink transition-colors">Email</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <Footer />
 
   </main>
 </Layout>

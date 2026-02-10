@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
 const posts = await Astro.glob('./*.{md,mdx}');
 
 const sortedPosts = posts.sort((a, b) => {
@@ -53,11 +54,6 @@ const sortedPosts = posts.sort((a, b) => {
       </div>
     </section>
 
-    <footer class="border-t border-border py-12">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-sm text-ink-muted">
-        <span>&copy; {new Date().getFullYear()} sambulo.dev</span>
-        <a href="mailto:sambulosenda@gmail.com" class="hover:text-ink transition-colors">sambulosenda@gmail.com</a>
-      </div>
-    </footer>
+    <Footer />
   </main>
 </Layout>
