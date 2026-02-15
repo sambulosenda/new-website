@@ -4,6 +4,13 @@ const navLinks = [
   { path: '/writing', label: 'Writing' },
   { path: '/now', label: 'Now' },
 ];
+
+const currentPath = Astro.url.pathname;
+
+function isActive(path: string): boolean {
+  if (path === '/') return currentPath === '/';
+  return currentPath === path || currentPath.startsWith(path + '/');
+}
 ---
 
 <nav id="nav" class="fixed w-full py-5 px-4 sm:px-6 lg:px-8 z-50 transition-all duration-300">
@@ -17,7 +24,12 @@ const navLinks = [
       {navLinks.map(({ path, label }) => (
         <a
           href={path}
-          class="text-ink-muted hover:text-ink text-sm transition-colors"
+          class={`text-sm transition-colors ${
+            isActive(path)
+              ? 'text-ink font-medium'
+              : 'text-ink-muted hover:text-ink'
+          }`}
+          aria-current={isActive(path) ? 'page' : undefined}
         >
           {label}
         </a>
@@ -97,7 +109,15 @@ const navLinks = [
 
       <nav class="flex flex-col items-center justify-center flex-1 gap-8">
         {navLinks.map(({ path, label }) => (
-          <a href={path} class="text-ink text-xl hover:text-accent transition-colors">
+          <a
+            href={path}
+            class={`text-xl transition-colors ${
+              isActive(path)
+                ? 'text-accent font-medium'
+                : 'text-ink hover:text-accent'
+            }`}
+            aria-current={isActive(path) ? 'page' : undefined}
+          >
             {label}
           </a>
         ))}

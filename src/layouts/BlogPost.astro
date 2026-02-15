@@ -25,7 +25,12 @@ const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
   day: 'numeric'
 });
 
-const readingTime = frontmatter.readingTime || '5 min read';
+// Auto-calculate reading time from post body
+const rawContent = await Astro.slots.render('default');
+const textOnly = rawContent.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+const wordCount = textOnly.split(/\s+/).length;
+const minutes = Math.max(1, Math.ceil(wordCount / 230));
+const readingTime = frontmatter.readingTime || `${minutes} min read`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://sambulosenda.com');
 const slug = Astro.url.pathname.replace(/^\/blog\//, '').replace(/\/$/, '');
 
