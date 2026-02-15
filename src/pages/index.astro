@@ -1,202 +1,56 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
-import { projects, socialLinks, technologies } from '../data/projects';
-
-const allPosts = await Astro.glob('./blog/*.{md,mdx}');
-const latestPosts = allPosts
-  .sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf())
-  .slice(0, 3);
-
-const featured = projects.slice(0, 3);
+import { socialLinks } from '../data/projects';
 ---
 
 <Layout title="Sambulo Senda — Software Engineer">
   <main>
 
-    <!-- Hero -->
-    <section class="pt-36 pb-20 sm:pt-44 sm:pb-28">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6">
-        <div class="flex items-center gap-5 mb-10">
-          <img
-            src="/profile.jpg"
-            alt="Sambulo Senda"
-            class="w-16 h-16 rounded-full object-cover ring-2 ring-border"
-          />
-          <div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight">Sambulo Senda</h1>
-            <p class="text-ink-muted text-sm mt-0.5">Mobile Engineer & Indie App Maker</p>
-          </div>
-        </div>
+    <section class="pt-36 pb-24 sm:pt-44 sm:pb-32">
+      <div class="max-w-xl mx-auto px-4 sm:px-6">
 
-        <p class="text-lg sm:text-xl text-ink-muted leading-relaxed max-w-2xl">
-          I take ideas from zero to the App Store using React Native, TypeScript, and Expo. Multiple live apps shipped, and I help teams build great mobile experiences too.
+        <img
+          src="/profile.jpg"
+          alt="Sambulo Senda"
+          class="w-14 h-14 rounded-full object-cover ring-2 ring-border mb-8"
+        />
+
+        <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight">Sambulo Senda</h1>
+        <p class="text-ink-muted mt-2 leading-relaxed">
+          Mobile engineer building apps with React Native, TypeScript, and Expo.
+          I ship indie products to the App Store and help teams build great mobile experiences.
         </p>
 
-        <!-- About -->
-        <div class="mt-8 p-5 bg-surface rounded-xl border border-border">
-          <p class="text-sm text-ink-muted leading-relaxed">
-            Software engineer with experience across startups and agencies. I've built apps serving thousands of users, migrated codebases to React Native's New Architecture, and shipped AI-powered features using LLMs. Currently building indie apps and available for consulting.
-          </p>
-        </div>
-
-        <!-- Social + CTA -->
-        <div class="flex flex-wrap items-center gap-4 mt-8">
-          <a
-            href="https://cal.com/sambulosenda"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-surface text-sm font-medium rounded-lg hover:opacity-90 transition-colors"
-          >
-            Get in touch
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        <nav class="mt-10 flex flex-col gap-1">
+          <a href="/projects" class="group flex items-center justify-between py-2.5 text-sm text-ink hover:text-accent transition-colors">
+            <span class="font-medium">Projects</span>
+            <svg class="w-4 h-4 text-ink-faint group-hover:text-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
           </a>
-          <div class="flex items-center gap-3">
-            {socialLinks.map(({ url, platform, icon }) => (
-              <a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="p-2 text-ink-faint hover:text-ink rounded-lg hover:bg-surface-subtle transition-colors"
-                aria-label={platform}
-              >
-                <span set:html={icon} />
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Divider -->
-    <div class="max-w-3xl mx-auto px-4 sm:px-6"><div class="border-t border-border"></div></div>
-
-    <!-- Featured Projects -->
-    <section class="py-20">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6">
-        <div class="flex items-center justify-between mb-8">
-          <h2 class="text-lg font-semibold text-ink">Projects</h2>
-          <a href="/projects" class="text-sm text-ink-muted hover:text-accent transition-colors">
-            View all &rarr;
+          <a href="/writing" class="group flex items-center justify-between py-2.5 text-sm text-ink hover:text-accent transition-colors">
+            <span class="font-medium">Writing</span>
+            <svg class="w-4 h-4 text-ink-faint group-hover:text-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
           </a>
-        </div>
+          <a href="https://cal.com/sambulosenda" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between py-2.5 text-sm text-ink hover:text-accent transition-colors">
+            <span class="font-medium">Get in touch</span>
+            <svg class="w-4 h-4 text-ink-faint group-hover:text-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </nav>
 
-        <div class="space-y-4">
-          {featured.map((project) => {
-            const Wrapper = project.url ? 'a' : 'div';
-            return (
-              <Wrapper
-                href={project.url}
-                target={project.url ? '_blank' : undefined}
-                rel={project.url ? 'noopener noreferrer' : undefined}
-                class={`group block bg-surface rounded-xl border border-border p-5 hover:border-ink-faint/40 hover:shadow-sm transition-all ${project.url ? 'cursor-pointer' : ''}`}
-              >
-                <div class="flex items-start gap-4">
-                  {project.screenshot && (
-                    <div class="w-16 h-16 rounded-xl shrink-0 border border-border bg-surface-subtle flex items-center justify-center p-1.5 overflow-hidden">
-                      <img
-                        src={project.screenshot}
-                        alt={project.title}
-                        class="w-full h-full object-contain rounded-md"
-                        loading="lazy"
-                      />
-                    </div>
-                  )}
-                  <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2 mb-1">
-                      <h3 class="font-medium text-ink group-hover:text-accent transition-colors truncate">
-                        {project.title}
-                      </h3>
-                      {project.status && (
-                        <span class={`shrink-0 text-xs px-1.5 py-0.5 rounded-full font-medium ${
-                          project.status === 'Live' ? 'bg-emerald-50 text-emerald-600' :
-                          project.status === 'Beta' ? 'bg-amber-50 text-amber-600' :
-                          'bg-gray-100 text-gray-500'
-                        }`}>
-                          {project.status}
-                        </span>
-                      )}
-                    </div>
-                    <p class="text-sm text-ink-muted line-clamp-2">{project.description}</p>
-                    <div class="flex flex-wrap gap-1.5 mt-3">
-                      {project.tags.map(tag => (
-                        <span class="text-xs px-2 py-0.5 rounded-md bg-surface-subtle text-ink-faint">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </Wrapper>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-
-    <!-- Divider -->
-    <div class="max-w-3xl mx-auto px-4 sm:px-6"><div class="border-t border-border"></div></div>
-
-    <!-- Latest Writing -->
-    {latestPosts.length > 0 && (
-      <section class="py-20">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6">
-          <div class="flex items-center justify-between mb-8">
-            <h2 class="text-lg font-semibold text-ink">Writing</h2>
-            <a href="/writing" class="text-sm text-ink-muted hover:text-accent transition-colors">
-              All posts &rarr;
+        <div class="flex items-center gap-3 mt-10">
+          {socialLinks.map(({ url, platform, icon }) => (
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="p-2 text-ink-faint hover:text-ink transition-colors"
+              aria-label={platform}
+            >
+              <span set:html={icon} />
             </a>
-          </div>
-
-          <div class="space-y-1">
-            {latestPosts.map(post => (
-              <a href={post.url} class="group flex items-center justify-between gap-4 py-3 px-3 -mx-3 rounded-lg hover:bg-surface transition-colors">
-                <div class="flex-1 min-w-0">
-                  <h3 class="text-sm font-medium text-ink group-hover:text-accent transition-colors truncate">
-                    {post.frontmatter.title}
-                  </h3>
-                  {post.frontmatter.description && (
-                    <p class="text-sm text-ink-faint mt-0.5 line-clamp-1">{post.frontmatter.description}</p>
-                  )}
-                </div>
-                <time datetime={post.frontmatter.date} class="text-xs text-ink-faint whitespace-nowrap shrink-0 font-mono">
-                  {new Date(post.frontmatter.date).toLocaleDateString('en-US', {
-                    month: 'short',
-                    year: 'numeric'
-                  })}
-                </time>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-    )}
-
-    <!-- Divider -->
-    <div class="max-w-3xl mx-auto px-4 sm:px-6"><div class="border-t border-border"></div></div>
-
-    <!-- Stack -->
-    <section class="py-20">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6">
-        <h2 class="text-lg font-semibold text-ink mb-6">Stack</h2>
-        <div class="flex flex-wrap gap-2">
-          {technologies.map(({ name, primary, years, description }) => (
-            <div class="relative group">
-              <span class={`inline-block text-sm px-3 py-1.5 rounded-lg border transition-colors cursor-default ${
-                primary
-                  ? 'bg-accent-subtle border-accent/20 text-accent font-medium'
-                  : 'bg-surface border-border text-ink-muted'
-              }`}>
-                {name}
-              </span>
-              <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-3 bg-surface border border-border rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10 pointer-events-none">
-                <div class="text-sm font-medium text-ink mb-1">{name}</div>
-                <div class="text-xs text-ink-faint mb-1">{years} {years === 1 ? 'year' : 'years'} experience</div>
-                <div class="text-xs text-ink-muted leading-relaxed">{description}</div>
-              </div>
-            </div>
           ))}
         </div>
+
       </div>
     </section>
 
