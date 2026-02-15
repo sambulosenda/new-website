@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        sans: ['"Inter Variable"', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['"JetBrains Mono Variable"', 'ui-monospace', 'monospace'],
       },
       colors: {
         surface: {
@@ -52,7 +52,7 @@ export default {
               fontWeight: '600',
             },
             code: {
-              fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+              fontFamily: '"JetBrains Mono Variable", ui-monospace, monospace',
             },
           },
         },
