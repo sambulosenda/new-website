@@ -4,40 +4,28 @@ import Footer from '../components/Footer.astro';
 import { socialLinks } from '../data/projects';
 ---
 
-<Layout title="Sambulo Senda — Software Engineer">
-  <main>
+<Layout title="Sambulo Senda — Mobile Engineer">
+  <main class="min-h-screen flex flex-col">
 
-    <section class="pt-36 pb-24 sm:pt-44 sm:pb-32">
-      <div class="max-w-xl mx-auto px-4 sm:px-6">
+    <section class="pt-36 pb-24 sm:pt-44 sm:pb-32 flex-1">
+      <div class="max-w-2xl mx-auto px-4 sm:px-6">
 
         <img
           src="/profile.jpg"
           alt="Sambulo Senda"
-          class="w-14 h-14 rounded-full object-cover ring-2 ring-border mb-8"
+          class="w-20 h-20 rounded-full object-cover ring-2 ring-border mb-8"
         />
 
-        <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight">Sambulo Senda</h1>
-        <p class="text-ink-muted mt-2 leading-relaxed">
-          Mobile engineer building apps with React Native, TypeScript, and Expo.
-          I ship indie products to the App Store and help teams build great mobile experiences.
+        <h1 class="text-3xl sm:text-4xl font-bold text-ink tracking-tight">
+          Sambulo Senda
+        </h1>
+
+        <p class="text-lg text-ink-muted mt-4 leading-relaxed">
+          Mobile engineer shipping React Native apps to the App Store.
+          Building indie products, helping teams, and open to consulting.
         </p>
 
-        <nav class="mt-10 flex flex-col gap-1">
-          <a href="/projects" class="group flex items-center justify-between py-2.5 text-sm text-ink hover:text-accent transition-colors">
-            <span class="font-medium">Projects</span>
-            <svg class="w-4 h-4 text-ink-faint group-hover:text-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
-          </a>
-          <a href="/writing" class="group flex items-center justify-between py-2.5 text-sm text-ink hover:text-accent transition-colors">
-            <span class="font-medium">Writing</span>
-            <svg class="w-4 h-4 text-ink-faint group-hover:text-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
-          </a>
-          <a href="https://cal.com/sambulosenda" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between py-2.5 text-sm text-ink hover:text-accent transition-colors">
-            <span class="font-medium">Get in touch</span>
-            <svg class="w-4 h-4 text-ink-faint group-hover:text-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
-          </a>
-        </nav>
-
-        <div class="flex items-center gap-3 mt-10">
+        <div class="flex items-center gap-3 mt-8">
           {socialLinks.map(({ url, platform, icon }) => (
             <a
               href={url}

@@ -1,0 +1,93 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: How to Add iOS 26 Liquid Glass Icons to Your Expo App
+date: 2026-02-15
+description: Adopt Apple's new liquid glass icon style in your Expo app with zero code changes — just a new asset file and one config line.
+tags: ["React Native", "Expo", "iOS", "Design"]
+readingTime: "3 min read"
+---
+
+iOS 26 introduced liquid glass — a new design language that gives app icons real depth with translucency, gradients, and shadows. They look incredible on the home screen.
+
+If you're building with Expo, adopting this takes about 5 minutes. No code changes, no native modules — just a new asset file and a one-line config update.
+
+## Step 1: Create Your Icon with Icon Composer
+
+Apple ships a new app called **Icon Composer** with Xcode 26. Open it and:
+
+1. Drag your icon image onto the canvas
+2. Adjust the fill — use a solid colour or automatic gradient
+3. Tweak translucency and shadow until it looks right
+4. Save as a `.icon` file (e.g. `my-app.icon`)
+
+It outputs a folder bundle containing:
+
+```
+my-app.icon/
+├── icon.json          # Defines fill, shadow, translucency, layers
+└── Assets/
+    └── your-image.png # Your icon artwork
+```
+
+The `icon.json` controls the glass effect — gradient type, shadow opacity, translucency value, and which platforms to target. Here's what it looks like:
+
+```json
+{
+  "fill": {
+    "auto-gray:0.25000,1.00000"
+  },
+  "groups": [
+    {
+      "layers": [
+        {
+          "fill": {
+            "solid": "srgb:0.98658,1.00000,0.96916,1.00000"
+          },
+          "image-name": "your-image.png",
+          "name": "your-image"
+        }
+      ],
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
+      },
+      "translucency": {
+        "enabled": true,
+        "value": 0.5
+      }
+    }
+  ],
+  "supported-platforms": {
+    "circles": ["watchOS"],
+    "squares": "shared"
+  }
+}
+```
+
+## Step 2: Point to It in app.json
+
+Drop the `.icon` bundle into your project (I put mine in `assets/`) and reference it under `ios.icon`:
+
+```json
+{
+  "expo": {
+    "icon": "./assets/images/icon.png",
+    "ios": {
+      "icon": "./assets/my-app.icon"
+    }
+  }
+}
+```
+
+Keep the top-level `icon` field for Android and other platforms. The `ios.icon` field takes priority on iOS.
+
+That's it. Build your app and the liquid glass effect shows up on iOS 26+. Older iOS versions automatically fall back to a flat icon.
+
+## Tips
+
+- **Keep your artwork simple.** Translucency and gradient effects work best with clean, high-contrast icons.
+- **Use a large source image.** The PNG inside the `.icon` bundle should be at least 1024×1024.
+- **Test both modes.** Check how your icon looks in light and dark mode — the liquid glass effect adapts to system appearance.
+- **No code changes needed.** This is purely a build-time config. Your app code stays exactly the same.
+
+No native modules. No ejecting. Just a new asset and one config line.
