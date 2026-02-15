@@ -1,46 +1,210 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
-import { socialLinks } from '../data/projects';
+import { socialLinks, projects, technologies } from '../data/projects';
+
+const allPosts = await Astro.glob('./blog/*.{md,mdx}');
+const recentPosts = allPosts
+  .sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf())
+  .slice(0, 3);
+
+const featuredProjects = projects.slice(0, 3);
+const primaryTech = technologies.filter(t => t.primary);
+const secondaryTech = technologies.filter(t => !t.primary);
 ---
 
 <Layout title="Sambulo Senda — Mobile Engineer">
   <main class="min-h-screen flex flex-col">
 
-    <section class="pt-36 pb-24 sm:pt-44 sm:pb-32 flex-1">
+    <!-- Hero -->
+    <section class="pt-36 pb-16 sm:pt-44 sm:pb-20">
       <div class="max-w-2xl mx-auto px-4 sm:px-6">
 
-        <img
-          src="/profile.jpg"
-          alt="Sambulo Senda"
-          class="w-20 h-20 rounded-full object-cover ring-2 ring-border mb-8"
-        />
+        <div class="flex items-center gap-4 mb-8">
+          <img
+            src="/profile.jpg"
+            alt="Sambulo Senda"
+            class="w-16 h-16 rounded-full object-cover ring-2 ring-border"
+          />
+          <div class="flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <span class="text-sm text-ink-muted">Available for consulting</span>
+          </div>
+        </div>
 
-        <h1 class="text-3xl sm:text-4xl font-bold text-ink tracking-tight">
-          Sambulo Senda
+        <h1 class="text-3xl sm:text-4xl font-bold text-ink tracking-tight text-balance">
+          Mobile engineer shipping React Native apps to the App Store.
         </h1>
 
-        <p class="text-lg text-ink-muted mt-4 leading-relaxed">
-          Mobile engineer shipping React Native apps to the App Store.
-          Building indie products, helping teams, and open to consulting.
+        <p class="text-lg text-ink-muted mt-4 leading-relaxed max-w-xl">
+          I build indie products, help teams ship faster, and write about mobile development along the way.
         </p>
 
-        <div class="flex items-center gap-3 mt-8">
-          {socialLinks.map(({ url, platform, icon }) => (
+        <div class="flex items-center gap-4 mt-8">
+          <a
+            href="https://cal.com/sambulosenda"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-ink text-surface rounded-lg hover:opacity-90 transition-colors"
+          >
+            Book a call
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+          <div class="flex items-center gap-1">
+            {socialLinks.map(({ url, platform, icon }) => (
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="p-2 text-ink-faint hover:text-ink transition-colors"
+                aria-label={platform}
+              >
+                <span set:html={icon} />
+              </a>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Featured Projects -->
+    <section class="py-16 border-t border-border">
+      <div class="max-w-2xl mx-auto px-4 sm:px-6">
+
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-lg font-semibold text-ink">Featured Projects</h2>
+          <a href="/projects" class="text-sm text-ink-muted hover:text-accent transition-colors">
+            View all &rarr;
+          </a>
+        </div>
+
+        <div class="space-y-4">
+          {featuredProjects.map((project) => (
             <a
-              href={url}
+              href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              class="p-2 text-ink-faint hover:text-ink transition-colors"
-              aria-label={platform}
+              class="group block bg-surface rounded-xl border border-border overflow-hidden hover:border-ink-faint/40 hover:shadow-sm transition-all"
             >
-              <span set:html={icon} />
+              <div class="flex flex-col sm:flex-row">
+                {project.screenshot && (
+                  <div class="sm:w-44 shrink-0 overflow-hidden bg-surface-subtle flex items-center justify-center p-3 sm:p-4">
+                    <img
+                      src={project.screenshot}
+                      alt={project.title}
+                      class="w-full h-full max-h-36 object-contain rounded-lg"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <div class="flex-1 p-5">
+                  <div class="flex items-center gap-2 mb-1.5">
+                    <h3 class="font-medium text-ink group-hover:text-accent transition-colors">
+                      {project.title}
+                    </h3>
+                    {project.status && (
+                      <span class={`shrink-0 text-xs px-1.5 py-0.5 rounded-full font-medium ${
+                        project.status === 'Live' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' :
+                        project.status === 'Beta' ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400' :
+                        'bg-ink-faint/10 text-ink-faint'
+                      }`}>
+                        {project.status}
+                      </span>
+                    )}
+                  </div>
+                  <p class="text-sm text-ink-muted mb-3 line-clamp-2">{project.description}</p>
+                  <div class="flex flex-wrap gap-1.5">
+                    {project.tags.slice(0, 3).map(tag => (
+                      <span class="text-xs px-2 py-0.5 rounded-md bg-surface-subtle text-ink-faint">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </a>
           ))}
         </div>
 
       </div>
     </section>
+
+    <!-- Tech Stack -->
+    <section class="py-16 border-t border-border">
+      <div class="max-w-2xl mx-auto px-4 sm:px-6">
+
+        <h2 class="text-lg font-semibold text-ink mb-8">Tech Stack</h2>
+
+        <div class="space-y-3">
+          {primaryTech.map((tech) => (
+            <div class="flex items-start gap-4 p-4 bg-surface rounded-xl border border-border">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <h3 class="font-medium text-ink text-sm">{tech.name}</h3>
+                  <span class="text-xs px-1.5 py-0.5 rounded-full bg-accent-subtle text-accent font-medium">
+                    {tech.years}+ years
+                  </span>
+                </div>
+                <p class="text-sm text-ink-muted mt-1">{tech.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="flex flex-wrap gap-2 mt-4">
+          {secondaryTech.map((tech) => (
+            <span class="inline-flex items-center gap-1.5 text-sm px-3 py-1.5 bg-surface rounded-lg border border-border text-ink-muted" title={tech.description}>
+              {tech.name}
+              <span class="text-xs text-ink-faint">{tech.years}y</span>
+            </span>
+          ))}
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Recent Writing -->
+    {recentPosts.length > 0 && (
+      <section class="py-16 border-t border-border">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6">
+
+          <div class="flex items-center justify-between mb-8">
+            <h2 class="text-lg font-semibold text-ink">Recent Writing</h2>
+            <a href="/writing" class="text-sm text-ink-muted hover:text-accent transition-colors">
+              All posts &rarr;
+            </a>
+          </div>
+
+          <div class="space-y-1">
+            {recentPosts.map(post => (
+              <a href={post.url} class="group flex items-start justify-between gap-4 py-3 px-3 -mx-3 rounded-lg hover:bg-surface transition-colors">
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-sm font-medium text-ink group-hover:text-accent transition-colors">
+                    {post.frontmatter.title}
+                  </h3>
+                  {post.frontmatter.description && (
+                    <p class="text-sm text-ink-faint mt-0.5 line-clamp-1">{post.frontmatter.description}</p>
+                  )}
+                </div>
+                <time datetime={post.frontmatter.date} class="text-xs text-ink-faint whitespace-nowrap shrink-0 font-mono mt-0.5">
+                  {new Date(post.frontmatter.date).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric'
+                  })}
+                </time>
+              </a>
+            ))}
+          </div>
+
+        </div>
+      </section>
+    )}
 
     <Footer />
 

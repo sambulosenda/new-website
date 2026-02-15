@@ -2,23 +2,53 @@
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-border py-12">
-  <div class="max-w-2xl mx-auto px-4 sm:px-6">
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-      <div>
-        <span class="font-semibold text-ink tracking-tight">sambulo</span>
-        <p class="text-sm text-ink-faint mt-1">&copy; {year}</p>
+<footer class="border-t border-border">
+  <!-- Newsletter -->
+  <div class="py-12 border-b border-border">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-6">
+        <div class="flex-1">
+          <h3 class="text-sm font-semibold text-ink mb-1">Stay updated</h3>
+          <p class="text-sm text-ink-muted">
+            Get notified when I publish new articles about React Native and mobile development.
+          </p>
+        </div>
+        <form class="flex gap-2 shrink-0 sm:w-auto w-full" onsubmit="event.preventDefault()">
+          <input
+            type="email"
+            placeholder="your@email.com"
+            class="flex-1 sm:w-48 px-3 py-2 text-sm bg-surface border border-border rounded-lg text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-colors"
+            required
+          />
+          <button
+            type="submit"
+            class="px-4 py-2 text-sm font-medium bg-ink text-surface rounded-lg hover:opacity-90 transition-colors whitespace-nowrap"
+          >
+            Subscribe
+          </button>
+        </form>
       </div>
-      <div class="flex items-center gap-6 text-sm text-ink-muted">
-        <a href="/projects" class="hover:text-ink transition-colors">Projects</a>
-        <a href="/writing" class="hover:text-ink transition-colors">Writing</a>
-        <a href="/now" class="hover:text-ink transition-colors">Now</a>
-        <a href="/support" class="hover:text-ink transition-colors">Support</a>
-        <a href="/rss.xml" class="hover:text-ink transition-colors" aria-label="RSS Feed">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"/>
-          </svg>
-        </a>
+    </div>
+  </div>
+
+  <!-- Footer links -->
+  <div class="py-8">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+        <div>
+          <span class="font-semibold text-ink tracking-tight">sambulo</span>
+          <p class="text-sm text-ink-faint mt-1">&copy; {year}</p>
+        </div>
+        <div class="flex items-center gap-6 text-sm text-ink-muted">
+          <a href="/projects" class="hover:text-ink transition-colors">Projects</a>
+          <a href="/writing" class="hover:text-ink transition-colors">Writing</a>
+          <a href="/now" class="hover:text-ink transition-colors">Now</a>
+          <a href="/rss.xml" class="hover:text-ink transition-colors" aria-label="RSS Feed">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"/>
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
   </div>
