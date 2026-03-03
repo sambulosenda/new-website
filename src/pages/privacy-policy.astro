@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
-const lastUpdated = "January 28, 2025";
+const lastUpdated = "March 3, 2026";
 ---
 
 <Layout title="Privacy Policy — Sambulo Senda">
@@ -34,6 +34,11 @@ const lastUpdated = "January 28, 2025";
                     <td class="py-3">Camera, Local Storage</td>
                     <td class="py-3">Google Gemini API, RevenueCat</td>
                   </tr>
+                  <tr class="border-b border-border-muted">
+                    <td class="py-3 font-medium text-ink">Grace Lock</td>
+                    <td class="py-3">Screen Time (Family Controls), Local Storage</td>
+                    <td class="py-3">RevenueCat</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -43,8 +48,9 @@ const lastUpdated = "January 28, 2025";
             <h2 class="text-lg font-semibold text-ink mb-4">Mobile Applications</h2>
             <h3 class="text-sm font-medium text-ink mb-2">Data We Collect</h3>
             <ul class="list-disc pl-5 space-y-1 mb-4">
-              <li><strong class="text-ink">Camera Access:</strong> Used solely to capture images for text extraction. Images are processed and not stored on our servers.</li>
-              <li><strong class="text-ink">Local Storage:</strong> Your scans and preferences are stored locally on your device.</li>
+              <li><strong class="text-ink">Camera Access (Scribe Scan):</strong> Used solely to capture images for text extraction. Images are processed and not stored on our servers.</li>
+              <li><strong class="text-ink">Screen Time Access (Grace Lock):</strong> Used to block and unblock apps via Apple's Family Controls framework. This data stays on your device and is never sent to our servers.</li>
+              <li><strong class="text-ink">Local Storage:</strong> Your scans, prayer history, preferences, and guarded app selections are stored locally on your device.</li>
               <li><strong class="text-ink">Subscription Data:</strong> Managed by RevenueCat for in-app purchases. We receive anonymized purchase status only.</li>
             </ul>
             <h3 class="text-sm font-medium text-ink mb-2">Data We Do NOT Collect</h3>

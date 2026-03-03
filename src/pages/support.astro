@@ -52,6 +52,19 @@ import Footer from '../components/Footer.astro';
                 </div>
               </div>
             </div>
+            <div class="bg-surface rounded-xl p-5 border border-border">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-surface-subtle rounded-xl flex items-center justify-center">
+                  <svg class="w-6 h-6 text-ink-faint" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-medium text-ink">Grace Lock</h3>
+                  <p class="text-sm text-ink-muted mt-1">Pause and pray before opening distracting apps</p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -67,8 +80,8 @@ import Footer from '../components/Footer.astro';
                 </svg>
               </summary>
               <div class="px-4 pb-4 text-sm text-ink-muted">
-                <p><strong class="text-ink">iOS:</strong> Settings &rarr; Apple ID &rarr; Subscriptions &rarr; Scribe Scan &rarr; Cancel</p>
-                <p class="mt-2"><strong class="text-ink">Android:</strong> Play Store &rarr; Profile &rarr; Payments & subscriptions &rarr; Subscriptions &rarr; Scribe Scan &rarr; Cancel</p>
+                <p><strong class="text-ink">iOS:</strong> Settings &rarr; Apple ID &rarr; Subscriptions &rarr; select the app &rarr; Cancel</p>
+                <p class="mt-2"><strong class="text-ink">Android:</strong> Play Store &rarr; Profile &rarr; Payments & subscriptions &rarr; Subscriptions &rarr; select the app &rarr; Cancel</p>
               </div>
             </details>
 
@@ -105,6 +118,30 @@ import Footer from '../components/Footer.astro';
               </summary>
               <div class="px-4 pb-4 text-sm text-ink-muted">
                 All your scans are stored locally on your device. Go to Settings &rarr; Data &rarr; Clear All Scans to delete everything. Alternatively, uninstalling the app removes all data.
+              </div>
+            </details>
+
+            <details class="group bg-surface rounded-xl border border-border">
+              <summary class="flex items-center justify-between p-4 cursor-pointer text-sm font-medium text-ink">
+                Why does Grace Lock need Screen Time permission?
+                <svg class="w-4 h-4 text-ink-faint group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-ink-muted">
+                Grace Lock uses Apple's Screen Time (Family Controls) framework to block and unblock apps. This permission is required for the app to function. Your Screen Time data stays on your device and is never sent to our servers.
+              </div>
+            </details>
+
+            <details class="group bg-surface rounded-xl border border-border">
+              <summary class="flex items-center justify-between p-4 cursor-pointer text-sm font-medium text-ink">
+                How many apps can I guard with Grace Lock?
+                <svg class="w-4 h-4 text-ink-faint group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-ink-muted">
+                The free plan allows up to 3 guarded apps. Upgrade to Premium to guard unlimited apps.
               </div>
             </details>
 
