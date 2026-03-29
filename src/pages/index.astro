@@ -1,155 +1,80 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
-import { socialLinks, projects } from '../data/projects';
-
-const allPosts = await Astro.glob('./blog/*.{md,mdx}');
-const recentPosts = allPosts
-  .sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf())
-  .slice(0, 3);
-
-const featuredProjects = projects.slice(0, 2);
+import { socialLinks } from '../data/projects';
 ---
 
-<Layout title="Sambulo Senda — Mobile Engineer">
+<Layout title="Sambulo Senda — Mobile Engineer" description="Mobile engineer, indie app maker, and consultant helping teams ship React Native apps.">
   <main class="min-h-screen flex flex-col">
 
-    <!-- Hero -->
-    <section class="pt-36 pb-12 sm:pt-44 sm:pb-16 animate-fade-in-up">
+    <section class="pt-36 pb-16 sm:pt-44 animate-fade-in-up">
       <div class="max-w-2xl mx-auto px-4 sm:px-6">
 
-        <div class="flex items-center gap-4 mb-6">
+        <div class="flex items-center gap-5 mb-8">
           <img
             src="/profile.jpg"
             alt="Sambulo Senda"
-            class="w-14 h-14 rounded-full object-cover"
+            class="w-20 h-20 rounded-full object-cover"
           />
           <div>
-            <h1 class="text-lg font-semibold text-ink">Sambulo Senda</h1>
-            <p class="text-sm text-ink-muted">Mobile Engineer</p>
+            <h1 class="text-2xl font-bold text-ink tracking-tight">Sambulo Senda</h1>
+            <p class="text-ink-muted mt-1">Mobile Engineer & Consultant</p>
           </div>
         </div>
 
-        <p class="text-2xl sm:text-3xl font-bold text-ink tracking-tight text-balance leading-tight">
-          I build React Native apps that ship.
-        </p>
+        <div class="space-y-4 text-ink-muted leading-relaxed animate-fade-in-up-delay-1">
+          <p>
+            I ship React Native apps for a living. Some are my own, like <a href="/projects" class="text-accent hover:underline">Versify Bible</a> and <a href="/projects" class="text-accent hover:underline">Scribe Scan</a>. Others are for clients, from EV charging platforms to offline-first news apps.
+          </p>
+          <p>
+            Five years of putting apps in the App Store has taught me what actually matters: architecture that survives real users, performance that doesn't need a loading spinner, and code that the next developer can read.
+          </p>
+          <p>
+            I also <a href="/writing" class="text-accent hover:underline">write</a> about the stuff I figure out along the way. If you're building with React Native, some of it might save you a few hours.
+          </p>
+        </div>
 
-        <p class="text-ink-muted mt-4 leading-relaxed max-w-lg">
-          Indie app maker and consultant. I help teams ship faster and write about mobile development along the way.
-        </p>
-
-        <div class="flex items-center gap-4 mt-8">
-          <a
-            href="https://cal.com/sambulosenda"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-ink text-surface rounded-lg hover:opacity-90 transition-opacity"
-          >
-            Book a call
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-            </svg>
-          </a>
-          <div class="flex items-center gap-0.5">
-            {socialLinks.map(({ url, platform, icon }) => (
-              <a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="p-2 text-ink-faint hover:text-ink transition-colors"
-                aria-label={platform}
-              >
-                <span set:html={icon} />
-              </a>
-            ))}
+        <div class="mt-10 pt-8 border-t border-border animate-fade-in-up-delay-2">
+          <h2 class="text-sm font-medium text-ink-faint uppercase tracking-wider mb-4">What I do</h2>
+          <div class="space-y-3 text-sm text-ink-muted">
+            <p><strong class="text-ink">Build apps.</strong> I design, build, and ship my own products on the App Store. Real users, real feedback, real problems to solve.</p>
+            <p><strong class="text-ink">Help teams ship.</strong> Architecture reviews, New Architecture migrations, performance audits. I've done this enough to know where the pain points are.</p>
+            <p><strong class="text-ink">Share what I learn.</strong> Technical writing on React Native, Expo, and mobile engineering. No fluff, just things that work.</p>
           </div>
         </div>
 
-      </div>
-    </section>
-
-    <!-- Featured Work -->
-    <section class="py-12 sm:py-16 animate-fade-in-up-delay-1">
-      <div class="max-w-2xl mx-auto px-4 sm:px-6">
-
-        <div class="flex items-center justify-between mb-6">
-          <h2 class="text-sm font-medium text-ink-faint uppercase tracking-wider">Featured Work</h2>
-          <a href="/projects" class="text-sm text-ink-faint hover:text-ink transition-colors">
-            All projects &rarr;
-          </a>
-        </div>
-
-        <div class="space-y-6">
-          {featuredProjects.map((project) => (
+        <div class="mt-10 pt-8 border-t border-border animate-fade-in-up-delay-3">
+          <h2 class="text-sm font-medium text-ink-faint uppercase tracking-wider mb-4">Get in touch</h2>
+          <div class="flex items-center gap-4">
             <a
-              href={project.url}
+              href="https://cal.com/sambulosenda"
               target="_blank"
               rel="noopener noreferrer"
-              class="group block"
+              class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-ink text-surface rounded-lg hover:opacity-90 transition-opacity"
             >
-              <div class="flex flex-col sm:flex-row gap-4">
-                {project.screenshot && (
-                  <div class="sm:w-40 shrink-0 overflow-hidden rounded-lg bg-surface-subtle flex items-center justify-center p-3">
-                    <img
-                      src={project.screenshot}
-                      alt={project.title}
-                      class="w-full h-full max-h-32 object-contain"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-                <div class="flex-1 min-w-0">
-                  <h3 class="font-medium text-ink group-hover:text-accent transition-colors">
-                    {project.title}
-                  </h3>
-                  <p class="text-sm text-ink-muted mt-1 line-clamp-2">{project.description}</p>
-                  <div class="flex flex-wrap gap-1.5 mt-3">
-                    {project.tags.slice(0, 3).map(tag => (
-                      <span class="text-xs px-2 py-0.5 rounded-md bg-surface-subtle text-ink-faint">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              Book a call
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
             </a>
-          ))}
+            <div class="flex items-center gap-0.5">
+              {socialLinks.map(({ url, platform, icon }) => (
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="p-2 text-ink-faint hover:text-ink transition-colors"
+                  aria-label={platform}
+                >
+                  <span set:html={icon} />
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
 
       </div>
     </section>
-
-    <!-- Recent Writing -->
-    {recentPosts.length > 0 && (
-      <section class="py-12 sm:py-16 animate-fade-in-up-delay-2">
-        <div class="max-w-2xl mx-auto px-4 sm:px-6">
-
-          <div class="flex items-center justify-between mb-6">
-            <h2 class="text-sm font-medium text-ink-faint uppercase tracking-wider">Recent Writing</h2>
-            <a href="/writing" class="text-sm text-ink-faint hover:text-ink transition-colors">
-              All posts &rarr;
-            </a>
-          </div>
-
-          <div class="space-y-1">
-            {recentPosts.map(post => (
-              <a href={post.url} class="group flex items-baseline justify-between gap-4 py-2.5">
-                <h3 class="text-sm text-ink group-hover:text-accent transition-colors truncate">
-                  {post.frontmatter.title}
-                </h3>
-                <time datetime={post.frontmatter.date} class="text-xs text-ink-faint whitespace-nowrap shrink-0 font-mono tabular-nums">
-                  {new Date(post.frontmatter.date).toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric'
-                  })}
-                </time>
-              </a>
-            ))}
-          </div>
-
-        </div>
-      </section>
-    )}
 
     <Footer />
 
