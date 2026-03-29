@@ -12,16 +12,18 @@ interface Frontmatter {
   description?: string;
   readingTime?: string;
   image?: string;
+  type?: 'blog' | 'case-study' | 'decision';
 }
 
 interface Props {
   frontmatter: Frontmatter;
   headings?: { depth: number; slug: string; text: string }[];
-  type?: 'blog' | 'case-study';
 }
 
-const { frontmatter, headings = [], type = 'blog' } = Astro.props;
-const isCaseStudy = type === 'case-study';
+const { frontmatter, headings = [] } = Astro.props;
+const contentType = frontmatter.type || 'blog';
+const isCaseStudy = contentType === 'case-study';
+const isDecision = contentType === 'decision';
 
 const formattedDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
   year: 'numeric',
@@ -36,9 +38,9 @@ const wordCount = textOnly.split(/\s+/).length;
 const minutes = Math.max(1, Math.ceil(wordCount / 230));
 const readingTime = frontmatter.readingTime || `${minutes} min read`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://sambulosenda.com');
-const slug = Astro.url.pathname.replace(/^\/(blog|case-studies)\//, '').replace(/\/$/, '');
-const backLink = isCaseStudy ? '/projects' : '/writing';
-const backLabel = isCaseStudy ? 'Back to projects' : 'Back to writing';
+const slug = Astro.url.pathname.replace(/^\/(blog|case-studies|decisions)\//, '').replace(/\/$/, '');
+const backLink = isCaseStudy ? '/projects' : isDecision ? '/decisions' : '/writing';
+const backLabel = isCaseStudy ? 'Back to projects' : isDecision ? 'Back to decisions' : 'Back to writing';
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -121,7 +123,7 @@ const checkSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" st
     </header>
 
     <!-- Series nav (blog only) -->
-    {!isCaseStudy && <SeriesNav currentSlug={slug} />}
+    {contentType === 'blog' && <SeriesNav currentSlug={slug} />}
 
     <div class="border-t border-border">
       <div class="max-w-2xl mx-auto px-4 sm:px-6 py-12">
