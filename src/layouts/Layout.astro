@@ -76,16 +76,16 @@ const ogImage = type === 'article' && slug
     <style is:global>
       :root {
         --color-surface: #ffffff;
-        --color-surface-muted: #f8f8f7;
-        --color-surface-subtle: #f0efed;
-        --color-border: #e8e6e3;
-        --color-border-muted: #f0efed;
-        --color-ink: #1a1a19;
-        --color-ink-muted: #6b6b69;
-        --color-ink-faint: #9e9e9b;
-        --color-accent: #2b5ce6;
+        --color-surface-muted: #fafafa;
+        --color-surface-subtle: #f4f4f5;
+        --color-border: #e4e4e7;
+        --color-border-muted: #f4f4f5;
+        --color-ink: #18181b;
+        --color-ink-muted: #52525b;
+        --color-ink-faint: #a1a1aa;
+        --color-accent: #2563eb;
         --color-accent-hover: #1d4ed8;
-        --color-accent-subtle: #eef2ff;
+        --color-accent-subtle: #eff6ff;
       }
 
       /* Page entrance animations */
@@ -132,21 +132,21 @@ const ogImage = type === 'article' && slug
       }
 
       html.dark {
-        --color-surface: #131313;
-        --color-surface-muted: #1a1a1a;
-        --color-surface-subtle: #232323;
-        --color-border: #2e2e2e;
-        --color-border-muted: #232323;
-        --color-ink: #e8e6e3;
-        --color-ink-muted: #a0a09d;
-        --color-ink-faint: #6b6b69;
-        --color-accent: #6b8ef2;
-        --color-accent-hover: #8aa4f5;
-        --color-accent-subtle: #1e2640;
+        --color-surface: #09090b;
+        --color-surface-muted: #111113;
+        --color-surface-subtle: #1c1c1f;
+        --color-border: #27272a;
+        --color-border-muted: #1c1c1f;
+        --color-ink: #fafafa;
+        --color-ink-muted: #a1a1aa;
+        --color-ink-faint: #71717a;
+        --color-accent: #60a5fa;
+        --color-accent-hover: #93bbfd;
+        --color-accent-subtle: #172554;
       }
     </style>
   </head>
-  <body class="bg-surface-muted text-ink antialiased" style="font-family: 'Inter Variable', system-ui, sans-serif;">
+  <body class="bg-surface text-ink antialiased text-[15px] leading-relaxed" style="font-family: 'Inter Variable', system-ui, sans-serif;">
     <Navigation />
     <slot />
     <CommandPalette />

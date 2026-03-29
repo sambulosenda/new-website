@@ -9,14 +9,14 @@ import { projects } from '../data/projects';
     <section class="pt-36 pb-20 sm:pt-44">
       <div class="max-w-2xl mx-auto px-4 sm:px-6">
 
-        <header class="mb-12 animate-fade-in-up">
+        <header class="mb-10 animate-fade-in-up">
           <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-3">Projects</h1>
           <p class="text-ink-muted">
-            Apps I've built — each solving a unique problem.
+            Apps I've built and shipped.
           </p>
         </header>
 
-        <div class="space-y-4 animate-fade-in-up-delay-1">
+        <div class="space-y-8 animate-fade-in-up-delay-1">
           {projects.map((project) => {
             const Wrapper = project.url ? 'a' : 'div';
             return (
@@ -24,36 +24,25 @@ import { projects } from '../data/projects';
                 href={project.url}
                 target={project.url ? '_blank' : undefined}
                 rel={project.url ? 'noopener noreferrer' : undefined}
-                class={`group block bg-surface rounded-xl border border-border overflow-hidden hover:border-ink-faint/40 hover:shadow-sm transition-all ${project.url ? 'cursor-pointer' : ''}`}
+                class={`group block ${project.url ? 'cursor-pointer' : ''}`}
               >
-                <div class="flex flex-col sm:flex-row">
+                <div class="flex flex-col sm:flex-row gap-4">
                   {project.screenshot && (
-                    <div class="sm:w-48 shrink-0 overflow-hidden bg-surface-subtle flex items-center justify-center p-3 sm:p-4">
+                    <div class="sm:w-40 shrink-0 overflow-hidden rounded-lg bg-surface-subtle flex items-center justify-center p-3">
                       <img
                         src={project.screenshot}
                         alt={project.title}
-                        class="w-full h-full max-h-40 object-contain rounded-lg"
+                        class="w-full h-full max-h-32 object-contain"
                         loading="lazy"
                       />
                     </div>
                   )}
-                  <div class="flex-1 p-5">
-                    <div class="flex items-center gap-2 mb-1.5">
-                      <h3 class="font-medium text-ink group-hover:text-accent transition-colors">
-                        {project.title}
-                      </h3>
-                      {project.status && (
-                        <span class={`shrink-0 text-xs px-1.5 py-0.5 rounded-full font-medium ${
-                          project.status === 'Live' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' :
-                          project.status === 'Beta' ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400' :
-                          'bg-ink-faint/10 text-ink-faint'
-                        }`}>
-                          {project.status}
-                        </span>
-                      )}
-                    </div>
-                    <p class="text-sm text-ink-muted mb-3">{project.description}</p>
-                    <div class="flex flex-wrap gap-1.5">
+                  <div class="flex-1 min-w-0">
+                    <h3 class="font-medium text-ink group-hover:text-accent transition-colors">
+                      {project.title}
+                    </h3>
+                    <p class="text-sm text-ink-muted mt-1">{project.description}</p>
+                    <div class="flex flex-wrap gap-1.5 mt-3">
                       {project.tags.map(tag => (
                         <span class="text-xs px-2 py-0.5 rounded-md bg-surface-subtle text-ink-faint">
                           {tag}

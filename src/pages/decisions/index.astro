@@ -1,0 +1,167 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+
+const allDecisions = await Astro.glob('./*.mdx');
+const decisions = allDecisions
+  .sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+
+const allTags = [...new Set(decisions.flatMap(d => d.frontmatter.tags || []))].sort();
+---
+
+<Layout title="Decisions — Sambulo Senda" description="Technical decisions and the reasoning behind them.">
+  <main>
+    <section class="pt-36 pb-20 sm:pt-44">
+      <div class="max-w-2xl mx-auto px-4 sm:px-6">
+
+        <header class="mb-10 animate-fade-in-up">
+          <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-3">Decisions</h1>
+          <p class="text-ink-muted">
+            Technical decisions I've made and why. Each one is a small artifact, not a full blog post.
+          </p>
+        </header>
+
+        <!-- Tag filter -->
+        {allTags.length >= 3 && (
+          <div class="flex flex-wrap gap-2 mb-8 animate-fade-in-up-delay-1" id="tag-filter">
+            <button
+              class="tag-btn active text-xs px-2.5 py-1 rounded-md border border-accent bg-accent text-surface transition-colors"
+              data-tag="all"
+            >
+              All
+            </button>
+            {allTags.map(tag => (
+              <button
+                class="tag-btn text-xs px-2.5 py-1 rounded-md border border-border text-ink-muted hover:border-ink-faint transition-colors"
+                data-tag={tag}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <!-- Decision entries -->
+        <div class="space-y-6 animate-fade-in-up-delay-1" id="decisions-list">
+          {decisions.map(decision => (
+            <a
+              href={decision.url}
+              class="decision-entry group block"
+              data-tags={JSON.stringify(decision.frontmatter.tags || [])}
+            >
+              <article>
+                <div class="flex items-baseline justify-between gap-4 mb-1">
+                  <h3 class="text-sm font-medium text-ink group-hover:text-accent transition-colors">
+                    {decision.frontmatter.title}
+                  </h3>
+                  <time datetime={decision.frontmatter.date} class="text-xs text-ink-faint whitespace-nowrap shrink-0 font-mono tabular-nums">
+                    {new Date(decision.frontmatter.date).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric'
+                    })}
+                  </time>
+                </div>
+                {decision.frontmatter.tldr && (
+                  <p class="text-sm text-ink-muted">{decision.frontmatter.tldr}</p>
+                )}
+                {decision.frontmatter.tags && (
+                  <div class="flex flex-wrap gap-1.5 mt-2">
+                    {decision.frontmatter.tags.map((tag: string) => (
+                      <span class="text-xs px-1.5 py-0.5 rounded bg-surface-subtle text-ink-faint">{tag}</span>
+                    ))}
+                  </div>
+                )}
+              </article>
+            </a>
+          ))}
+        </div>
+
+        <!-- Empty state -->
+        <div id="no-matches" class="hidden text-center py-8">
+          <p class="text-sm text-ink-faint">No matches. <button id="reset-filter" class="text-accent hover:underline">Show all</button></p>
+        </div>
+
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+</Layout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const filterContainer = document.getElementById('tag-filter');
+    if (!filterContainer) return;
+
+    const buttons = filterContainer.querySelectorAll('.tag-btn');
+    const entries = document.querySelectorAll('.decision-entry');
+    const noMatches = document.getElementById('no-matches');
+    const resetBtn = document.getElementById('reset-filter');
+
+    let activeTags = new Set<string>();
+
+    function updateFilter() {
+      let visibleCount = 0;
+
+      entries.forEach(entry => {
+        const entryTags: string[] = JSON.parse(entry.getAttribute('data-tags') || '[]');
+        const show = activeTags.size === 0 || entryTags.some(t => activeTags.has(t));
+        (entry as HTMLElement).style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+
+      if (noMatches) {
+        noMatches.classList.toggle('hidden', visibleCount > 0);
+      }
+    }
+
+    function setAllActive() {
+      activeTags.clear();
+      buttons.forEach(btn => {
+        if (btn.getAttribute('data-tag') === 'all') {
+          btn.classList.add('active', 'border-accent', 'bg-accent', 'text-surface');
+          btn.classList.remove('border-border', 'text-ink-muted');
+        } else {
+          btn.classList.remove('active', 'border-accent', 'bg-accent', 'text-surface');
+          btn.classList.add('border-border', 'text-ink-muted');
+        }
+      });
+      updateFilter();
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tag = btn.getAttribute('data-tag');
+        if (tag === 'all') {
+          setAllActive();
+          return;
+        }
+
+        // Deactivate "All" button
+        const allBtn = filterContainer.querySelector('[data-tag="all"]');
+        if (allBtn) {
+          allBtn.classList.remove('active', 'border-accent', 'bg-accent', 'text-surface');
+          allBtn.classList.add('border-border', 'text-ink-muted');
+        }
+
+        if (activeTags.has(tag!)) {
+          activeTags.delete(tag!);
+          btn.classList.remove('active', 'border-accent', 'bg-accent', 'text-surface');
+          btn.classList.add('border-border', 'text-ink-muted');
+        } else {
+          activeTags.add(tag!);
+          btn.classList.add('active', 'border-accent', 'bg-accent', 'text-surface');
+          btn.classList.remove('border-border', 'text-ink-muted');
+        }
+
+        if (activeTags.size === 0) {
+          setAllActive();
+        } else {
+          updateFilter();
+        }
+      });
+    });
+
+    resetBtn?.addEventListener('click', () => setAllActive());
+  });
+</script>

@@ -1,0 +1,15 @@
+---
+interface Props {
+  tools: string[];
+}
+
+const { tools } = Astro.props;
+---
+
+<div class="not-prose flex flex-wrap gap-2 my-6">
+  {tools.map(tool => (
+    <span class="text-xs px-2.5 py-1 rounded-md bg-surface-subtle text-ink-muted border border-border">
+      {tool}
+    </span>
+  ))}
+</div>

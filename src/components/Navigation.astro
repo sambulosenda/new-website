@@ -1,8 +1,8 @@
 ---
 const navLinks = [
+  { path: '/writing', label: 'Blog' },
   { path: '/projects', label: 'Projects' },
-  { path: '/writing', label: 'Writing' },
-  { path: '/now', label: 'Now' },
+  { path: '/about', label: 'About' },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -35,42 +35,19 @@ function isActive(path: string): boolean {
         </a>
       ))}
 
-      <!-- Search trigger -->
-      <button
-        id="search-trigger"
-        class="p-2 text-ink-faint hover:text-ink rounded-lg hover:bg-surface-subtle transition-colors"
-        aria-label="Search (Cmd+K)"
-        title="Search (Cmd+K)"
-      >
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-        </svg>
-      </button>
-
       <!-- Dark mode toggle -->
       <button
         id="theme-toggle"
-        class="p-2 text-ink-faint hover:text-ink rounded-lg hover:bg-surface-subtle transition-colors"
+        class="p-1.5 text-ink-faint hover:text-ink transition-colors"
         aria-label="Toggle dark mode"
       >
-        <!-- Sun (shown in dark mode) -->
         <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
         </svg>
-        <!-- Moon (shown in light mode) -->
         <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
         </svg>
       </button>
-
-      <a
-        href="https://cal.com/sambulosenda"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-sm px-4 py-2 bg-ink text-surface rounded-lg hover:opacity-90 transition-colors"
-      >
-        Book a call
-      </a>
     </div>
 
     <!-- Mobile toggle -->
@@ -82,14 +59,14 @@ function isActive(path: string): boolean {
   </div>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="fixed inset-0 bg-surface-muted z-50 hidden">
+  <div id="mobile-menu" class="fixed inset-0 bg-surface z-50 hidden">
     <div class="flex flex-col h-full p-4 sm:p-6">
       <div class="flex justify-between items-center">
         <a href="/" class="text-ink font-semibold tracking-tight">sambulo</a>
         <div class="flex items-center gap-2">
           <button
             id="theme-toggle-mobile"
-            class="p-2 text-ink-faint hover:text-ink rounded-lg hover:bg-surface-subtle transition-colors"
+            class="p-2 text-ink-faint hover:text-ink transition-colors"
             aria-label="Toggle dark mode"
           >
             <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -121,20 +98,6 @@ function isActive(path: string): boolean {
             {label}
           </a>
         ))}
-        <button
-          id="search-trigger-mobile"
-          class="text-ink text-xl hover:text-accent transition-colors"
-        >
-          Search
-        </button>
-        <a
-          href="https://cal.com/sambulosenda"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="px-6 py-3 bg-ink text-surface rounded-lg"
-        >
-          Book a call
-        </a>
       </nav>
     </div>
   </div>
@@ -149,9 +112,9 @@ function isActive(path: string): boolean {
 
     window.addEventListener('scroll', () => {
       if (window.scrollY > 20) {
-        nav?.classList.add('bg-surface-muted/80', 'backdrop-blur-xl', 'border-b', 'border-border/60');
+        nav?.classList.add('bg-surface/80', 'backdrop-blur-xl', 'border-b', 'border-border/60');
       } else {
-        nav?.classList.remove('bg-surface-muted/80', 'backdrop-blur-xl', 'border-b', 'border-border/60');
+        nav?.classList.remove('bg-surface/80', 'backdrop-blur-xl', 'border-b', 'border-border/60');
       }
     }, { passive: true });
 
@@ -180,13 +143,6 @@ function isActive(path: string): boolean {
     document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
     document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggleTheme);
 
-    // Search triggers
-    document.getElementById('search-trigger')?.addEventListener('click', () => {
-      document.dispatchEvent(new CustomEvent('open-command-palette'));
-    });
-    document.getElementById('search-trigger-mobile')?.addEventListener('click', () => {
-      toggleMobileMenu(false);
-      document.dispatchEvent(new CustomEvent('open-command-palette'));
-    });
+    // Cmd+K still opens command palette via CommandPalette.astro's own listener
   });
 </script>

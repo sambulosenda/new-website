@@ -1,0 +1,27 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: "Why I chose SQLite over AsyncStorage in Versify Bible"
+date: 2026-03-20
+tags: ["storage", "react-native", "sqlite"]
+tldr: "AsyncStorage is fine for settings. But once you're querying thousands of Bible verses with cross-references, you need a real database."
+type: "decision"
+---
+
+import Decision from '../../components/Decision.astro';
+
+<Decision
+  question="How should we store Bible content and user data locally?"
+  chosen="expo-sqlite with raw SQL queries"
+  rejected="AsyncStorage with JSON serialization"
+  reason="Versify Bible has 31,000+ verses, cross-references between books, reading plan progress, highlights, and bookmarks. AsyncStorage stores key-value pairs, so querying 'all highlighted verses in Romans' means loading everything into memory and filtering in JS. SQLite lets us do this in a single indexed query in under 5ms."
+/>
+
+The decision came down to query patterns. With AsyncStorage, every read loads the entire value for a key. For user preferences (theme, font size, last read position), that's fine. For content with relationships, it's a bottleneck.
+
+SQLite gave us:
+- Indexed queries across 31K+ verses
+- JOINs for cross-references without loading everything into memory
+- Transactions for batch operations (importing reading plans)
+- WAL mode for concurrent reads during sync
+
+The tradeoff: more complex setup, raw SQL strings instead of a nice API, and we had to handle migrations manually. But the performance difference was not close. Loading a chapter went from ~400ms to ~8ms.

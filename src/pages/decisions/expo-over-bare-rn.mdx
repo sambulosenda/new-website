@@ -1,0 +1,31 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: "Why I use Expo instead of bare React Native"
+date: 2026-03-15
+tags: ["expo", "react-native", "tooling"]
+tldr: "EAS Build, OTA updates, and managed native modules save me weeks per year as a solo developer. The tradeoff of less native control is worth it."
+type: "decision"
+---
+
+import Decision from '../../components/Decision.astro';
+
+<Decision
+  question="Should indie apps use Expo managed workflow or bare React Native?"
+  chosen="Expo managed workflow with EAS"
+  rejected="Bare React Native with manual native config"
+  reason="As a solo developer shipping multiple apps, the hours spent on Xcode and Gradle configs add up fast. Expo's managed workflow handles native builds in the cloud, OTA updates ship fixes without App Store review, and most native modules I need have Expo equivalents."
+/>
+
+I've shipped 5 apps with Expo. The math is simple:
+
+**Time saved per app per year:**
+- No Xcode/Gradle debugging: ~20 hours
+- OTA updates instead of full releases for JS-only changes: ~10 hours
+- EAS Build instead of local builds: ~15 hours
+- Config plugins instead of manual native setup: ~10 hours
+
+That's roughly 55 hours per app per year. Across 5 apps, that's 275 hours, or about 7 work weeks.
+
+The tradeoff: occasionally I hit a native module that Expo doesn't support yet. When that happens, I write a config plugin or use a development build. It's happened maybe 3 times in 4 years.
+
+For teams with dedicated iOS/Android engineers, bare React Native makes more sense. For solo developers and small teams, Expo is the obvious choice.
