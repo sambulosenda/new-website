@@ -1,6 +1,8 @@
 ---
 import '@fontsource-variable/inter';
 import '@fontsource-variable/jetbrains-mono';
+import '../styles/scroll-reveal.css';
+import '../styles/micro-interactions.css';
 import { ViewTransitions } from 'astro:transitions';
 import Navigation from '../components/Navigation.astro';
 import CommandPalette from '../components/CommandPalette.astro';
@@ -88,47 +90,14 @@ const ogImage = type === 'article' && slug
         --color-accent-subtle: #eff6ff;
       }
 
-      /* Page entrance animations */
-      @keyframes fade-in-up {
-        from {
-          opacity: 0;
-          transform: translateY(12px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .animate-fade-in-up {
-        animation: fade-in-up 0.5s ease-out both;
-      }
-
-      .animate-fade-in-up-delay-1 {
-        animation: fade-in-up 0.5s ease-out 0.1s both;
-      }
-
-      .animate-fade-in-up-delay-2 {
-        animation: fade-in-up 0.5s ease-out 0.2s both;
-      }
-
-      .animate-fade-in-up-delay-3 {
-        animation: fade-in-up 0.5s ease-out 0.3s both;
-      }
-
+      /* Legacy animation classes — kept for backward compat, now instant */
+      .animate-fade-in-up,
+      .animate-fade-in-up-delay-1,
+      .animate-fade-in-up-delay-2,
+      .animate-fade-in-up-delay-3,
       .animate-fade-in-up-delay-4 {
-        animation: fade-in-up 0.5s ease-out 0.4s both;
-      }
-
-      /* Respect reduced motion preference */
-      @media (prefers-reduced-motion: reduce) {
-        .animate-fade-in-up,
-        .animate-fade-in-up-delay-1,
-        .animate-fade-in-up-delay-2,
-        .animate-fade-in-up-delay-3,
-        .animate-fade-in-up-delay-4 {
-          animation: none;
-        }
+        /* These classes are being replaced by .reveal + IntersectionObserver */
+        /* Keep them visible so nothing breaks during migration */
       }
 
       html.dark {
@@ -162,5 +131,69 @@ const ogImage = type === 'article' && slug
     } else {
       document.documentElement.classList.remove('dark');
     }
+  });
+
+  // Scroll reveal: IntersectionObserver (primary implementation)
+  // Skips if browser supports animation-timeline natively
+  let revealObserver: IntersectionObserver | null = null;
+
+  document.addEventListener('astro:page-load', () => {
+    if (CSS.supports?.('animation-timeline: view()')) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    revealObserver?.disconnect();
+    revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver?.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach((el) => {
+      revealObserver!.observe(el);
+    });
+  });
+
+  document.addEventListener('astro:before-swap', () => {
+    revealObserver?.disconnect();
+  });
+
+  // Cursor-reactive tilt (desktop only, respects reduced motion)
+  let tiltRaf: number | null = null;
+  let tiltHandler: ((e: MouseEvent) => void) | null = null;
+
+  document.addEventListener('astro:page-load', () => {
+    if (!window.matchMedia('(hover: hover)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const root = document.documentElement;
+
+    tiltHandler = (e: MouseEvent) => {
+      if (tiltRaf) return;
+      tiltRaf = requestAnimationFrame(() => {
+        const mx = (e.clientX / window.innerWidth - 0.5) * 2;
+        const my = (e.clientY / window.innerHeight - 0.5) * 2;
+        root.style.setProperty('--mx', mx.toFixed(3));
+        root.style.setProperty('--my', my.toFixed(3));
+        tiltRaf = null;
+      });
+    };
+
+    window.addEventListener('mousemove', tiltHandler, { passive: true });
+  });
+
+  document.addEventListener('astro:before-swap', () => {
+    if (tiltHandler) {
+      window.removeEventListener('mousemove', tiltHandler);
+      tiltHandler = null;
+    }
+    if (tiltRaf) {
+      cancelAnimationFrame(tiltRaf);
+      tiltRaf = null;
+    }
+    document.documentElement.style.removeProperty('--mx');
+    document.documentElement.style.removeProperty('--my');
   });
 </script>

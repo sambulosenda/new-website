@@ -23,7 +23,7 @@ const years = Object.keys(postsByYear).sort().reverse();
     <section class="pt-36 pb-20 sm:pt-44">
       <div class="max-w-2xl mx-auto px-4 sm:px-6">
 
-        <header class="mb-10 animate-fade-in-up">
+        <header class="reveal mb-10" style="--i: 0">
           <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-3">Blog</h1>
           <p class="text-ink-muted">
             Writing about mobile development and React Native.
@@ -31,14 +31,14 @@ const years = Object.keys(postsByYear).sort().reverse();
         </header>
 
         <!-- Posts by year -->
-        <div class="space-y-10 animate-fade-in-up-delay-1">
-          {years.map(year => (
-            <section>
+        <div class="space-y-10">
+          {years.map((year, yi) => (
+            <section class="reveal" style={`--i: ${Math.min(yi + 1, 6)}`}>
               <h2 class="text-sm font-medium text-ink-faint uppercase tracking-wider mb-4">{year}</h2>
               <div class="space-y-1">
                 {postsByYear[year].map(post => (
-                  <a href={post.url} class="group flex items-baseline justify-between gap-4 py-2.5">
-                    <h3 class="text-sm text-ink group-hover:text-accent transition-colors truncate">
+                  <a href={post.url} class="group flex items-baseline justify-between gap-4 py-2.5 hover-lift">
+                    <h3 class="text-sm text-ink group-hover:text-accent transition-colors truncate" transition:name={`post-${post.url?.replace(/\//g, '-')}`}>
                       {post.frontmatter.title}
                     </h3>
                     <time datetime={post.frontmatter.date} class="text-xs text-ink-faint whitespace-nowrap shrink-0 font-mono tabular-nums">

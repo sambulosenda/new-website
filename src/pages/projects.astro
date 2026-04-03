@@ -9,22 +9,23 @@ import { projects } from '../data/projects';
     <section class="pt-36 pb-20 sm:pt-44">
       <div class="max-w-2xl mx-auto px-4 sm:px-6">
 
-        <header class="mb-10 animate-fade-in-up">
+        <header class="reveal mb-10" style="--i: 0">
           <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-3">Projects</h1>
           <p class="text-ink-muted">
             Apps I've built and shipped.
           </p>
         </header>
 
-        <div class="space-y-8 animate-fade-in-up-delay-1">
-          {projects.map((project) => {
+        <div class="space-y-8">
+          {projects.map((project, i) => {
             const Wrapper = project.url ? 'a' : 'div';
             return (
               <Wrapper
                 href={project.url}
                 target={project.url ? '_blank' : undefined}
                 rel={project.url ? 'noopener noreferrer' : undefined}
-                class={`group block ${project.url ? 'cursor-pointer' : ''}`}
+                class={`reveal tilt-card hover-lift group block ${project.url ? 'cursor-pointer' : ''}`}
+                style={`--i: ${Math.min(i + 1, 6)}`}
               >
                 <div class="flex flex-col sm:flex-row gap-4">
                   {project.screenshot && (

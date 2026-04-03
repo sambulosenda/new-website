@@ -1,0 +1,98 @@
+/* Micro-Interactions
+   Scoped hover effects, link animations, button feedback */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Link underline animation — scoped to prose and content links only */
+  .prose a {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1.5px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease, color 0.2s ease;
+    text-decoration: none;
+  }
+
+  .prose a:hover {
+    background-size: 100% 1.5px;
+    text-decoration: none;
+  }
+
+  /* Card hover lift */
+  .hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Button press feedback */
+  .btn-press {
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+
+  .btn-press:active {
+    transform: scale(0.97);
+  }
+
+  /* Nav link hover */
+  .nav-hover {
+    transition: color 0.2s ease, opacity 0.2s ease;
+  }
+
+  /* Dark mode toggle rotation */
+  .theme-toggle-icon {
+    transition: transform 0.4s ease;
+  }
+
+  .theme-toggle-rotate {
+    transform: rotate(180deg);
+  }
+}
+
+/* Cursor-reactive tilt — desktop only, respects reduced motion */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .tilt-card {
+    transform: perspective(800px)
+      rotateY(calc(var(--mx, 0) * 2deg))
+      rotateX(calc(var(--my, 0) * -2deg));
+    transition: transform 0.3s ease-out;
+  }
+
+  .tilt-card:hover {
+    will-change: transform;
+  }
+}
+
+/* Custom page transitions */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-out {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+  }
+
+  ::view-transition-old(root) {
+    animation: slide-out 200ms ease-out both;
+  }
+
+  ::view-transition-new(root) {
+    animation: slide-in 200ms ease-out both;
+  }
+}

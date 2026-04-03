@@ -1,0 +1,51 @@
+/* Scroll Reveal System
+   Primary: IntersectionObserver adds .revealed class
+   Enhancement: CSS animation-timeline for Chromium browsers */
+
+/* Base state: hidden, ready to reveal */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+
+  .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Progressive enhancement: native scroll-driven animation for Chromium */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+      animation: scroll-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 30%;
+    }
+
+    @keyframes scroll-reveal {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+/* When reduced motion is preferred, everything is visible immediately */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
