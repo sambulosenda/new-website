@@ -1,10 +1,10 @@
 ---
 import '@fontsource-variable/inter';
 import '@fontsource-variable/jetbrains-mono';
+import '@fontsource-variable/newsreader';
 import '../styles/scroll-reveal.css';
 import '../styles/micro-interactions.css';
 import { ViewTransitions } from 'astro:transitions';
-import Navigation from '../components/Navigation.astro';
 import CommandPalette from '../components/CommandPalette.astro';
 
 interface Props {
@@ -33,7 +33,7 @@ const ogImage = type === 'article' && slug
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth overflow-x-hidden overscroll-none">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -115,8 +115,7 @@ const ogImage = type === 'article' && slug
       }
     </style>
   </head>
-  <body class="bg-surface text-ink antialiased text-[15px] leading-relaxed" style="font-family: 'Inter Variable', system-ui, sans-serif;">
-    <Navigation />
+  <body class="bg-surface text-ink antialiased text-base leading-relaxed font-serif">
     <slot />
     <CommandPalette />
   </body>
@@ -133,12 +132,18 @@ const ogImage = type === 'article' && slug
     }
   });
 
-  // Scroll reveal: IntersectionObserver (primary implementation)
-  // Skips if browser supports animation-timeline natively
+  // Dark mode toggle
+  document.addEventListener('astro:page-load', () => {
+    document.getElementById('theme-toggle')?.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+  });
+
+  // Scroll reveal: IntersectionObserver
   let revealObserver: IntersectionObserver | null = null;
 
   document.addEventListener('astro:page-load', () => {
-    if (CSS.supports?.('animation-timeline: view()')) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     revealObserver?.disconnect();

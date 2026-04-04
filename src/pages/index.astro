@@ -1,76 +1,39 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
-import { socialLinks } from '../data/projects';
 ---
 
 <Layout title="Sambulo Senda — Mobile Engineer" description="Mobile engineer, indie app maker, and consultant helping teams ship React Native apps.">
   <main class="min-h-screen flex flex-col">
 
-    <section class="pt-36 pb-16 sm:pt-44">
+    <section class="pt-16 pb-20 sm:pt-24 flex-1">
       <div class="max-w-2xl mx-auto px-4 sm:px-6">
 
-        <div class="reveal flex items-center gap-5 mb-8" style="--i: 0">
-          <img
-            src="/profile.jpg"
-            alt="Sambulo Senda"
-            class="w-20 h-20 rounded-full object-cover"
-          />
-          <div>
-            <h1 class="text-2xl font-bold text-ink tracking-tight">Sambulo Senda</h1>
-            <p class="text-ink-muted mt-1">Mobile Engineer & Consultant</p>
-          </div>
-        </div>
+        <h1 class="reveal text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-8 font-sans" style="--i: 0">
+          Sambulo Senda
+        </h1>
 
-        <div class="reveal space-y-4 text-ink-muted leading-relaxed" style="--i: 1">
+        <div class="reveal space-y-5 text-ink-muted text-lg leading-relaxed" style="--i: 1">
           <p>
-            I build React Native apps for a living—some my own, others for clients.
+            I'm a <a href="/writing" class="text-ink underline underline-offset-4 decoration-ink-faint hover:decoration-ink transition-colors">developer and writer</a>. I build React Native apps for a living, some my own, others for clients.
           </p>
           <p>
             Five years of shipping to the App Store has taught me what actually matters: architecture that holds up under real users, performance that doesn't rely on loading spinners, and code the next developer can actually understand.
           </p>
           <p>
-            I also <a href="/writing" class="text-accent hover:underline">write</a> about what I learn along the way. If you're building with React Native, some of it might save you a few hours.
+            I also write about what I learn along the way. If you're building with React Native, some of it might save you a few hours.
           </p>
-        </div>
-
-        <div class="reveal mt-10 pt-8 border-t border-border" style="--i: 2">
-          <h2 class="text-sm font-medium text-ink-faint uppercase tracking-wider mb-4">What I do</h2>
-          <div class="space-y-3 text-sm text-ink-muted">
-            <p><strong class="text-ink">Build apps.</strong> I design, build, and ship my own products on the App Store. Real users, real feedback, real problems to solve.</p>
-            <p><strong class="text-ink">Help teams ship.</strong> Architecture reviews, New Architecture migrations, performance audits. I've done this enough to know where the pain points are.</p>
-            <p><strong class="text-ink">Share what I learn.</strong> Technical writing on React Native, Expo, and mobile engineering. No fluff, just things that work.</p>
-          </div>
-        </div>
-
-        <div class="reveal mt-10 pt-8 border-t border-border" style="--i: 3">
-          <h2 class="text-sm font-medium text-ink-faint uppercase tracking-wider mb-4">Get in touch</h2>
-          <div class="flex items-center gap-4">
-            <a
-              href="https://cal.com/sambulosenda"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-ink text-surface rounded-lg hover:opacity-90 transition-opacity"
-            >
-              Book a call
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-              </svg>
-            </a>
-            <div class="flex items-center gap-0.5">
-              {socialLinks.map(({ url, platform, icon }) => (
-                <a
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="p-2 text-ink-faint hover:text-ink transition-colors"
-                  aria-label={platform}
-                >
-                  <span set:html={icon} />
-                </a>
-              ))}
-            </div>
-          </div>
+          <p>
+            Some of my favorite writing includes:
+          </p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><a href="/blog/react-native-0-78-react-19-updates" class="text-ink underline underline-offset-4 decoration-ink-faint hover:decoration-ink transition-colors">React Native 0.78 & React 19</a></li>
+            <li><a href="/blog/building-offline-first-react-native" class="text-ink underline underline-offset-4 decoration-ink-faint hover:decoration-ink transition-colors">Building Offline-First React Native</a></li>
+            <li><a href="/blog/react-native-perfomance-tips" class="text-ink underline underline-offset-4 decoration-ink-faint hover:decoration-ink transition-colors">React Native Performance Tips</a></li>
+          </ul>
+          <p>
+            You can <a href="/writing" class="text-ink underline underline-offset-4 decoration-ink-faint hover:decoration-ink transition-colors">read my writing</a> or <a href="https://cal.com/sambulosenda" class="text-ink underline underline-offset-4 decoration-ink-faint hover:decoration-ink transition-colors">reach out</a> if interested.
+          </p>
         </div>
 
       </div>
