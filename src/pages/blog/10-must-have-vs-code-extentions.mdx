@@ -1,20 +1,18 @@
 ---
 layout: ../../layouts/BlogPost.astro
-title: 10 VS Code Extensions That Will Supercharge Your Development
+title: 10 VS Code Extensions I Actually Use
 date: 2024-10-28
-description: Discover powerful VS Code extensions that will boost your productivity and make coding more enjoyable
+description: VS Code extensions I keep installed across machines, and what each one does
 tags: ["VS Code", "Tools", "Productivity", "Development"]
 ---
 
-# 10 VS Code Extensions That Will Supercharge Your Development
+# 10 VS Code Extensions I Actually Use
 
-Time is precious, especially in the fast-paced world of software development. Every second counts, and making the most of each moment can make a huge difference in our productivity. That's why today I'm sharing **10 amazing Visual Studio Code (VS Code) extensions that will help you code faster and more efficiently**.
-
-Want to see these extensions in action? Check out my video demonstration where I show how each extension works! 🔥
+These are the VS Code extensions I keep installed across machines. Short notes on what each one does and why I use it.
 
 ## 1. JSON to TS
 
-How many precious minutes have you spent manually creating TypeScript interfaces to define JSON object types? With JSON to TS, this task becomes quick and simple. Just select the object, run the command, and your interfaces are generated automatically!
+Generates TypeScript interfaces from a JSON object. Select the object, run the command, get the interfaces. Saves the tedious work of typing them out by hand.
 
 Example usage:
 
@@ -31,7 +29,7 @@ Example usage:
   ]
 }
 
-// To this TypeScript interface automatically!
+// To this TypeScript interface
 interface Address {
   street: string;
   city: string;
@@ -46,31 +44,21 @@ interface User {
 
 ## 2. VSCode Random
 
-VSCode Random lets you generate random data right in VS Code. No more switching to external tools! With just a few clicks, you can generate various types of data automatically:
-
-- Names
-- Emails
-- Phone numbers
-- Addresses
-- UUIDs
-- And much more!
+Generates random test data inside the editor. Names, emails, phone numbers, addresses, UUIDs. Handy when you need to seed a form or fixture without leaving VS Code.
 
 ## 3. Intellicode
 
-Intellicode is your AI-powered development assistant that suggests functions and methods based on your code context. These recommendations are made by analyzing thousands of open-source contributions on GitHub, making it easier to find the most relevant options.
+AI code completion from Microsoft. Suggestions come from patterns in open-source repos on GitHub, so the recommendations tend to match common usage for whatever framework you're in.
 
-Key features:
-
-- Smart code completion
+- Code completion
 - Context-aware suggestions
 - Framework-specific recommendations
-- Learning from your coding patterns
 
 ## 4. Tabnine
 
-Tabnine is another AI assistant that takes development speed to the next level. With features like:
+Another AI completion tool. Worth trying alongside Intellicode to see which one suits your workflow.
 
-- AI-powered autocompletion
+- Autocompletion
 - Test generation
 - Code explanations
 - Full-line and full-function completion
@@ -78,17 +66,16 @@ Tabnine is another AI assistant that takes development speed to the next level. 
 
 ## 5. Codeium
 
-Similar to Tabnine, Codeium is an AI toolkit that accelerates development. Key features include:
+Similar to Tabnine and free for individual developers.
 
-- Natural language to code generation
-- Smart refactoring suggestions
+- Natural language to code
+- Refactoring suggestions
 - Code explanations
 - Context-aware completions
-- Free for individual developers!
 
 ## 6. Prettier
 
-Prettier is a code formatting tool that automates the process of maintaining consistent style across your project. Configuration example:
+Formats code on save. The standard for keeping style consistent across a project.
 
 ```json
 // .prettierrc
@@ -104,17 +91,11 @@ Prettier is a code formatting tool that automates the process of maintaining con
 
 ## 7. Markdown Preview Enhanced
 
-If you work with Markdown files (like me writing this blog post!), Markdown Preview Enhanced is indispensable. Features include:
-
-- Real-time preview
-- Multiple export formats
-- Custom CSS
-- Math equations
-- Diagrams and charts
+Good if you write Markdown often. Live preview, custom CSS, math equations, diagrams, and several export formats.
 
 ## 8. Bookmark
 
-Bookmark allows you to add reminders in your code. These bookmarks help track pending tasks and make it easy to return to specific parts of your code. Usage:
+Drop markers in your code so you can jump back later. Useful when navigating a large file or tracking a half-finished task.
 
 - `Ctrl + Alt + K`: Create/remove bookmark
 - `Ctrl + Alt + L`: Jump to next bookmark
@@ -122,14 +103,7 @@ Bookmark allows you to add reminders in your code. These bookmarks help track pe
 
 ## 9. Code Spell Checker
 
-Code Spell Checker helps catch spelling mistakes as you type. It supports:
-
-- Multiple programming languages
-- Custom dictionaries
-- Camel case splitting
-- Workspace-specific settings
-
-Example configuration:
+Catches spelling mistakes as you type. Splits camelCase so it works on variable names, and you can add project-specific words to a custom dictionary.
 
 ```json
 {
@@ -140,7 +114,7 @@ Example configuration:
 
 ## 10. Snippets
 
-Snippets are reusable code blocks that save time and reduce typing errors. Here's a React component snippet example:
+Custom snippets cut down on boilerplate. Here's a React functional component snippet I use:
 
 ```json
 {
@@ -163,12 +137,6 @@ Snippets are reusable code blocks that save time and reduce typing errors. Here'
 }
 ```
 
-## Conclusion
+## Wrap up
 
-These 10 VS Code extensions are just a few of the many tools available to increase your productivity as a developer. Try them out and discover how they can transform your workflow and make development more efficient and enjoyable.
-
-Do you use any other VS Code extensions? Drop them in the comments! Let's help each other and share extensions to make our daily coding lives easier! 🔥
-
-Until next time! 👋
-
-PS: Don't forget to hit ⭐️ if you found this useful!
+That's what I have installed. If you use something I'm missing, let me know.

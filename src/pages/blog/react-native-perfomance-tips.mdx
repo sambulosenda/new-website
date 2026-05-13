@@ -7,14 +7,14 @@ tags: ['React Native', 'Performance', 'FlatList', 'Mobile Development']
 ---
 
 
-Hey there! 👋 Let's cut straight to the chase and look at some real performance optimizations we deal with daily in React Native development. No theoretical fluff - just practical examples you can use in your apps today.
+Real performance patterns from production React Native apps.
 
-## FlatList Optimization: The Most Common Need
+## FlatList Optimization
 
-If you're like me, you're probably working with lists in 90% of your screens. Here's how to make them blazing fast:
+Lists show up on most screens. The patterns below are the ones that actually move the needle.
 
 ```jsx
-// 🚫 Common mistake: Creating new functions in render
+// Bad: new functions on every render
 const BadContactList = ({ contacts }) => {
   return (
     <FlatList
@@ -22,15 +22,15 @@ const BadContactList = ({ contacts }) => {
       renderItem={({ item }) => (
         <ContactCard 
           contact={item}
-          onPress={() => handlePress(item.id)} // New function every render!
+          onPress={() => handlePress(item.id)} // new function every render
         />
       )}
-      keyExtractor={item => item.id} // Also a new function!
+      keyExtractor={item => item.id} // also new every render
     />
   );
 };
 
-// ✅ Optimized version
+// Good: memoized
 const ContactList = ({ contacts }) => {
   // Memoize the renderItem function
   const renderItem = useCallback(({ item }) => (
@@ -86,9 +86,9 @@ const ContactCard = memo(({ contact, onPress }) => (
 ));
 ```
 
-## Image Heavy Screens: Profile & Gallery Views
+## Image-heavy screens
 
-Working with images in RN can be tricky. Here's a pattern I use for profile screens:
+Pattern I use for profile and gallery screens:
 
 ```jsx
 const ProfileScreen = () => {
@@ -149,9 +149,9 @@ const PhotoGrid = memo(({ photos }) => {
 });
 ```
 
-## Form Handling: Without Breaking the Bank
+## Forms
 
-Forms are everywhere in our apps. Here's how to handle them efficiently:
+Use refs instead of state when you don't need per-keystroke validation:
 
 ```jsx
 const EditProfileForm = () => {
@@ -214,9 +214,9 @@ const EditProfileForm = () => {
 };
 ```
 
-## Navigation & Screen Transitions
+## Navigation
 
-Here's how to handle navigation without performance hits:
+Memoize handlers and any data prep for the next screen:
 
 ```jsx
 const HomeScreen = () => {
@@ -252,9 +252,7 @@ const HomeScreen = () => {
 };
 ```
 
-## Real-world Performance Tips
-
-Here are some bonus tips I've learned the hard way:
+## Misc tips
 
 1. Use `memo` for list items in FlatList/ScrollView:
 ```jsx
@@ -277,7 +275,7 @@ const FadeInView = ({ children }) => {
     Animated.timing(opacity, {
       toValue: 1,
       duration: 500,
-      useNativeDriver: true, // Important!
+      useNativeDriver: true,
     }).start();
   }, []);
 
@@ -289,22 +287,10 @@ const FadeInView = ({ children }) => {
 };
 ```
 
-## When Not to Optimize
+## When not to bother
 
-Not everything needs optimization. Skip these patterns when:
-- Your list has fewer than 20 items
-- Your form is simple (2-3 fields)
-- You're building a prototype
-- The screen is not frequently visited
-
-## Wrap Up
-
-Remember:
-- Always use `useCallback` for FlatList's `renderItem` and `keyExtractor`
-- Memoize list items with `memo`
-- Use `useMemo` for expensive calculations or data transformations
-- Consider using refs for form inputs if you don't need real-time validation
-
-Happy coding! 🚀
-
-PS: These examples are from real apps I've worked on. What performance challenges are you facing in your RN apps? Let me know in the comments!
+Skip the optimizations when:
+- The list has fewer than 20 items
+- The form has 2-3 fields
+- It's a prototype
+- The screen is rarely visited

@@ -8,17 +8,17 @@ tags: ["React Native", "i18n", "Internationalization", "Mobile Development"]
 
 # Complete Guide to React Native Internationalization (i18n)
 
-In today's global app marketplace, supporting multiple languages isn't just a nice-to-have—it's essential. Let's explore how to implement internationalization (i18n) in React Native, making your app accessible to users worldwide! 🌎
+If you want your React Native app to reach users outside English-speaking markets, you need i18n. This is how I set it up with `react-i18next`.
 
 ## What is i18n?
 
-Internationalization (i18n) helps adapt your app for different languages and regions. The term "i18n" comes from the word "internationalization" - there are 18 letters between the 'i' and the 'n'!
+Internationalization (i18n) is the work of adapting an app to different languages and regions. The abbreviation comes from the 18 letters between the 'i' and the 'n' in "internationalization".
 
 ## Setting Up i18n in React Native
 
 ### 1. Installation
 
-First, let's install the necessary packages:
+Install the packages:
 
 ```bash
 yarn add i18next react-i18next
@@ -101,7 +101,7 @@ export default i18n;
 
 ## Implementation Methods
 
-Let's look at three different ways to implement language selection in your app:
+Three ways to pick the language:
 
 ### 1. Manual Language Selection with Dropdown
 
@@ -208,7 +208,7 @@ export function useDeviceLanguage() {
 
 ## Using Translations in Your Components
 
-Here's how to use translations in your components:
+Call `useTranslation` and pass keys to `t`:
 
 ```typescript
 import React from "react";
@@ -296,7 +296,7 @@ i18n.init({
 
 ## Testing Internationalization
 
-Here's a simple test setup:
+Mock `react-i18next` so `t` returns the key:
 
 ```typescript
 import { render, screen } from "@testing-library/react-native";
@@ -319,15 +319,4 @@ test("renders welcome message", () => {
 
 ## Conclusion
 
-Implementing internationalization in your React Native app opens it up to a global audience. Whether you choose manual language selection, location-based, or device-language-based implementation, the key is to plan your translation structure early and maintain it consistently.
-
-Remember:
-
-- Start with a good translation key structure
-- Choose the right implementation method for your needs
-- Consider performance implications
-- Test your translations
-
-Need help setting this up? Drop your questions in the comments below! 👇
-
-Happy coding! 🚀
+Pick whichever language-selection method fits the app (manual, location, or device). The thing that matters most is settling on a translation key structure early and sticking to it. Retrofitting keys later is painful.

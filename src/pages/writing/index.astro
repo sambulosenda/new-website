@@ -16,53 +16,43 @@ const postsByYear = posts.reduce((acc, post) => {
 }, {} as Record<number, typeof posts>);
 
 const years = Object.keys(postsByYear).sort().reverse();
+
+const fmtDate = (d: string) =>
+  new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 ---
 
-<Layout title="Blog — Sambulo Senda">
-  <main>
-    <section class="pt-16 pb-20 sm:pt-24">
-      <div class="max-w-2xl mx-auto px-4 sm:px-6">
+<Layout title="Writing — Sambulo Senda" description="Notes from five years of mobile engineering. Mostly React Native.">
+  <main class="max-w-2xl mx-auto px-6 pt-20 sm:pt-24">
 
-        <header class="reveal mb-10" style="--i: 0">
-          <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-3">Blog</h1>
-          <p class="text-ink-muted">
-            Writing about mobile development and React Native.
-          </p>
-        </header>
+    <header class="archive-head reveal" style="--i: 0">
+      <h1 class="archive-h1">Writing</h1>
+      <p class="archive-sub">
+        Notes from five years of mobile engineering. Mostly React Native.
+      </p>
+      <div class="archive-meta">{posts.length} posts</div>
+    </header>
 
-        <!-- Posts by year -->
-        <div class="space-y-10">
-          {years.map((year, yi) => (
-            <section class="reveal" style={`--i: ${Math.min(yi + 1, 6)}`}>
-              <h2 class="text-sm font-medium text-ink-faint uppercase tracking-wider mb-4">{year}</h2>
-              <div class="space-y-1">
-                {postsByYear[year].map(post => (
-                  <a href={post.url} class="group flex items-baseline justify-between gap-4 py-2.5 hover-lift">
-                    <h3 class="text-sm text-ink group-hover:text-accent transition-colors truncate" transition:name={`post-${post.url?.replace(/\//g, '-')}`}>
-                      {post.frontmatter.title}
-                    </h3>
-                    <time datetime={post.frontmatter.date} class="text-xs text-ink-faint whitespace-nowrap shrink-0 font-mono tabular-nums">
-                      {new Date(post.frontmatter.date).toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric'
-                      })}
-                    </time>
-                  </a>
-                ))}
-              </div>
-            </section>
+    {years.map((y, yi) => (
+      <div class="year-group reveal" style={`--i: ${Math.min(yi + 1, 6)}`}>
+        <div class="year-label">{y}</div>
+        <ul class="post-list">
+          {postsByYear[y as any].map((post) => (
+            <li>
+              <a href={post.url} class="post-row">
+                <span class="post-title">{post.frontmatter.title}</span>
+                <span class="post-date">{fmtDate(post.frontmatter.date)}</span>
+              </a>
+            </li>
           ))}
-        </div>
-
-        {posts.length === 0 && (
-          <div class="text-center py-16">
-            <p class="text-ink-faint">No posts yet.</p>
-          </div>
-        )}
-
+        </ul>
       </div>
-    </section>
+    ))}
 
-    <Footer />
+    {posts.length === 0 && (
+      <div class="text-center py-20 text-sm text-ink-faint">No posts yet.</div>
+    )}
+
   </main>
+
+  <Footer />
 </Layout>

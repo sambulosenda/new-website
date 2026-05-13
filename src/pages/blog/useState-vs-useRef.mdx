@@ -7,11 +7,11 @@ tags: ["React", "Performance", "Forms", "Hooks"]
 ---
 
 
-When we learn React hooks, the first one we encounter is useState, and we're amazed by how it updates our components and reflects the values. However, we can get lazy and start using it for everything. Over time, this can lead to performance loss and make our project heavier, often without us knowing why. Let's look at an example of a simple login page.
+useState is usually the first hook anyone learns, and it's easy to reach for it everywhere. That habit costs you re-renders. Here's a login form as an example.
 
 ## The Problem with useState
 
-Every time we type a value into an input, we end up re-rendering the entire component unnecessarily. Here's what we typically do:
+Every keystroke re-renders the whole component. The typical pattern:
 
 ```jsx
 const LoginForm = () => {
@@ -42,11 +42,11 @@ const LoginForm = () => {
 };
 ```
 
-Unless we actually need to validate the inputs with every user input, there's no need to track the value at every moment. We can capture the value and even validate it only when the user presses the submit button.
+If you're not validating on every keystroke, you don't need to track the value on every keystroke. Read it on submit instead.
 
 ## Solution 1: Using useRef
 
-Instead of using useState, which triggers re-renders, we can use useRef to tie a reference to each input:
+useRef holds a reference to the input without triggering re-renders:
 
 ```jsx
 const LoginForm = () => {
@@ -71,7 +71,7 @@ const LoginForm = () => {
 
 ## Solution 2: Using FormData API
 
-We might not even need to use useRef. If our form is encapsulated within a form element, we can simply use the FormData API:
+You often don't need useRef either. If the inputs live inside a `<form>`, FormData covers it:
 
 ```jsx
 const LoginForm = () => {
@@ -96,18 +96,18 @@ const LoginForm = () => {
 };
 ```
 
-## When Should You Still Use useState?
+## When useState still makes sense
 
-While the above solutions are great for performance, there are still valid use cases for useState in forms:
+Reach for useState when you actually need the value during typing:
 
-1. When you need real-time validation
-2. When you need to show immediate feedback based on input
-3. When the input value affects other parts of the UI
-4. When building controlled components that need to sync with external state
+1. Real-time validation
+2. Immediate feedback based on input
+3. The input value drives other UI
+4. Controlled components syncing with external state
 
-## Performance Impact
+## Performance impact
 
-Let's look at the difference in re-renders for a form with 5 inputs:
+Re-render counts for a form with 5 inputs:
 
 | Approach | Re-renders per keystroke | Re-renders for 100 characters |
 | -------- | ------------------------ | ----------------------------- |
@@ -117,14 +117,6 @@ Let's look at the difference in re-renders for a form with 5 inputs:
 
 ## Conclusion
 
-While useState is a powerful tool in React's arsenal, it's important to choose the right tool for the job. For many forms, especially those that don't require real-time validation or immediate feedback, using useRef or the Form Data API can lead to better performance and cleaner code.
+useState isn't wrong, it's just overused for forms. If you don't need the value mid-keystroke, useRef or FormData gives you the same result with zero re-renders and less code.
 
-Next time you're building a form, ask yourself:
-
-- Do I really need to track this value on every keystroke?
-- Could I wait until form submission to access these values?
-- Am I causing unnecessary re-renders?
-
-The answers to these questions will guide you to the most appropriate solution for your use case.
-
-I hope you found this tip useful. Feel free to comment, share your experiences, or add to this discussion. I look forward to sharing more insights on how to develop more performant applications.
+Before adding useState to a form input, check whether you actually need the value before submit. Usually you don't.

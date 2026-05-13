@@ -2,17 +2,15 @@
 layout: ../../layouts/BlogPost.astro
 title: Learn how to send local and production push notifications in your React Native Application
 date: 2025-01-17
-description: A comprehensive guide to implementing push notifications in React Native using Firebase Cloud Messaging for both Android and iOS
+description: Implementing push notifications in React Native using Firebase Cloud Messaging on Android and iOS
 tags: ["React Native", "Firebase", "Push Notifications", "Mobile Development", "FCM"]
 ---
 
 # Learn how to send local and production push notifications in your React Native Application
 
-Push notifications are essential for keeping users engaged with your mobile app. From alerting users about new messages to announcing flash sales or order updates, notifications help build stronger connections and boost app usage. In this guide, we’ll show you how to implement push notifications in your React Native app using **Firebase Cloud Messaging (FCM)** for both Android and iOS.
+This guide walks through implementing push notifications in React Native with **Firebase Cloud Messaging (FCM)** on Android and iOS. The example is a chat app.
 
-This step-by-step tutorial covers everything from setting up Firebase to sending test notifications and displaying them with a polished UI. We’ll use a simple chat app example to demonstrate the implementation.
-
-Here’s what we’ll cover:
+Sections:
 
 1. Firebase Project Setup
 2. Installing Firebase in React Native
@@ -21,8 +19,6 @@ Here’s what we’ll cover:
 5. Coding Push Notifications
 6. Sending Test Notifications
 7. Displaying Local Notifications with Notifee
-
-Let’s dive in!
 
 ## Prerequisites
 
@@ -36,17 +32,17 @@ Before starting, ensure you have:
 
 ### 1. Firebase Project Setup
 
-Head to the [Firebase Console](https://console.firebase.google.com) and create a new project. Give it a name, enable analytics if desired, and click **Create Project**.
+In the [Firebase Console](https://console.firebase.google.com), create a project. Name it, enable analytics if you want, click **Create Project**.
 
-Next, add apps for both platforms:
-- **Android**: Enter your app’s package name (found in `android/app/build.gradle` under `applicationId`). Download the `google-services.json` file.
-- **iOS**: Provide your app’s Bundle ID (found in Xcode or `ios/YourApp.xcodeproj/project.pbxproj`). Download the `GoogleService-Info.plist` file.
+Add apps for both platforms:
+- **Android**: Enter your package name (from `android/app/build.gradle` under `applicationId`). Download `google-services.json`.
+- **iOS**: Enter your Bundle ID (from Xcode or `ios/YourApp.xcodeproj/project.pbxproj`). Download `GoogleService-Info.plist`.
 
-These files connect your app to Firebase services. Keep them safe for the next steps.
+Keep both files; you'll need them next.
 
 ### 2. Firebase Installation
 
-Install the required Firebase libraries in your React Native project’s root directory:
+From your project root:
 
 ```bash
 npm install --save @react-native-firebase/app @react-native-firebase/messaging
@@ -58,12 +54,11 @@ Or with Yarn:
 yarn add @react-native-firebase/app @react-native-firebase/messaging
 ```
 
-Since React Native 0.60+, autolinking handles native module linking, so no additional steps are needed here.
+Autolinking (RN 0.60+) handles the native linking.
 
 ## Android Setup
 
-To connect your Android app to Firebase:
-1. Place the `google-services.json` file in `android/app/`.
+1. Drop `google-services.json` into `android/app/`.
 2. Add the Google Services plugin to `android/build.gradle`:
 
 ```gradle
@@ -82,20 +77,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 ```
 
-**Note**: For Android 13+ (API 33), you’ll need to request the `POST_NOTIFICATIONS` permission, which we’ll handle in the code later.
-
-Your Android setup is complete! Let’s move to iOS.
+On Android 13+ (API 33) you need to request `POST_NOTIFICATIONS` at runtime. Handled in the code below.
 
 ## iOS Setup
 
-For iOS, follow these steps:
-1. Add the `GoogleService-Info.plist` file to your Xcode project:
-   - Open Xcode, right-click your project in the Project Navigator, and select **Add Files to [YourApp]**.
-   - Choose the `GoogleService-Info.plist` file.
-2. Enable Push Notifications in Xcode:
-   - Go to your project’s target > **Signing & Capabilities**.
-   - Click **+ Capability** and add **Push Notifications**.
-   - Optionally, enable **Background Modes** and check **Remote notifications** for background handling.
+1. Add `GoogleService-Info.plist` to the Xcode project: right-click the project in the Navigator, **Add Files to [YourApp]**, pick the plist.
+2. Enable Push Notifications: target > **Signing & Capabilities** > **+ Capability** > **Push Notifications**. Add **Background Modes** > **Remote notifications** if you want background delivery.
 3. Initialize Firebase in `ios/YourApp/AppDelegate.m`:
 
 ```objc
@@ -109,22 +96,22 @@ For iOS, follow these steps:
 }
 ```
 
-4. In the Firebase Console, go to **Cloud Messaging** > **Apple app configuration** and set up an APNs key or certificate for push notifications.
+4. In the Firebase Console, **Cloud Messaging** > **Apple app configuration**, upload an APNs key or certificate.
 
-**Important**: Test on a physical iOS device, as simulators don’t support FCM notifications.
+Test on a physical device. iOS simulators don't deliver FCM notifications.
 
 ## Usage
 
-FCM sends notifications as data payloads to Android and iOS devices (and Android emulators). We need to handle notifications in three app states:
-- **Foreground**: App is open and active.
-- **Background**: App is minimized.
-- **Killed**: App is closed.
+FCM delivers payloads to Android and iOS devices (and Android emulators). You handle three app states:
+- **Foreground**: app open and active.
+- **Background**: app minimized.
+- **Killed**: app closed.
 
-Let’s code the logic to request permissions, handle notifications, and retrieve the FCM token.
+Below: request permission, handle notifications, get the FCM token.
 
 ### Coding Push Notifications
 
-Here’s a complete component that integrates push notifications for a chat app:
+A component wiring it together:
 
 ```javascript
 import React, { useEffect } from 'react';
@@ -206,23 +193,23 @@ const styles = StyleSheet.create({
 });
 ```
 
-**Key Points**:
-- **Permissions**: The `requestUserPermission` function checks for notification permissions. On iOS, users may grant **provisional** permissions for silent notifications.
-- **Foreground**: The `onMessage` handler shows an alert for notifications received while the app is open.
-- **Background/Killed**: The `setBackgroundMessageHandler` logs notifications for debugging.
-- **FCM Token**: This unique device identifier is used to send notifications. Securely send it to your backend over HTTPS.
+Notes:
+- `requestUserPermission` checks notification permission. On iOS, users may grant **provisional** permission for silent notifications.
+- `onMessage` fires for notifications received while the app is foregrounded.
+- `setBackgroundMessageHandler` runs in background/killed states. Logging here is for debugging.
+- The FCM token identifies the device. Send it to your backend over HTTPS.
 
 ## Sending push notification
 
-Let’s test notifications with a Node.js script:
-1. In the Firebase Console, go to **Project Settings** > **Service Accounts** and click **Generate new private key** to download a JSON file.
-2. Create a Node.js project and install `firebase-admin`:
+Test with a Node script:
+1. Firebase Console > **Project Settings** > **Service Accounts** > **Generate new private key**. Save the JSON.
+2. In a Node project, install `firebase-admin`:
 
 ```bash
 npm install firebase-admin
 ```
 
-3. Create a script to send a test notification:
+3. Send a test notification:
 
 ```javascript
 const { initializeApp } = require('firebase-admin/app');
@@ -253,19 +240,19 @@ initializeApp({
 })();
 ```
 
-Run the script with `node your-script.js`. For quick tests, use the Firebase Console’s **Cloud Messaging** section to send a notification without coding.
+Run with `node your-script.js`. The Firebase Console's **Cloud Messaging** tab also lets you send a test notification without writing code.
 
 ## Local notifications
 
-Using `Alert.alert` for foreground notifications is fine for testing, but for a native notification UI, we’ll use `@notifee/react-native` due to its excellent documentation and cross-platform support.
+`Alert.alert` works for testing, but for a native notification UI use `@notifee/react-native`.
 
-Install Notifee:
+Install:
 
 ```bash
 npm install @notifee/react-native --save
 ```
 
-Update the `onMessage` handler to display native notifications:
+Update `onMessage` to display native notifications:
 
 ```javascript
 import notifee, { EventType } from '@notifee/react-native';
@@ -320,12 +307,10 @@ useEffect(() => {
 }, []);
 ```
 
-**Notes**:
-- **Android**: Notification channels are required for Android 8.0+. Add a `ic_notification.png` file to `android/app/src/main/res/drawable` for the notification icon.
-- **iOS**: The `foregroundPresentationOptions` ensure notifications appear with banners, sounds, and badges.
+Notes:
+- Android 8.0+ requires notification channels. Add `ic_notification.png` to `android/app/src/main/res/drawable` for the icon.
+- On iOS, `foregroundPresentationOptions` controls whether banners, sounds, and badges show while the app is foregrounded.
 
-## Conclusion
+## Wrap up
 
-You’ve now mastered push notifications in React Native using Firebase and Notifee! From setting up Firebase to displaying native notifications, you’re ready to engage users with timely updates. Stay updated with the [Firebase](https://firebase.google.com/docs) and [Notifee](https://notifee.app) documentation, as mobile development evolves quickly.
-
-Experiment with custom notification data or styling to match your app’s vibe. Drop a comment on our site to share how you’re using notifications in your app!
+That covers FCM setup, sending from a Node script, and rendering native notifications with Notifee. Both the [Firebase](https://firebase.google.com/docs) and [Notifee](https://notifee.app) docs are worth reading when you hit edge cases.
