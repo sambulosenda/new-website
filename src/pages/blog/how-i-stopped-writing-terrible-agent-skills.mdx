@@ -1,0 +1,57 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: How I Stopped Writing Terrible Agent Skills
+date: 2026-05-24
+description: After months of bloated prompts and tangled instructions, here's the system I actually use now.
+tags: ["AI", "Agents", "Claude", "Workflow"]
+readingTime: "5 min read"
+---
+
+I've spent the last few months living inside AI agents. Claude Projects, Cursor, a couple of custom harnesses I cobbled together at weekends. For most of that time my skills were bad. Bloated prompts. Steps that contradicted themselves halfway through. Tool-specific hacks I'd forgotten the reason for a week later. Sometimes they worked. Often they didn't, and I couldn't tell you why.
+
+Then I saw a thread that listed, more or less in order, every mistake I was making. It stung. It also went round the community, so at least I wasn't the only one. I took the ideas, used them on real work for a few weeks, and they've settled into something I rely on.
+
+This is that. Opinionated and mine, but take what you want.
+
+## What goes wrong
+
+A wall of instructions can work. Right up until it doesn't, and then you're looking at hallucinations, skipped steps, a context window stuffed with preamble, or output that only behaves in the one tool you wrote it for.
+
+What changed things for me was to stop thinking of skills as instructions and start thinking of them as functions. Small ones you can trust and snap together. That shift is most of the difference between agents that are occasionally brilliant and ones that are actually useful.
+
+## The principles
+
+**Short.** If a skill runs past a screen it's usually doing two jobs. I edit them down hard now. If a sentence isn't pulling weight, it goes.
+
+**One job each.** The biggest change. I used to cram "gather the requirements" and "write the PRD" into one skill and wonder why the agent kept charging ahead. Splitting them forced me to think about what each step was for, and let me chain them on purpose instead of hoping.
+
+**Composable.** I treat them like Unix commands. One skill drafts a plan. Another reads the plan and builds the thing. A third reviews what came out. You get complicated workflows without a single fragile mega-prompt holding it all up.
+
+**Reveal detail late.** Don't front-load every rule. Keep the opening light and let deeper instructions surface when the context calls for them. On long sessions this matters more than I expected, and it's how Anthropic's own Skills work: name and description load first, full instructions when triggered, reference files only when something needs them.
+
+**Don't marry one tool.** I used to bake in Claude-specific commands and Cursor-only patterns, then swear when I moved platforms. Skills that travel take a bit more work upfront and save you a lot later. Since late 2025 the SKILL.md format has become an open standard. Cursor, Codex, Gemini CLI and others all read it. Portability stopped being a nice-to-have.
+
+## Smaller rules I don't skip
+
+- Every skill gets an example, its preconditions, the output I expect, and a one-line note on why it exists. Future me is always grateful.
+- One file, plain text. No ceremony.
+- Assume the model is careless with secrets. The rules against leaking anything or running something unsafe are written in, explicitly.
+- Safe to run twice. Running again shouldn't break what it did the first time.
+- Observable. Mine now return a bit of structured metadata: what was decided, how confident, a short log. Debugging went from guesswork to reading.
+- Versioned. Clear inputs, clear outputs, a version number. Essential the moment you hand a skill to someone else.
+
+## How I build them
+
+There's a `skills/` folder in every project, one skill per file. Nothing clever.
+
+Testing is three steps. I get the agent to critique the skill before it ever runs — it catches the obvious holes. Then a toy task. Then real work.
+
+The habit that quietly fixed everything was a review at the end. Ask the agent, or myself, whether the skill did what it set out to do, and where it went sideways if it did. That loop is most of why my library is any good now.
+
+## Worth it?
+
+Prompt-debugging time is down by roughly half and the code I get back is better. The agents feel less like keen juniors knocking things over and more like someone who's done this before.
+
+It's not a law of the universe. Some of the gnarlier work — security audits, legacy migrations — still wants heavier orchestration than a handful of tidy skills. But starting small and focused has changed how I work more than almost anything I've tried this year.
+
+If you're stuck on the same thing: short, single-purpose, composable, hold detail back, don't tie them to one tool. Document them, keep them portable, build in a way to see what they did. Steal what's useful.
