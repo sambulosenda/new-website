@@ -466,6 +466,17 @@
   .sb-nav { flex-direction: row; flex-wrap: wrap; gap: 20px; margin: 6px 0 0; }
   .sb-foot { margin-top: 30px; }
   .shell-main { padding: 44px 30px; }
+
+  /* Article pages: collapse the stacked sidebar to a compact header so the
+     post isn't buried under the full bio/meta/CTA block. */
+  .shell-article .sb-inner { padding: 26px 30px; }
+  .shell-article .sb-role,
+  .shell-article .sb-bio,
+  .shell-article .sb-meta,
+  .shell-article .sb-foot { display: none; }
+  .shell-article .sb-name { font-size: 30px; margin: 0; }
+  .shell-article .sb-name-link { margin-top: 14px; }
+  .shell-article .sb-nav { margin-top: 18px; }
 }
 @media (max-width: 520px) {
   .sb-name { font-size: 34px; }
