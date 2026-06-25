@@ -1,98 +1,43 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="Now — Sambulo Senda">
-  <main>
-    <section class="pt-16 pb-20 sm:pt-24">
-      <div class="max-w-2xl mx-auto px-4 sm:px-6">
+<Layout title="Now — Sambulo Senda" description="A snapshot of what I'm focused on right now.">
+  <div class="page">
+    <div class="page-head">
+      <h1 class="page-title">Now</h1>
+      <span class="page-meta">UPDATED JUN 2026</span>
+    </div>
 
-        <header class="reveal mb-12" style="--i: 0">
-          <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-3">Now</h1>
-          <p class="text-ink-muted">
-            What I'm currently focused on. Updated February 2026.
-          </p>
-        </header>
+    <p class="now-intro">A snapshot of what's got my attention right now.</p>
 
-        <div class="space-y-10">
+    <div class="now-grid">
+      <div class="now-k">WORKING ON</div>
+      <p class="now-v">
+        <em>Versify Bible</em> and <em>Scribe Scan</em> &mdash; both live on the App Store. Most of
+        my writing energy goes into React Native's New Architecture: Fabric, TurboModules, and the
+        migration work that comes with them.
+      </p>
 
-          <section class="reveal" style="--i: 1">
-            <h2 class="text-lg font-semibold text-ink mb-4">Building</h2>
-            <ul class="space-y-3 text-sm text-ink-muted">
-              <li class="flex gap-3">
-                <span class="text-accent">&#8227;</span>
-                <span><strong class="text-ink">Versify Bible</strong> — Adding community features and reading plan sharing. Focusing on retention and engagement.</span>
-              </li>
-              <li class="flex gap-3">
-                <span class="text-accent">&#8227;</span>
-                <span><strong class="text-ink">Scribe Scan</strong> — Improving OCR accuracy and adding batch scanning support.</span>
-              </li>
-              <li class="flex gap-3">
-                <span class="text-accent">&#8227;</span>
-                <span><strong class="text-ink">This website</strong> — Adding dark mode, search, and improving the blog experience.</span>
-              </li>
-            </ul>
-          </section>
+      <div class="now-k">READING</div>
+      <p class="now-v">Tony Fadell's <em>Build</em>, on the train. Slow and good.</p>
 
-          <section>
-            <h2 class="text-lg font-semibold text-ink mb-4">Learning</h2>
-            <ul class="space-y-3 text-sm text-ink-muted">
-              <li class="flex gap-3">
-                <span class="text-accent">&#8227;</span>
-                <span>Exploring AI integration patterns in mobile apps</span>
-              </li>
-              <li class="flex gap-3">
-                <span class="text-accent">&#8227;</span>
-                <span>React Native's New Architecture — Fabric and TurboModules</span>
-              </li>
-              <li class="flex gap-3">
-                <span class="text-accent">&#8227;</span>
-                <span>Server-driven UI patterns for mobile</span>
-              </li>
-            </ul>
-          </section>
+      <div class="now-k">TINKERING</div>
+      <p class="now-v">
+        On-device LLM inference on iPhone &mdash; seeing how far you can get without ever touching a
+        server.
+      </p>
 
-          <section>
-            <h2 class="text-lg font-semibold text-ink mb-4">Reading</h2>
-            <ul class="space-y-3 text-sm text-ink-muted">
-              <li class="flex gap-3">
-                <span class="text-accent">&#8227;</span>
-                <span><em>Build</em> by Tony Fadell</span>
-              </li>
-              <li class="flex gap-3">
-                <span class="text-accent">&#8227;</span>
-                <span><em>The Pragmatic Programmer</em> by Hunt & Thomas</span>
-              </li>
-            </ul>
-          </section>
+      <div class="now-k">BASED IN</div>
+      <p class="now-v">
+        London. Open to consulting from Q3 2026 &mdash; <a class="clink" href="/contact">say hello</a>.
+      </p>
+    </div>
 
-          <section>
-            <h2 class="text-lg font-semibold text-ink mb-4">Side Interests</h2>
-            <ul class="space-y-3 text-sm text-ink-muted">
-              <li class="flex gap-3">
-                <span class="text-accent">&#8227;</span>
-                <span>Indie app marketing and App Store Optimization</span>
-              </li>
-              <li class="flex gap-3">
-                <span class="text-accent">&#8227;</span>
-                <span>Writing more regularly about React Native</span>
-              </li>
-            </ul>
-          </section>
-
-        </div>
-
-        <div class="mt-12 p-5 rounded-lg bg-surface-subtle">
-          <p class="text-sm text-ink-muted">
-            This is a <a href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">now page</a>.
-            If you want to chat about any of this, <a href="https://cal.com/sambulosenda" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">book a call</a> or <a href="mailto:sambulosenda@gmail.com" class="text-accent hover:underline">email me</a>.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <Footer />
-  </main>
+    <p class="now-note">
+      This is a <a class="clink" href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer">now page</a>.
+      If you want to chat about any of this, <a class="clink" href="https://cal.com/sambulosenda" target="_blank" rel="noopener noreferrer">book a call</a>
+      or <a class="clink" href="mailto:sambulosendas@gmail.com">email me</a>.
+    </p>
+  </div>
 </Layout>

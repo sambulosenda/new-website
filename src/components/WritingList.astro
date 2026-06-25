@@ -1,0 +1,65 @@
+---
+const allPosts = await Astro.glob('../pages/blog/*.{md,mdx}');
+const posts = allPosts.sort(
+  (a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf()
+);
+
+const fmtDate = (d: string) =>
+  new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+// Primary category = first tag (data-driven chip filter)
+const cat = (p: any) => (p.frontmatter.tags?.[0] as string) || 'general';
+const cats = ['all', ...Array.from(new Set(posts.map(cat)))];
+---
+
+<div class="page wl">
+  <div class="page-head">
+    <h1 class="page-title">Writing</h1>
+    <span class="page-meta" id="wl-count">{posts.length} {posts.length === 1 ? 'POST' : 'POSTS'}</span>
+  </div>
+
+  <div class="wl-chips">
+    {cats.map((c, i) => (
+      <button class:list={['wl-chip', i === 0 && 'active']} data-tag={c}>{c}</button>
+    ))}
+  </div>
+
+  <div class="wl-list">
+    {posts.map((p) => (
+      <a href={p.url} class="post-row" data-tag={cat(p)}>
+        <span class="pr-left">
+          <span class="pr-arrow">&rarr;</span>
+          <span class="pr-title">{p.frontmatter.title}</span>
+        </span>
+        <span class="pr-right">
+          <span class="pr-tag">{cat(p)}</span>
+          <span class="pr-date">{fmtDate(p.frontmatter.date)}</span>
+        </span>
+      </a>
+    ))}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const wl = document.querySelector('.wl');
+    if (!wl) return;
+    const chips = wl.querySelectorAll<HTMLButtonElement>('.wl-chip');
+    const rows = wl.querySelectorAll<HTMLElement>('.post-row');
+    const countEl = wl.querySelector('#wl-count');
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const tag = chip.getAttribute('data-tag');
+        chips.forEach((c) => c.classList.toggle('active', c === chip));
+        let shown = 0;
+        rows.forEach((r) => {
+          const match = tag === 'all' || r.getAttribute('data-tag') === tag;
+          r.hidden = !match;
+          if (match) shown++;
+        });
+        if (countEl) countEl.textContent = `${shown} ${shown === 1 ? 'POST' : 'POSTS'}`;
+      });
+    });
+  });
+</script>

@@ -7,6 +7,10 @@ import node from '@astrojs/node';
 export default defineConfig({
   site: 'https://sambulosenda.com',
   output: 'hybrid',
+  redirects: {
+    // /writing and / rendered identical content; / is canonical (sidebar nav points here).
+    '/writing': '/',
+  },
   adapter: node({
     mode: 'standalone',
   }),

@@ -1,0 +1,63 @@
+---
+const path = Astro.url.pathname;
+const isWriting = path === '/' || path.startsWith('/writing') || path.startsWith('/blog');
+const isNow = path.startsWith('/now');
+const isContact = path.startsWith('/contact');
+
+const nav = [
+  { label: 'Writing', href: '/', active: isWriting },
+  { label: 'Now', href: '/now', active: isNow },
+  { label: 'Contact', href: '/contact', active: isContact },
+];
+---
+
+<aside class="sidebar">
+  <div class="sb-inner">
+
+    <div class="sb-top">
+      <div class="sb-status">
+        <span class="sb-status-dot"></span>OPEN TO CONSULTING
+      </div>
+      <button id="theme-toggle" class="tt" aria-label="Toggle theme">
+        <span id="tt-dot" class="tt-dot"></span><span id="tt-label">LIGHT</span>
+      </button>
+    </div>
+
+    <a href="/" class="sb-name-link">
+      <p class="sb-name">Sambulo<br>Senda</p>
+    </a>
+    <div class="sb-role">MOBILE ENGINEER &middot; LONDON</div>
+
+    <p class="sb-bio">
+      Five years deep in React Native &mdash; shipping apps and writing about the
+      parts most people avoid: offline sync, performance, native modules, the New
+      Architecture.
+    </p>
+
+    <div class="sb-meta">
+      <span class="sb-meta-k">loc</span><span class="sb-meta-v">London, UK</span>
+      <span class="sb-meta-k">exp</span><span class="sb-meta-v">5 years</span>
+      <span class="sb-meta-k">apps</span><span class="sb-meta-v">live on the App Store</span>
+      <span class="sb-meta-k">stack</span><span class="sb-meta-v">React Native &middot; Expo</span>
+    </div>
+
+    <nav class="sb-nav">
+      {nav.map((n) => (
+        <a href={n.href} class:list={['sb-navbtn', n.active && 'active']}>
+          <span class="sb-navdot"></span>
+          <span class="sb-navlabel">{n.label}</span>
+        </a>
+      ))}
+    </nav>
+
+    <div class="sb-foot">
+      <a class="sb-cta" href="/contact">AVAILABLE Q3 2026 &rarr;</a>
+      <div class="sb-social">
+        <a href="mailto:sambulosendas@gmail.com">Email</a>
+        <a href="https://github.com/sambulosenda">GitHub</a>
+        <a href="https://twitter.com/sambulosenda">X</a>
+      </div>
+    </div>
+
+  </div>
+</aside>
