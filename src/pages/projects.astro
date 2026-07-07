@@ -1,65 +1,92 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Footer from '../components/Footer.astro';
-import { projects } from '../data/projects';
+
+const projects = [
+  {
+    name: 'Slotavio',
+    desc: 'Booking platform for Black &amp; Afro hair professionals. Solo-built full stack &mdash; Next.js, Node.js, PostgreSQL, payments.',
+    href: 'https://slotavio.com',
+  },
+  {
+    name: 'PrayGuard',
+    desc: 'Screen Time app blocker built on Apple’s Family Controls API with custom Swift modules.',
+    href: 'https://apps.apple.com/us/app/id6757086543',
+  },
+  {
+    name: 'SubHelm',
+    desc: 'Subscription tracker with renewal reminders so nothing bills you by surprise.',
+    href: 'https://apps.apple.com/us/app/subhelm-subscription-tracker/id6777939621',
+  },
+  {
+    name: 'Scribe Scan',
+    desc: 'Handwriting OCR &mdash; snap a photo of handwritten notes and get editable text back.',
+    href: 'https://apps.apple.com/us/app/scribe-scan-handwriting-ocr/id6758213865',
+  },
+];
 ---
 
-<Layout title="Projects — Sambulo Senda">
-  <main>
-    <section class="pt-16 pb-20 sm:pt-24">
-      <div class="max-w-2xl mx-auto px-4 sm:px-6">
+<Layout
+  title="Projects — Sambulo Senda"
+  description="Apps and platforms I've built — Slotavio, PrayGuard, SubHelm, Scribe Scan, and more on the App Store."
+>
+  <div class="page">
+    <div class="page-head">
+      <h1 class="page-title">Projects</h1>
+      <span class="page-meta">SHIPPED</span>
+    </div>
 
-        <header class="reveal mb-10" style="--i: 0">
-          <h1 class="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-3">Projects</h1>
-          <p class="text-ink-muted">
-            Apps I've built and shipped.
-          </p>
-        </header>
+    <p class="now-intro">Things I've built &mdash; mostly solo, mostly shipped.</p>
 
-        <div class="space-y-8">
-          {projects.map((project, i) => {
-            const Wrapper = project.url ? 'a' : 'div';
-            return (
-              <Wrapper
-                href={project.url}
-                target={project.url ? '_blank' : undefined}
-                rel={project.url ? 'noopener noreferrer' : undefined}
-                class={`reveal tilt-card hover-lift group block ${project.url ? 'cursor-pointer' : ''}`}
-                style={`--i: ${Math.min(i + 1, 6)}`}
-              >
-                <div class="flex flex-col sm:flex-row gap-4">
-                  {project.screenshot && (
-                    <div class="sm:w-40 shrink-0 overflow-hidden rounded-lg bg-surface-subtle flex items-center justify-center p-3">
-                      <img
-                        src={project.screenshot}
-                        alt={project.title}
-                        class="w-full h-full max-h-32 object-contain"
-                        loading="lazy"
-                      />
-                    </div>
-                  )}
-                  <div class="flex-1 min-w-0">
-                    <h3 class="font-medium text-ink group-hover:text-accent transition-colors">
-                      {project.title}
-                    </h3>
-                    <p class="text-sm text-ink-muted mt-1">{project.description}</p>
-                    <div class="flex flex-wrap gap-1.5 mt-3">
-                      {project.tags.map(tag => (
-                        <span class="text-xs px-2 py-0.5 rounded-md bg-surface-subtle text-ink-faint">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </Wrapper>
-            );
-          })}
-        </div>
+    <div class="proj-list">
+      {projects.map((p) => (
+        <a class="proj-row" href={p.href} target="_blank" rel="noopener noreferrer">
+          <span class="proj-name">{p.name}<span class="proj-arrow">&#8599;</span></span>
+          <p class="proj-desc" set:html={p.desc} />
+        </a>
+      ))}
+    </div>
 
-      </div>
-    </section>
-
-    <Footer />
-  </main>
+    <p class="now-note">
+      More on the <a class="clink" href="https://apps.apple.com/us/developer/sambulo-senda/id957217460" target="_blank" rel="noopener noreferrer">App Store &#8599;</a>
+    </p>
+  </div>
 </Layout>
+
+<style>
+  .proj-list { margin-top: 6px; }
+  .proj-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--hair);
+    text-decoration: none;
+  }
+  .proj-name {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 16.5px;
+    color: var(--fg);
+    transition: color .15s ease;
+  }
+  .proj-row:hover .proj-name { color: var(--accent); }
+  .proj-arrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity .18s ease, transform .18s ease, color .18s ease;
+  }
+  .proj-row:hover .proj-arrow { opacity: 1; transform: translateX(0); color: var(--accent); }
+  .proj-desc {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--body);
+    margin: 0;
+  }
+</style>

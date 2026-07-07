@@ -1,11 +1,13 @@
 ---
 const path = Astro.url.pathname;
 const isWriting = path === '/' || path.startsWith('/writing') || path.startsWith('/blog');
+const isProjects = path.startsWith('/projects');
 const isNow = path.startsWith('/now');
 const isContact = path.startsWith('/contact');
 
 const nav = [
   { label: 'Writing', href: '/', active: isWriting },
+  { label: 'Projects', href: '/projects', active: isProjects },
   { label: 'Now', href: '/now', active: isNow },
   { label: 'Contact', href: '/contact', active: isContact },
 ];
