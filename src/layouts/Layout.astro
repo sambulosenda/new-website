@@ -31,7 +31,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://sambulos
 const slug = Astro.url.pathname.replace(/^\/blog\//, '').replace(/\/$/, '');
 const ogImage = type === 'article' && slug
   ? new URL(`/og/${slug}.png`, Astro.site || 'https://sambulosenda.com')
-  : new URL(image || '/profile.jpg', Astro.site || 'https://sambulosenda.com');
+  : new URL(image || '/og/default.png', Astro.site || 'https://sambulosenda.com');
 ---
 
 <!doctype html>
@@ -51,9 +51,12 @@ const ogImage = type === 'article' && slug
     <!-- Open Graph -->
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="Sambulo Senda" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     {publishedTime && <meta property="article:published_time" content={publishedTime} />}
 
     <!-- Twitter -->
