@@ -10,6 +10,8 @@ export default defineConfig({
   redirects: {
     // /writing and / rendered identical content; / is canonical (sidebar nav points here).
     '/writing': '/',
+    // @astrojs/sitemap emits sitemap-index.xml; make the conventional /sitemap.xml resolve.
+    '/sitemap.xml': '/sitemap-index.xml',
   },
   adapter: node({
     mode: 'standalone',
